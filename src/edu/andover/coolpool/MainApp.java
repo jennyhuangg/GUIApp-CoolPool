@@ -11,6 +11,14 @@ public class MainApp extends Application {
 		
 	}
 	
+	public void loadMainMenuScene() {
+		
+	}
+	
+	public void loadGameScene() {
+		
+	}
+	
 	public static void main(String[] args) {
 		launch(args);
 	}
