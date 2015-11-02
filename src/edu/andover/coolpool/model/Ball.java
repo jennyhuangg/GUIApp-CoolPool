@@ -31,9 +31,9 @@ public class Ball {
 
 	public double setCenterY(double centerY) { view.setCenterY(centerY * cmToPixel); }
 
-	public void setXVelocity(double xVel) { xVelocity = xVel };
+	public void setXVelocity(double xVel) { xVelocity = xVel; };
 
-	public void setYVelocity(double yVel) { yVelocity = yVel };
+	public void setYVelocity(double yVel) { yVelocity = yVel; };
 
 
 	public void slowDown(){
