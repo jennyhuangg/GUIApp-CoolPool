@@ -1,5 +1,7 @@
 package edu.andover.coolpool.model;
 
+import java.awt.Point;
+
 import edu.andover.coolpool.view.BallSprite;
 
 public class Ball {
@@ -8,7 +10,8 @@ public class Ball {
 	private double xVelocity; //in CM/s
 	private double yVelocity; //in CM/s
 
-	private Point center; //stores Point(centerX, centerY);
+	private double centerX;
+	private double centerY;
 
 	private final double radius = 2.86; //in centimeters
 
@@ -17,11 +20,11 @@ public class Ball {
 	}
 
 
-	public double getCenterX() { return center.x; }
-	public double getCenterY() { return center.y; }
+	public double getCenterX() { return centerX; }
+	public double getCenterY() { return centerY; }
 
-	public void setCenterX(double centerX) { center.x = centerX; }
-	public void setCenterY(double centerY) { center.y = centerY; }
+	public void setCenterX(double centerX) { this.centerX = centerX; }
+	public void setCenterY(double centerY) { this.centerY = centerY; }
 	public void setXVelocity(double xVel) { xVelocity = xVel; }
 	public void setYVelocity(double yVel) { yVelocity = yVel; }
 
