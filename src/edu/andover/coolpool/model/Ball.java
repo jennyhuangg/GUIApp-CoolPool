@@ -1,16 +1,16 @@
 package edu.andover.coolpool.model;
 
+import edu.andover.coolpool.view.BallSprite;
+
 public class Ball {
 	private boolean isPocketed;
 
 	private double xVelocity;
-
 	private double yVelocity;
 
 	private final double radius = 2.86;
 
 	private final double cmToPixel = 37.795;
-
 
 	private BallSprite view;
 
@@ -23,18 +23,17 @@ public class Ball {
 
 	}
 
+	public double getCenterX() { return view.getCenterX() / cmToPixel; }
 
-	public double getCenterX() {return view.getCenterX()/cmToPixel; }
+	public double getCenterY() { return view.getCenterY() / cmToPixel; }
 
-	public double getCenterY() {return view.getCenterY()/cmToPixel; }
+	public double setCenterX(double centerX) { view.setCenterX(centerX * cmToPixel); }
 
-	public double setCenterX(double centerX) {view.setCenterX(centerX*cmToPixel); }
+	public double setCenterY(double centerY) { view.setCenterY(centerY * cmToPixel); }
 
-	public double setCenterY(double centerY) {view.setCenterY(centerY*cmToPixel); }
+	public void setXVelocity(double xVel) { xVelocity = xVel };
 
-	public void setXVelocity(double xVel) {xVelocity = xVel};
-
-	public void setYVelocity(double yVel) {yVelocity = yVel};
+	public void setYVelocity(double yVel) { yVelocity = yVel };
 
 
 	public void slowDown(){
