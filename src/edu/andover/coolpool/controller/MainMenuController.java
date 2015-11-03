@@ -1,5 +1,6 @@
 package edu.andover.coolpool.controller;
 
+import edu.andover.coolpool.GameManager;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 
@@ -8,6 +9,8 @@ public class MainMenuController {
 	
 	@FXML
 	public void handleButtonAction() {
-		System.out.println("Hello!");
+		GameManager gm = new GameManager(btn_Go.getScene());
+		
+		gm.initPoolScreen();
 	}
 }
