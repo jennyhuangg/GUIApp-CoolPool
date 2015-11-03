@@ -39,12 +39,12 @@ public class Ball {
 
 	public void setCenterX(double centerX) {
 		this.centerX = centerX;
-		ballView.setCenterX(centerX);
+		ballView.setCenterX(this.centerX);
 	}
 
 	public void setCenterY(double centerY) {
 		this.centerY = centerY;
-		ballView.setCenterY(centerY);
+		ballView.setCenterY(this.centerY);
 	}
 
 	public void setXVelocity(double xVel) {xVelocity = xVel;}

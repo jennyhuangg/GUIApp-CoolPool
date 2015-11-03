@@ -89,7 +89,7 @@ public class PoolBoard {
 			if ((ball.getCenterX() - ball.getRadius() <= 0 && ball.getXVelocity() < 0) || (ball.getCenterX() + ball.getRadius() >= length && ball.getXVelocity() > 0)) {
 				ball.setXVelocity(ball.getXVelocity()*(-1));
 			}
-			if ((ball.getCenterY() - ball.getRadius() <= 0 && ball.getYVelocity() < 0)|| (ball.getCenterY() + ball.getRadius() >= width && ball.getYVelocity() < 0)) {
+			if ((ball.getCenterY() - ball.getRadius() <= 0 && ball.getYVelocity() < 0)|| (ball.getCenterY() + ball.getRadius() >= width && ball.getYVelocity() > 0)) {
 				ball.setYVelocity(ball.getYVelocity()*(-1));
 			}
 		}
@@ -105,19 +105,17 @@ public class PoolBoard {
 			if (xVel != 0 || yVel != 0){
 				{
 					if (xVel < 0){
-						ball.setXVelocity(Math.min(xVel - 2*elapsedSeconds*xVel/speed, 0));
+						ball.setXVelocity(Math.min(xVel - 3*elapsedSeconds*xVel/speed, 0));
 					}
 					if (yVel < 0){
-						ball.setYVelocity(Math.min(yVel - 2*elapsedSeconds*yVel/speed, 0));
+						ball.setYVelocity(Math.min(yVel - 3*elapsedSeconds*yVel/speed, 0));
 					}
 					if (xVel > 0){
-						ball.setXVelocity(Math.max(xVel - 2*elapsedSeconds*xVel/speed, 0));
+						ball.setXVelocity(Math.max(xVel - 3*elapsedSeconds*xVel/speed, 0));
 					}
 					if (yVel > 0){
-						ball.setYVelocity(Math.max(yVel - 2*elapsedSeconds*yVel/speed, 0));
+						ball.setYVelocity(Math.max(yVel - 3*elapsedSeconds*yVel/speed, 0));
 					}
-					//ball.setXVelocity(Math.max(Math.abs(xVel - 2*elapsedSeconds*xVel/speed), 0));
-					//ball.setYVelocity(Math.max(Math.abs(yVel - 2*elapsedSeconds*yVel/speed), 0));
 				}
 			}
 		}
