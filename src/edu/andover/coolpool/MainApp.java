@@ -1,25 +1,32 @@
 package edu.andover.coolpool;
 
+import java.io.IOException;
+
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 public class MainApp extends Application {
 
 	private Stage primaryStage;
+	private Scene scene;
 
 	@Override
 	public void start(Stage primaryStage){
 		BorderPane root = new BorderPane();
 
-		Scene scene = new Scene(root);
+		scene = new Scene(root);
 		primaryStage.setScene(scene);
 		primaryStage.show();
 
 		GameManager poolGame = new GameManager(scene);
-		
-		poolGame.initStartScreen();
+
+		poolGame.initStartScreen(scene);
+
 	}
 
 	public static void main(String[] args){
