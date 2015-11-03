@@ -6,6 +6,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Shape;
 
 public class BallView {
 	private Circle circle;
@@ -68,4 +69,6 @@ public class BallView {
 		Pane parentNode = (Pane) circle.getParent();
 		parentNode.getChildren().remove(this);
 	}
+	
+	public Shape getCircle() {return circle; }
 }
