@@ -1,6 +1,9 @@
 package edu.andover.coolpool.view;
 
 import edu.andover.coolpool.GameConstants;
+import javafx.scene.Parent;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
@@ -60,5 +63,9 @@ public class BallView {
 	
 	public void setCenterY(double centerYCM) {
 		this.centerY = centerYCM * GameConstants.CM_TO_PIXEL;
+	}
+	public void remove() {
+		Pane parentNode = (Pane) circle.getParent();
+		parentNode.getChildren().remove(this);
 	}
 }
