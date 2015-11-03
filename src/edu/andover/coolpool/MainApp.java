@@ -18,8 +18,8 @@ public class MainApp extends Application {
 		primaryStage.show();
 
 		GameManager poolGame = new GameManager(scene);
-
-		poolGame.initPoolScreen();
+		
+		poolGame.initStartScreen();
 	}
 
 	public static void main(String[] args){
