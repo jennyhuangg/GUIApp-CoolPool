@@ -19,7 +19,7 @@ public class MainApp extends Application {
 	public void start(Stage primaryStage){
 		BorderPane root = new BorderPane();
 
-		scene = new Scene(root);
+		scene = new Scene(root, 1280, 780);
 		primaryStage.setScene(scene);
 		primaryStage.show();
 
