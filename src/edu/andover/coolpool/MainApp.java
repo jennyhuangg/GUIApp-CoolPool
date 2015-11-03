@@ -12,7 +12,7 @@ public class MainApp extends Application {
 	public void start(Stage primaryStage){
 		Pane root = new Pane();
 	
-		scene = new Scene(root, 1280, 720);
+		scene = new Scene(root, 1280, 730);
 		
 		primaryStage.setTitle("Cool Pool");
 		primaryStage.setWidth(1280);
