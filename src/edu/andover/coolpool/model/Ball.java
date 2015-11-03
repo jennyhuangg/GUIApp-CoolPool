@@ -24,6 +24,9 @@ public class Ball {
 
 		ballView = new BallView(centerX, centerY, radius, id);
 		isPocketed = false;
+	
+		xVelocity = 100;
+		yVelocity = 100;
 	}
 
 	public boolean getIsPocketed(){ return isPocketed; }

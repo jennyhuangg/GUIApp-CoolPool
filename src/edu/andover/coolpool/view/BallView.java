@@ -60,14 +60,16 @@ public class BallView {
 
 	public void setCenterX(double centerXCM) { 
 		this.centerX = centerXCM * GameConstants.CM_TO_PIXEL; 
+		circle.setCenterX(this.centerX);
 	}
 	
 	public void setCenterY(double centerYCM) {
 		this.centerY = centerYCM * GameConstants.CM_TO_PIXEL;
+		circle.setCenterY(this.centerY);
 	}
 	public void remove() {
 		Pane parentNode = (Pane) circle.getParent();
-		parentNode.getChildren().remove(this);
+		parentNode.getChildren().remove(circle);
 	}
 	
 	public Shape getCircle() {return circle; }

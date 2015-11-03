@@ -32,8 +32,9 @@ public class PoolBoard {
 		};
 		
 
-		//pockets = new Pocket[6];
-		//for (int i = 0; i < 6; i ++) {pockets[i] = new Pocket(i, this); }
+		pockets = new Pocket[6];
+		for (int i = 0; i < 6; i ++) {pockets[i] = new Pocket(i, 
+				this.length, this.width); }
 		setView();
 	}
 
@@ -58,7 +59,7 @@ public class PoolBoard {
 			b.setCenterY(b.getCenterY() + elapsedSeconds * b.getYVelocity());
 		}
 		checkCollisions();
-		checkPockets();
+		//checkPockets();
 		decelerateBalls();
 		if (stable()) timer.stop();
 
@@ -86,10 +87,10 @@ public class PoolBoard {
 		for (Ball ball: balls)
 		{
 			if ((ball.getCenterX() - ball.getRadius() <= 0 && ball.getXVelocity() < 0) || (ball.getCenterX() + ball.getRadius() >= length && ball.getXVelocity() > 0)) {
-				ball.setXVelocity(-1*ball.getXVelocity());
+				ball.setXVelocity(ball.getXVelocity()*(-1));
 			}
 			if ((ball.getCenterY() - ball.getRadius() <= 0 && ball.getYVelocity() < 0)|| (ball.getCenterY() + ball.getRadius() >= width && ball.getYVelocity() < 0)) {
-				ball.setYVelocity(-1*ball.getYVelocity());
+				ball.setYVelocity(ball.getYVelocity()*(-1));
 			}
 		}
 	}
@@ -103,8 +104,20 @@ public class PoolBoard {
 			double speed = Math.sqrt(Math.pow(xVel, 2) + Math.pow(yVel, 2));
 			if (xVel != 0 || yVel != 0){
 				{
-					ball.setXVelocity(Math.max(Math.abs(xVel - elapsedSeconds*xVel/speed), 0));
-					ball.setYVelocity(Math.max(Math.abs(yVel - elapsedSeconds*yVel/speed), 0));
+					if (xVel < 0){
+						ball.setXVelocity(Math.min(xVel - 2*elapsedSeconds*xVel/speed, 0));
+					}
+					if (yVel < 0){
+						ball.setYVelocity(Math.min(yVel - 2*elapsedSeconds*yVel/speed, 0));
+					}
+					if (xVel > 0){
+						ball.setXVelocity(Math.max(xVel - 2*elapsedSeconds*xVel/speed, 0));
+					}
+					if (yVel > 0){
+						ball.setYVelocity(Math.max(yVel - 2*elapsedSeconds*yVel/speed, 0));
+					}
+					//ball.setXVelocity(Math.max(Math.abs(xVel - 2*elapsedSeconds*xVel/speed), 0));
+					//ball.setYVelocity(Math.max(Math.abs(yVel - 2*elapsedSeconds*yVel/speed), 0));
 				}
 			}
 		}

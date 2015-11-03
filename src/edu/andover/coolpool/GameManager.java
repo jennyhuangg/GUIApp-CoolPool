@@ -41,9 +41,13 @@ public class GameManager {
 		loader.setLocation(GameManager.class.getResource("view/PoolScreen.fxml"));
 		try {
 			
+			BorderPane root = new BorderPane();
 			PoolBoard poolBoard = new PoolBoard();
-			rootLayout.setCenter(poolBoard.getView());
+			root.setCenter(poolBoard.getView());
+			rootLayout.setCenter(root);
 			scene.setRoot(rootLayout);
+			
+			poolBoard.animate();
 
 			Parent mainMenuScreen = (Parent) loader.load();
 			//rootLayout.setLeft(mainMenuScreen);
