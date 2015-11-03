@@ -4,6 +4,7 @@ import edu.andover.coolpool.view.PoolBoardView;
 import javafx.animation.AnimationTimer;
 import javafx.beans.property.LongProperty;
 import javafx.beans.property.SimpleLongProperty;
+import javafx.scene.layout.Pane;
 
 public class PoolBoard {
 
@@ -19,8 +20,6 @@ public class PoolBoard {
 	public PoolBoard() {
 		balls = new Ball[16];
 		for (int i = 0; i < 16; i ++) {balls[i] = new Ball(i); }
-		pockets = new Pocket[6];
-		for (int i = 0; i < 6; i ++) {pockets[i] = new Pocket(i, this); }
 		length = 284; //CENTIMETERS
 		width = 142; //CENTIMETERS
 		isPaused = false;
@@ -32,6 +31,9 @@ public class PoolBoard {
 			}
 		};
 		
+
+		//pockets = new Pocket[6];
+		//for (int i = 0; i < 6; i ++) {pockets[i] = new Pocket(i, this); }
 		setView();
 	}
 
@@ -127,5 +129,9 @@ public class PoolBoard {
 			poolBoardView.getPane().getChildren().add(ball.getView());
 		}
 		
+	}
+	
+	public Pane getView(){
+		return poolBoardView.getPane();
 	}
 }

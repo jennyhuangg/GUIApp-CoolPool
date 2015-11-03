@@ -17,8 +17,8 @@ public class Ball {
 	public Ball(int id) {
 		switch (id){
 		default:
-			centerX = 0; //we need to change this later
-			centerY = 0;
+			centerX = id*4; //we need to change this later
+			centerY = id*4;
 			break;
 		}
 

@@ -2,6 +2,7 @@ package edu.andover.coolpool;
 
 import java.io.IOException;
 
+import edu.andover.coolpool.model.PoolBoard;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -39,13 +40,18 @@ public class GameManager {
 		FXMLLoader loader = new FXMLLoader();
 		loader.setLocation(GameManager.class.getResource("view/PoolScreen.fxml"));
 		try {
-			Parent mainMenuScreen = (Parent) loader.load();
-			rootLayout.setCenter(mainMenuScreen);
+			
+			PoolBoard poolBoard = new PoolBoard();
+			rootLayout.setCenter(poolBoard.getView());
 			scene.setRoot(rootLayout);
+
+			Parent mainMenuScreen = (Parent) loader.load();
+			//rootLayout.setLeft(mainMenuScreen);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
+	
 
 	public void initEndScreen(){
 		FXMLLoader loader = new FXMLLoader();

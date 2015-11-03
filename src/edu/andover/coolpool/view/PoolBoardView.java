@@ -2,6 +2,7 @@ package edu.andover.coolpool.view;
 
 import edu.andover.coolpool.GameConstants;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 public class PoolBoardView {
@@ -14,6 +15,7 @@ public class PoolBoardView {
 		this.length = length*GameConstants.CM_TO_PIXEL;
 		this.width = length*GameConstants.CM_TO_PIXEL;
 		Rectangle rect = new Rectangle(this.length, this.width);
+		rect.setFill(Color.GREEN);
 		view.setCenter(rect);
 	}
 	
