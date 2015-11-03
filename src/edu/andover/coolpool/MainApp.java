@@ -14,20 +14,16 @@ public class MainApp extends Application {
 		BorderPane root = new BorderPane();
 
 		Scene scene = new Scene(root);
-
 		primaryStage.setScene(scene);
-
 		primaryStage.show();
-
 
 		GameManager poolGame = new GameManager(scene);
 
-		poolGame.initPoolGame();
+		poolGame.initPoolScreen();
 	}
 
 
 	public static void main(String[] args){
-
 		launch(args);
 	}
 

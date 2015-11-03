@@ -31,7 +31,6 @@ public class Ball {
 
 	public void slowDown(){
 	    xVelocity -= 1; //deceleration of 1 m/s^2
-
 	    yVelocity -= 1; //deceleration of 1 m/s^2
 	}
 
