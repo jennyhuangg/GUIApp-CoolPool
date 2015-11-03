@@ -1,25 +1,32 @@
 package edu.andover.coolpool.view;
 
 import edu.andover.coolpool.GameConstants;
+import edu.andover.coolpool.model.Ball;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 public class PoolBoardView {
-	public BorderPane view;
+	public Pane view;
 	double length;
 	double width;
+	public Rectangle rectangle;
 	
 	public PoolBoardView(double length, double width){
-		view = new BorderPane();
+		view = new Pane();
 		this.length = length*GameConstants.CM_TO_PIXEL;
-		this.width = length*GameConstants.CM_TO_PIXEL;
-		Rectangle rect = new Rectangle(this.length, this.width);
-		rect.setFill(Color.GREEN);
-		view.setCenter(rect);
+		this.width = width*GameConstants.CM_TO_PIXEL;
+		rectangle = new Rectangle(0, 0, this.length, this.width);
+		rectangle.setFill(Color.GREEN);
+		view.getChildren().add(rectangle);
 	}
 	
-	public BorderPane getPane(){
+	public Pane getPane(){
 		return view;
+	}
+	
+	public Rectangle getRectangle(){
+		return rectangle;
 	}
 }
