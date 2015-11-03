@@ -1,8 +1,5 @@
 package edu.andover.coolpool.model;
 
-import java.awt.Point;
-
-import edu.andover.coolpool.GameConstants;
 import edu.andover.coolpool.view.BallView;
 
 public class Ball {
@@ -27,13 +24,13 @@ public class Ball {
 		isPocketed = false;
 	}
 
-	public boolean getIsPocketed(){
-		return isPocketed;
-	}
-
-	public BallView getView(){
-		return ballView;
-	}
+	public boolean getIsPocketed(){ return isPocketed; }
+	public double getXVelocity(){ return xVelocity; }
+	public double getYVelocity(){ return yVelocity; }
+	public double getRadius(){ return radius; }
+	public BallView getView(){ return ballView; }
+	public double getCenterX(){ return centerX; }
+	public double getCenterY() { return centerY; }
 
 	public void setCenterX(double centerX) {
 		this.centerX = centerX;
@@ -45,13 +42,6 @@ public class Ball {
 		ballView.setCenterY(centerY);
 	}
 
-	public double getCenterX(){
-		return centerX;
-	}
-
-	public double getCenterY() {
-		return centerY;
-	}
 	public void setXVelocity(double xVel) {xVelocity = xVel;}
 	public void setYVelocity(double yVel) {yVelocity = yVel;}
 
@@ -64,20 +54,4 @@ public class Ball {
 			yVelocity = 0;
 		}
 	}
-
-		public double getXVelocity(){
-			return xVelocity;
-		}
-		
-		public double getYVelocity(){
-			return yVelocity;
-		}
-
-		public double setYVelocity(){
-			return yVelocity;
-		}
-
-		public double getRadius(){
-			return radius;
-		}
-	}
+}
