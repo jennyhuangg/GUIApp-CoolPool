@@ -22,9 +22,7 @@ public class MainApp extends Application {
 		poolGame.initPoolScreen();
 	}
 
-
 	public static void main(String[] args){
 		launch(args);
 	}
-
 }
