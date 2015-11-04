@@ -24,7 +24,6 @@ public class CueStickView {
 		line = new Line(startX, startY, endX, endY);
 	}
 
-
 	public double getStartX() { return startX; }
 	public double getStartY() { return startY; }
 	public double getEndX() { return endX; }

@@ -16,15 +16,27 @@ public class Player {
 	    canPocketEightBall = false;
 	}
 
-	public ArrayList<Ball> getPocketedBalls(){ return pocketedBalls; }
+	public ArrayList<Ball> getPocketedBalls(){
+		return pocketedBalls; 
+	}
 	
-	public int getBallType(){ return ballType; }
+	public int getBallType(){ 
+		return ballType; 
+	}
 
-	public boolean canPocketEightBall() { return canPocketEightBall; }
+	public boolean canPocketEightBall() { 
+		return canPocketEightBall; 
+	}
 
-	public void setBallType(int ballType) { this.ballType = ballType; }
+	public void setBallType(int ballType) { 
+		this.ballType = ballType; 
+	}
 
-	public void addToPocketedBalls(Ball ball) { pocketedBalls.add(ball); }
+	public void addToPocketedBalls(Ball ball) { 
+		pocketedBalls.add(ball); 
+	}
 
-	public void setCanPocketEightBall(){ canPocketEightBall = true; }
+	public void setCanPocketEightBall(){ 
+		canPocketEightBall = true; 
+	}
 }

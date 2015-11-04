@@ -38,8 +38,6 @@ public class PoolBoard {
 		setView();
 	}
 
-
-
 	public void checkPockets(){
 		for (Pocket pocket: pockets){
 			for (Ball ball: balls){
