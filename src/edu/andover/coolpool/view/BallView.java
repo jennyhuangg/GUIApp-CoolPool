@@ -14,7 +14,6 @@ public class BallView {
 	private double radius;
 
 	private double centerX;
-
 	private double centerY;
 
 
