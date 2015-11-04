@@ -3,10 +3,12 @@ package edu.andover.coolpool;
 import java.io.IOException;
 
 import edu.andover.coolpool.model.PoolBoard;
+import edu.andover.coolpool.view.PoolBoardView;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 
 public class GameManager {
 	private Scene scene;
@@ -41,16 +43,18 @@ public class GameManager {
 		loader.setLocation(GameManager.class.getResource("view/PoolScreen.fxml"));
 		try {
 			
-			BorderPane root = new BorderPane();
+			Parent poolScreen = (Parent) loader.load();
 			PoolBoard poolBoard = new PoolBoard();
-			root.setCenter(poolBoard.getView());
-			rootLayout.setCenter(root);
+
+			rootLayout.setCenter(poolScreen);
+			Pane pane = (Pane) poolScreen.getChildrenUnmodifiable().get(1);
+			
+			PoolBoardView poolBoardView = poolBoard.getView();
+			
+			pane.getChildren().add(poolBoardView.getPane());
 			scene.setRoot(rootLayout);
 			
 			poolBoard.animate();
-
-			Parent mainMenuScreen = (Parent) loader.load();
-			//rootLayout.setLeft(mainMenuScreen);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

@@ -8,10 +8,10 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 public class PoolBoardView {
-	public Pane view;
+	private Pane view;
 	double length;
 	double width;
-	public Rectangle rectangle;
+	private Rectangle rectangle;
 	
 	public PoolBoardView(double length, double width){
 		view = new Pane();

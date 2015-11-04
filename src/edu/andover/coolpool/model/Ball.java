@@ -14,11 +14,13 @@ public class Ball {
 
 	private BallView ballView;
 
-	public Ball(int id) {
+	public Ball(double centerX, double centerY, int id) {
+		this.centerX = centerX;
+		this.centerY = centerY;
+		
 		switch (id){
 		default:
-			centerX = id*4; //we need to change this later
-			centerY = id*4;
+			
 			break;
 		}
 
