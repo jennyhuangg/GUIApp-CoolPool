@@ -291,4 +291,8 @@ public class PoolBoard {
 	public PoolBoardView getView(){
 		return poolBoardView;
 	}
+	
+	public Ball[] getBalls() {
+		return balls;
+	}
 }
