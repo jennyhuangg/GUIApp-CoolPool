@@ -17,12 +17,12 @@ public class BallView {
 	private double centerY;
 
 
-	public BallView(double centerXCM, double centerYCM, double radiusCM, int id){
+	public BallView(double centerXCM, double centerYCM, double radius_inches, int id){
 
-		this.centerX = centerXCM * GameConstants.CM_TO_PIXEL;
-		this.centerY = centerYCM * GameConstants.CM_TO_PIXEL;
+		this.centerX = centerXCM * GameConstants.IN_TO_PIXEL;
+		this.centerY = centerYCM * GameConstants.IN_TO_PIXEL;
 
-		this.radius = radiusCM * GameConstants.CM_TO_PIXEL;
+		this.radius = radius_inches * GameConstants.IN_TO_PIXEL;
 
 		circle = new Circle(centerX, centerY, radius);
 
@@ -58,12 +58,12 @@ public class BallView {
 	public double getCenterY() {return centerY;}
 
 	public void setCenterX(double centerXCM) { 
-		this.centerX = centerXCM * GameConstants.CM_TO_PIXEL; 
+		this.centerX = centerXCM * GameConstants.IN_TO_PIXEL; 
 		circle.setCenterX(centerX);
 	}
 	
 	public void setCenterY(double centerYCM) {
-		this.centerY = centerYCM * GameConstants.CM_TO_PIXEL;
+		this.centerY = centerYCM * GameConstants.IN_TO_PIXEL;
 		circle.setCenterY(centerY);
 	}
 	public void remove() {

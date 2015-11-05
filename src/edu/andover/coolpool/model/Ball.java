@@ -8,9 +8,9 @@ public class Ball {
 	private boolean isPocketed;
 	private double centerX;
 	private double centerY;
-	private double xVelocity; //in CM/s
-	private double yVelocity; //in CM/s
-	private final double radius = 2.56;
+	private double xVelocity; //in IN/s
+	private double yVelocity; //in IN/s
+	private final double radius = 1.125; //in IN
 
 	private BallView ballView;
 
@@ -27,8 +27,8 @@ public class Ball {
 		ballView = new BallView(centerX, centerY, radius, id);
 		isPocketed = false;
 	
-		xVelocity = 100;
-		yVelocity = 100;
+		xVelocity = 0;
+		yVelocity = 0;
 	}
 
 	public boolean getIsPocketed(){ return isPocketed; }
