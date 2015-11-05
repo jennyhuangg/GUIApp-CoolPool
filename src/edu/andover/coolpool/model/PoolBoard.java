@@ -17,8 +17,8 @@ public class PoolBoard {
 	private PoolController poolController = new PoolController();
 	private PoolBoardView poolBoardView;
 
-	private double boardX; //height of board
-	private double boardY; //width of board
+	private double boardX; //height of playable board
+	private double boardY; //width of playable board
 
 	AnimationTimer timer;
 	
