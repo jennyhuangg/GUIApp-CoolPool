@@ -34,10 +34,6 @@ public class PoolBoard {
 			}
 		};
 
-		pockets = new Pocket[6];
-		for (int i = 0; i < 6; i ++) {pockets[i] = new Pocket(i, 
-				this.length, this.width); }
-
 		setView();
 
 		poolBoardView.getBigRectangle().getX();
@@ -51,6 +47,12 @@ public class PoolBoard {
 		for (Ball ball: balls){
 			poolBoardView.getPane().getChildren().add(ball.getView());
 		}
+		
+
+
+		pockets = new Pocket[6];
+		for (int i = 0; i < 6; i ++) {pockets[i] = new Pocket(i, 
+				this.length, this.width, boardX, boardY); }
 	}
 
 	public void setUpBalls() {
@@ -111,7 +113,8 @@ public class PoolBoard {
 				double distance = Math.sqrt(Math.pow(pocket.getXPosition() -
 						ball.getCenterX(), 2) + 
 						Math.pow(pocket.getYPosition() - ball.getCenterY(), 2));
-				if(distance <= Math.abs(pocket.getRadius() - ball.getRadius())){
+				if(distance <= Math.abs(pocket.getRadius() - ball.getRadius())
+						&& !ball.getIsPocketed()){
 					ball.setPocketed();
 				}
 			}
@@ -125,7 +128,7 @@ public class PoolBoard {
 			b.setCenterY(b.getCenterY() + elapsedSeconds * b.getYVelocity());
 		}
 		checkCollisions();
-		//checkPockets();
+		checkPockets();
 		decelerateBalls();
 		if (stable()) { 
 			timer.stop();

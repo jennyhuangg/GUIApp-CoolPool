@@ -5,6 +5,7 @@ import edu.andover.coolpool.model.Ball;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 
 public class PoolBoardView {

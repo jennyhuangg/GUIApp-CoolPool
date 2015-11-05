@@ -4,42 +4,46 @@ public class Pocket {
 	private double xPosition;
 	private double yPosition;
 
-	private final double radius = 5.72;
+	private final double radius = 5;
 	
-	private double boardLength;
-	private double boardWidth;
+	private double maxX;
+	private double maxY;
+	private double minX;
+	private double minY;
 
-	public Pocket(int id, double boardLength, double boardWidth){
+	public Pocket(int id, double boardLength, double boardWidth, double boardX, double boardY){
 		setPocketLocation(id);
-		this.boardLength = boardLength;
-		this.boardWidth = boardWidth;
+		minX = boardX;
+		minY = boardY;
+		maxX = boardX + boardLength;
+		maxY = boardY + boardLength;
 	}
 
 	public void setPocketLocation(int id){
 		switch (id){
 		case 0:
-			xPosition = 0;
-			yPosition = 0;
+			xPosition = minX;
+			yPosition = minY;
 			break;
 		case 1:
-			xPosition = boardLength/2;
-			yPosition = 0;
+			xPosition = (minX + maxX)/2;
+			yPosition = minY;
 			break;
 		case 2:
-			xPosition = boardLength;
-			yPosition = 0;
+			xPosition = maxX;
+			yPosition = minY;
 			break;
 		case 3:
 			xPosition = 0;
-			yPosition = boardWidth;
+			yPosition = maxY;
 			break;
 		case 4:
-			xPosition = boardLength;
-			yPosition = boardWidth;
+			xPosition = (minX + maxX)/2;
+			yPosition = maxY;
 			break;
 		case 5:
-			xPosition = boardLength;
-			yPosition = boardWidth;
+			xPosition = maxX;
+			yPosition = maxY;
 			break;
 		default:
 			xPosition = 0;
