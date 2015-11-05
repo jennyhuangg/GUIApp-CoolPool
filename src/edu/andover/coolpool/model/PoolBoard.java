@@ -22,8 +22,8 @@ public class PoolBoard {
 	AnimationTimer timer;
 
 	public PoolBoard() {
-		length = 112; //Inches
-		width = 56; //Inches
+		length = 92; //Inches
+		width = 46; //Inches
 		isPaused = false;
 
 		timer = new AnimationTimer() {
@@ -36,53 +36,73 @@ public class PoolBoard {
 		pockets = new Pocket[6];
 		for (int i = 0; i < 6; i ++) {pockets[i] = new Pocket(i, 
 				this.length, this.width); }
-		
+
 		setView();
-		
+
 		poolBoardView.getBigRectangle().getX();
-		boardX = poolBoardView.getRectangle().getX() * GameConstants.PIXEL_TO_IN;
-		boardY = poolBoardView.getRectangle().getY() * GameConstants.PIXEL_TO_IN;
+		boardX = poolBoardView.getRectangle().getX() *
+				GameConstants.PIXEL_TO_IN;
+		boardY = poolBoardView.getRectangle().getY() *
+				GameConstants.PIXEL_TO_IN;
 
 		setUpBalls();
-		
+
 		for (Ball ball: balls){
 			poolBoardView.getPane().getChildren().add(ball.getView());
 		}
-		
+
 		System.out.println(boardX);
 	}
 
 	public void setUpBalls() {
 		double centerY = width / 2 + boardY;
-		double centerX = length / 2 + boardX;
+		double incrementX = 2.25 * Math.cos(30) * GameConstants.IN_TO_PIXEL;
 		double radius = 1.125;
-		
+
 		balls = new Ball[16];
-		
+
 		balls[0] = new Ball(length * 3/4 + boardX, centerY, 1);
-		
-		balls[1] = new Ball(length * 3/4 + boardX + 1 * 2.25 * Math.cos(30) * GameConstants.IN_TO_PIXEL, centerY + radius, 1);
-		balls[2] = new Ball(length * 3/4 + boardX + 1 * 2.25 * Math.cos(30) * GameConstants.IN_TO_PIXEL, centerY - radius, 2);
-		
-		balls[3] = new Ball(length * 3/4 + boardX + 2 * 2.25 * Math.cos(30) * GameConstants.IN_TO_PIXEL, centerY + 2 * radius, 2);
-		balls[4] = new Ball(length * 3/4 + boardX + 2 * 2.25 * Math.cos(30) * GameConstants.IN_TO_PIXEL, centerY, 4);
-		balls[5] = new Ball(length * 3/4 + boardX + 2 * 2.25 * Math.cos(30) * GameConstants.IN_TO_PIXEL, centerY - 2 * radius, 1);
-		
-		balls[6] = new Ball(length * 3/4 + boardX + 3 * 2.25 * Math.cos(30) * GameConstants.IN_TO_PIXEL, centerY + 3 * radius, 1);
-		balls[7] = new Ball(length * 3/4 + boardX + 3 * 2.25 * Math.cos(30) * GameConstants.IN_TO_PIXEL, centerY + radius, 2);
-		balls[8] = new Ball(length * 3/4 + boardX + 3 * 2.25 * Math.cos(30) * GameConstants.IN_TO_PIXEL, centerY - radius, 1);
-		balls[9] = new Ball(length * 3/4 + boardX + 3 * 2.25 * Math.cos(30) * GameConstants.IN_TO_PIXEL, centerY - 3 * radius, 2);
-		
-		balls[10] = new Ball(length * 3/4 + boardX + 4 * 2.25 * Math.cos(30) * GameConstants.IN_TO_PIXEL, centerY + 4 * radius, 2);
-		balls[11] = new Ball(length * 3/4 + boardX + 4 * 2.25 * Math.cos(30) * GameConstants.IN_TO_PIXEL, centerY + 2 * radius, 1);
-		balls[12] = new Ball(length * 3/4 + boardX + 4 * 2.25 * Math.cos(30) * GameConstants.IN_TO_PIXEL, centerY, 1);
-		balls[13] = new Ball(length * 3/4 + boardX + 4 * 2.25 * Math.cos(30) * GameConstants.IN_TO_PIXEL, centerY - 2 * radius, 2);
-		balls[14] = new Ball(length * 3/4 + boardX + 4 * 2.25 * Math.cos(30) * GameConstants.IN_TO_PIXEL, centerY - 4 * radius, 1);
-		
+
+		balls[1] = new Ball(length * 3/4 + boardX + 1 * incrementX, 
+				centerY + radius, 1);
+		balls[2] = new Ball(length * 3/4 + boardX + 1 * incrementX, 
+				centerY - radius, 2);
+
+
+		balls[3] = new Ball(length * 3/4 + boardX + 2 * incrementX, 
+				centerY + 2 * radius, 2);
+		balls[4] = new Ball(length * 3/4 + boardX + 2 * incrementX, 
+				centerY, 4); //8 Ball
+		balls[5] = new Ball(length * 3/4 + boardX + 2 * incrementX, 
+				centerY - 2 * radius, 1);
+
+
+		balls[6] = new Ball(length * 3/4 + boardX + 3 * incrementX, 
+				centerY + 3 * radius, 1);
+		balls[7] = new Ball(length * 3/4 + boardX + 3 * incrementX, 
+				centerY + radius, 2);
+		balls[8] = new Ball(length * 3/4 + boardX + 3 * incrementX, 
+				centerY - radius, 1);
+		balls[9] = new Ball(length * 3/4 + boardX + 3 * incrementX, 
+				centerY - 3 * radius, 2);
+
+
+		balls[10] = new Ball(length * 3/4 + boardX + 4 * incrementX, 
+				centerY + 4 * radius, 2);
+		balls[11] = new Ball(length * 3/4 + boardX + 4 * incrementX, 
+				centerY + 2 * radius, 1);
+		balls[12] = new Ball(length * 3/4 + boardX + 4 * incrementX, 
+				centerY, 1);
+		balls[13] = new Ball(length * 3/4 + boardX + 4 * incrementX, 
+				centerY - 2 * radius, 2);
+		balls[14] = new Ball(length * 3/4 + boardX + 4 * incrementX, 
+				centerY - 4 * radius, 1);
+
 		//CueBall
 		balls[15] = new Ball(length * 1/4 + boardX, width / 2 + boardY, 3);
+		balls[15].setXVelocity(100);
 	}
-	
+
 	public void checkPockets(){
 		for (Pocket pocket: pockets){
 			for (Ball ball: balls){
@@ -183,7 +203,7 @@ public class PoolBoard {
 
 		poolBoardView.getRectangle().setX(180);
 		poolBoardView.getRectangle().setY(177);
-		
+
 		poolBoardView.getBigRectangle().setX(180);
 		poolBoardView.getBigRectangle().setY(177);
 	}
