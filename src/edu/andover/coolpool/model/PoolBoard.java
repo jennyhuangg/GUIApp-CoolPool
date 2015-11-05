@@ -6,19 +6,22 @@ import edu.andover.coolpool.controller.PoolController;
 import edu.andover.coolpool.view.PoolBoardView;
 import javafx.animation.AnimationTimer;
 
+// Model class for a pool board, including interactions between the
+// pool balls.
+
 public class PoolBoard {
 
 	private Ball[] balls; //16 balls
 	private boolean isPaused;
 	private Pocket[] pockets;
-	private double length;
+	private double length; 
 	private double width;
 	
 	private PoolController poolController = new PoolController();
 	private PoolBoardView poolBoardView;
 
-	private double boardX; //height of playable board
-	private double boardY; //width of playable board
+	private double boardX; //X coordinate of top left corner of playable board
+	private double boardY; //Y coordinate of top left corner of playable board
 
 	AnimationTimer timer;
 	
@@ -54,6 +57,8 @@ public class PoolBoard {
 				this.length, this.width, boardX, boardY); }
 	}
 
+	// Intializes the array of balls and places the balls in the correct
+	// locations on the pool board
 	public void setUpBalls() {
 		double centerY = width / 2 + boardY;
 		double incrementX = 2.25 * Math.cos(30) * GameConstants.IN_TO_PIXEL;
@@ -108,6 +113,9 @@ public class PoolBoard {
 		poolController.addMouseEventHandler(balls[15]);
 	}
 
+	// Checks to see if any balls have fallen inside the pockets
+	// Falls inside pockets if (distance between ball and pocket) <=
+	// (radius_of_pocket - radius_of_ball)
 	public void checkPockets(){
 		for (Pocket pocket: pockets){
 			for (Ball ball: balls){
@@ -122,14 +130,16 @@ public class PoolBoard {
 		}
 	}
 
+	//updates positions and states of the balls at each time step of 
+	//0.01 seconds
 	public void update() {
 		double elapsedSeconds = 0.01;
 		for (Ball b : balls) {
 			b.setCenterX(b.getCenterX() + elapsedSeconds * b.getXVelocity());
 			b.setCenterY(b.getCenterY() + elapsedSeconds * b.getYVelocity());
 		}
-		checkCollisions();
 		checkPockets();
+		checkCollisions();
 		decelerateBalls();
 		if (stable() && mode != 0) { 
 			timer.stop();
@@ -182,6 +192,7 @@ public class PoolBoard {
 	}
 	
 	
+	// Returns true if b1 and b2 are colliding. 
     public boolean colliding(final Ball b1, final Ball b2, final double deltaX, 
     							final double deltaY) {
         // Balls are colliding if (x2-x1)^2 + (y2-y1)^2 < (r1 + r2)^2
@@ -196,6 +207,8 @@ public class PoolBoard {
         return false;
     }
     
+    // Processes a collision with momentum equations. Updates velocities of 
+    // the balls after collisions
     private void bounce(final Ball b1, final Ball b2, final double deltaX, 
     					final double deltaY) {
     	// Direction of collision is <deltaX, deltaY>.
@@ -221,6 +234,8 @@ public class PoolBoard {
         
     }
 
+    // Decreases the speed of all balls uniformly due to kinetic friction
+    // with the pool board unless speed of ball is already 0.
 	public void decelerateBalls(){
 		double elapsedSeconds = 0.1;
 

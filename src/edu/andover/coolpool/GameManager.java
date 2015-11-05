@@ -1,5 +1,6 @@
 package edu.andover.coolpool;
 
+// This class contains methods to set each scene.
 import java.io.IOException;
 
 import edu.andover.coolpool.model.PoolBoard;
@@ -23,6 +24,7 @@ public class GameManager {
 	    scene.setRoot(rootLayout);
 	}
 
+	// Initializes the start screen. TODO: implement options menu
 	public void initStartScreen(Scene scene){
 		FXMLLoader loader = new FXMLLoader();
 		loader.setLocation(
@@ -36,7 +38,9 @@ public class GameManager {
 		}
 	}
 
-	//controller for start screen calls this when button is pressed
+	// The controller for start screen calls this when button is pressed
+	// Initializes the side bar of the pool game and the view of the
+	// pool board.
 	public void initPoolScreen(){
 		FXMLLoader loader = new FXMLLoader();
 		loader.setLocation(
@@ -60,6 +64,7 @@ public class GameManager {
 		}
 	}
 	
+	// Implementation not yet finished; not used in version 0
 	public void initEndScreen(){
 		FXMLLoader loader = new FXMLLoader();
 		loader.setLocation(

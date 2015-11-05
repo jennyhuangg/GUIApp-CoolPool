@@ -5,7 +5,7 @@ package edu.andover.coolpool;
  * 
  * Amy Chou, Jenny Huang, and Eric Lee
  * COMP-630: Software Design, Instructor: Dr. Miles
- * 5 October 2015
+ * 5 November 2015
  */
 
 import javafx.application.Application;
