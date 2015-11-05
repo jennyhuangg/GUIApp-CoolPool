@@ -186,7 +186,8 @@ public class PoolBoard {
 	}
 	
 	
-    public boolean colliding(final Ball b1, final Ball b2, final double deltaX, final double deltaY) {
+    public boolean colliding(final Ball b1, final Ball b2, final double deltaX, 
+    							final double deltaY) {
         // balls are colliding if (x2-x1)^2 + (y2-y1)^2 < (r1 + r2)^2
         // and if distance between them is decreasing
 
@@ -200,15 +201,19 @@ public class PoolBoard {
         return false;
     }
     
-    private void bounce(final Ball b1, final Ball b2, final double deltaX, final double deltaY) {
+    private void bounce(final Ball b1, final Ball b2, final double deltaX, 
+    					final double deltaY) {
     	//direction of collision is <deltaX, deltaY>
     	
-        double distance = sqrt(deltaX * deltaX + deltaY * deltaY) ;
-        double unitContactX = deltaX / distance ; //collision vector is <unitContactX, unitContactY>
-        double unitContactY = deltaY / distance ;
+        double distance = sqrt(deltaX * deltaX + deltaY * deltaY);
+        //collision vector is <unitContactX, unitContactY>
+        double unitContactX = deltaX / distance; 
+        double unitContactY = deltaY / distance;
         
-        double b1_i = b1.getXVelocity()*unitContactX + b1.getYVelocity()*unitContactY;
-        double b2_i = b2.getXVelocity()*unitContactX + b2.getYVelocity()*unitContactY;
+        double b1_i = b1.getXVelocity()*unitContactX + b1.getYVelocity()*
+        														unitContactY;
+        double b2_i = b2.getXVelocity()*unitContactX + b2.getYVelocity()*
+        														unitContactY;
         
         double b1_f = b2_i;
         double b2_f = b1_i;
