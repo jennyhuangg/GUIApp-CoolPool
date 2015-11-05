@@ -23,10 +23,8 @@ public class PoolBoard {
 	AnimationTimer timer;
 
 	public PoolBoard() {
-		setUpBalls();
-		
-		length = 284; //CENTIMETERS
-		width = 142; //CENTIMETERS
+		length = 92; //Inches
+		width = 46; //Inches
 		isPaused = false;
 
 		timer = new AnimationTimer() {
@@ -36,34 +34,84 @@ public class PoolBoard {
 			}
 		};
 
-
 		pockets = new Pocket[6];
 		for (int i = 0; i < 6; i ++) {pockets[i] = new Pocket(i, 
 				this.length, this.width); }
-		setView();
-		poolBoardView.getRectangle().setX(150);
-		poolBoardView.getRectangle().setY(172);
 
-		boardX = poolBoardView.getRectangle().getX();
-		boardY = poolBoardView.getRectangle().getY();
-		System.out.println(boardX);
-		System.out.println(boardY);
+		setView();
+
+		poolBoardView.getBigRectangle().getX();
+		boardX = poolBoardView.getRectangle().getX() *
+				GameConstants.PIXEL_TO_IN;
+		boardY = poolBoardView.getRectangle().getY() *
+				GameConstants.PIXEL_TO_IN;
+
+		setUpBalls();
+
+		for (Ball ball: balls){
+			poolBoardView.getPane().getChildren().add(ball.getView());
+		}
 	}
 
 	public void setUpBalls() {
+		double centerY = width / 2 + boardY;
+		double incrementX = 2.25 * Math.cos(30) * GameConstants.IN_TO_PIXEL;
+		double radius = 1.125;
+
 		balls = new Ball[16];
 		for (int i = 0; i < 16; i ++) {
 			balls[i] = new Ball(110 + i * 2, 110 + i * 2, i);
 		}
 		balls[1].setYVelocity(-100);
+		balls[0] = new Ball(length * 3/4 + boardX, centerY, 1);
+
+		balls[1] = new Ball(length * 3/4 + boardX + 1 * incrementX, 
+				centerY + radius, 1);
+		balls[2] = new Ball(length * 3/4 + boardX + 1 * incrementX, 
+				centerY - radius, 2);
+
+
+		balls[3] = new Ball(length * 3/4 + boardX + 2 * incrementX, 
+				centerY + 2 * radius, 2);
+		balls[4] = new Ball(length * 3/4 + boardX + 2 * incrementX, 
+				centerY, 4); //8 Ball
+		balls[5] = new Ball(length * 3/4 + boardX + 2 * incrementX, 
+				centerY - 2 * radius, 1);
+
+
+		balls[6] = new Ball(length * 3/4 + boardX + 3 * incrementX, 
+				centerY + 3 * radius, 1);
+		balls[7] = new Ball(length * 3/4 + boardX + 3 * incrementX, 
+				centerY + radius, 2);
+		balls[8] = new Ball(length * 3/4 + boardX + 3 * incrementX, 
+				centerY - radius, 1);
+		balls[9] = new Ball(length * 3/4 + boardX + 3 * incrementX, 
+				centerY - 3 * radius, 2);
+
+
+		balls[10] = new Ball(length * 3/4 + boardX + 4 * incrementX, 
+				centerY + 4 * radius, 2);
+		balls[11] = new Ball(length * 3/4 + boardX + 4 * incrementX, 
+				centerY + 2 * radius, 1);
+		balls[12] = new Ball(length * 3/4 + boardX + 4 * incrementX, 
+				centerY, 1);
+		balls[13] = new Ball(length * 3/4 + boardX + 4 * incrementX, 
+				centerY - 2 * radius, 2);
+		balls[14] = new Ball(length * 3/4 + boardX + 4 * incrementX, 
+				centerY - 4 * radius, 1);
+
+		//CueBall
+		balls[15] = new Ball(length * 1/4 + boardX, width / 2 + boardY, 3);
+		balls[15].setXVelocity(100);
 	}
-	
+
 	public void checkPockets(){
 		for (Pocket pocket: pockets){
 			for (Ball ball: balls){
-				double distance = Math.sqrt(Math.pow(pocket.getXPosition() - ball.getCenterX(), 2) + 
+				double distance = Math.sqrt(Math.pow(pocket.getXPosition() -
+						ball.getCenterX(), 2) + 
 						Math.pow(pocket.getYPosition() - ball.getCenterY(), 2));
-				if (distance <= Math.abs(pocket.getRadius() - ball.getRadius())){
+				if(distance <= Math.abs(pocket.getRadius() - ball.getRadius())){
 					ball.setPocketed();
 				}
 			}
@@ -104,12 +152,16 @@ public class PoolBoard {
 	public void checkCollisions() {
 		for (Ball ball: balls)
 		{
-			if ((ball.getCenterX() - ball.getRadius() <= boardX * GameConstants.PIXEL_TO_CM && ball.getXVelocity() < 0) 
-					|| (ball.getCenterX() + ball.getRadius() >= length + boardX * GameConstants.PIXEL_TO_CM && ball.getXVelocity() > 0)) {
+			if ((ball.getCenterX() - ball.getRadius() <= 
+					boardX && ball.getXVelocity() < 0) 
+					|| (ball.getCenterX() + ball.getRadius() >= 
+					length + boardX && ball.getXVelocity() > 0)) {
 				ball.setXVelocity(ball.getXVelocity()*(-1));
 			}
-			if ((ball.getCenterY() - ball.getRadius() <= boardY * GameConstants.PIXEL_TO_CM && ball.getYVelocity() < 0)
-					|| (ball.getCenterY() + ball.getRadius() >= width + boardY * GameConstants.PIXEL_TO_CM & ball.getYVelocity() > 0)) {
+			if ((ball.getCenterY() - ball.getRadius() <= 
+					boardY && ball.getYVelocity() < 0)
+					|| (ball.getCenterY() + ball.getRadius() >= 
+					width + boardY & ball.getYVelocity() > 0)) {
 				ball.setYVelocity(ball.getYVelocity()*(-1));
 			}
 			for (Ball b2: balls){
@@ -117,7 +169,6 @@ public class PoolBoard {
 					final double deltaY = b2.getCenterY() - ball.getCenterY() ;
 					if (colliding(ball, b2, deltaX, deltaY)) {
 						bounce(ball, b2, deltaX, deltaY);
-						System.out.println("Hi");
 					}
 			}
 		}
@@ -172,16 +223,20 @@ public class PoolBoard {
 			if (xVel != 0 || yVel != 0){
 				{
 					if (xVel < 0){
-						ball.setXVelocity(Math.min(xVel - 3*elapsedSeconds*xVel/speed, 0));
+						ball.setXVelocity(Math.min(xVel - 
+								3*elapsedSeconds*xVel/speed, 0));
 					}
 					if (yVel < 0){
-						ball.setYVelocity(Math.min(yVel - 3*elapsedSeconds*yVel/speed, 0));
+						ball.setYVelocity(Math.min(yVel - 
+								3*elapsedSeconds*yVel/speed, 0));
 					}
 					if (xVel > 0){
-						ball.setXVelocity(Math.max(xVel - 3*elapsedSeconds*xVel/speed, 0));
+						ball.setXVelocity(Math.max(xVel - 
+								3*elapsedSeconds*xVel/speed, 0));
 					}
 					if (yVel > 0){
-						ball.setYVelocity(Math.max(yVel - 3*elapsedSeconds*yVel/speed, 0));
+						ball.setYVelocity(Math.max(yVel - 
+								3*elapsedSeconds*yVel/speed, 0));
 					}
 				}
 			}
@@ -201,12 +256,13 @@ public class PoolBoard {
 	}
 
 	public void setView(){
-
 		poolBoardView = new PoolBoardView(length, width);
-		for (Ball ball: balls){
-			poolBoardView.getPane().getChildren().add(ball.getView());
-		}
 
+		poolBoardView.getRectangle().setX(180);
+		poolBoardView.getRectangle().setY(177);
+
+		poolBoardView.getBigRectangle().setX(180);
+		poolBoardView.getBigRectangle().setY(177);
 	}
 
 	public PoolBoardView getView(){
