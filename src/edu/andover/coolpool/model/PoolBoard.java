@@ -50,8 +50,6 @@ public class PoolBoard {
 		for (Ball ball: balls){
 			poolBoardView.getPane().getChildren().add(ball.getView());
 		}
-
-		System.out.println(boardX);
 	}
 
 	public void setUpBalls() {
@@ -106,9 +104,10 @@ public class PoolBoard {
 	public void checkPockets(){
 		for (Pocket pocket: pockets){
 			for (Ball ball: balls){
-				double distance = Math.sqrt(Math.pow(pocket.getXPosition() - ball.getCenterX(), 2) + 
+				double distance = Math.sqrt(Math.pow(pocket.getXPosition() -
+						ball.getCenterX(), 2) + 
 						Math.pow(pocket.getYPosition() - ball.getCenterY(), 2));
-				if (distance <= Math.abs(pocket.getRadius() - ball.getRadius())){
+				if(distance <= Math.abs(pocket.getRadius() - ball.getRadius())){
 					ball.setPocketed();
 				}
 			}
@@ -149,12 +148,16 @@ public class PoolBoard {
 	public void checkCollisions() {
 		for (Ball ball: balls)
 		{
-			if ((ball.getCenterX() - ball.getRadius() <= boardX && ball.getXVelocity() < 0) 
-					|| (ball.getCenterX() + ball.getRadius() >= length + boardX && ball.getXVelocity() > 0)) {
+			if ((ball.getCenterX() - ball.getRadius() <= 
+					boardX && ball.getXVelocity() < 0) 
+					|| (ball.getCenterX() + ball.getRadius() >= 
+					length + boardX && ball.getXVelocity() > 0)) {
 				ball.setXVelocity(ball.getXVelocity()*(-1));
 			}
-			if ((ball.getCenterY() - ball.getRadius() <= boardY && ball.getYVelocity() < 0)
-					|| (ball.getCenterY() + ball.getRadius() >= width + boardY & ball.getYVelocity() > 0)) {
+			if ((ball.getCenterY() - ball.getRadius() <= 
+					boardY && ball.getYVelocity() < 0)
+					|| (ball.getCenterY() + ball.getRadius() >= 
+					width + boardY & ball.getYVelocity() > 0)) {
 				ball.setYVelocity(ball.getYVelocity()*(-1));
 			}
 		}
@@ -170,16 +173,20 @@ public class PoolBoard {
 			if (xVel != 0 || yVel != 0){
 				{
 					if (xVel < 0){
-						ball.setXVelocity(Math.min(xVel - 3*elapsedSeconds*xVel/speed, 0));
+						ball.setXVelocity(Math.min(xVel - 
+								3*elapsedSeconds*xVel/speed, 0));
 					}
 					if (yVel < 0){
-						ball.setYVelocity(Math.min(yVel - 3*elapsedSeconds*yVel/speed, 0));
+						ball.setYVelocity(Math.min(yVel - 
+								3*elapsedSeconds*yVel/speed, 0));
 					}
 					if (xVel > 0){
-						ball.setXVelocity(Math.max(xVel - 3*elapsedSeconds*xVel/speed, 0));
+						ball.setXVelocity(Math.max(xVel - 
+								3*elapsedSeconds*xVel/speed, 0));
 					}
 					if (yVel > 0){
-						ball.setYVelocity(Math.max(yVel - 3*elapsedSeconds*yVel/speed, 0));
+						ball.setYVelocity(Math.max(yVel - 
+								3*elapsedSeconds*yVel/speed, 0));
 					}
 				}
 			}

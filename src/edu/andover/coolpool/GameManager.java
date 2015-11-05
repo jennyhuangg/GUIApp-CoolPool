@@ -27,7 +27,8 @@ public class GameManager {
 
 	public void initStartScreen(Scene scene){
 		FXMLLoader loader = new FXMLLoader();
-		loader.setLocation(GameManager.class.getResource("view/MainMenuScreen.fxml"));
+		loader.setLocation(
+				GameManager.class.getResource("view/MainMenuScreen.fxml"));
 		try {
 			Parent mainMenuScreen = (Parent) loader.load();
 			rootLayout.setCenter(mainMenuScreen);
@@ -40,7 +41,8 @@ public class GameManager {
 	//controller for start screen calls this when button is pressed
 	public void initPoolScreen(){
 		FXMLLoader loader = new FXMLLoader();
-		loader.setLocation(GameManager.class.getResource("view/PoolScreen.fxml"));
+		loader.setLocation(
+				GameManager.class.getResource("view/PoolScreen.fxml"));
 		try {
 			
 			Parent poolScreen = (Parent) loader.load();
@@ -63,7 +65,8 @@ public class GameManager {
 
 	public void initEndScreen(){
 		FXMLLoader loader = new FXMLLoader();
-		loader.setLocation(GameManager.class.getResource("view/EndScreen.fxml"));
+		loader.setLocation(
+				GameManager.class.getResource("view/EndScreen.fxml"));
 		try {
 			Parent mainMenuScreen = (Parent) loader.load();
 			rootLayout.setCenter(mainMenuScreen);

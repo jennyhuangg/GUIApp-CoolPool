@@ -17,7 +17,8 @@ public class BallView {
 	private double centerY;
 
 
-	public BallView(double centerXCM, double centerYCM, double radius_inches, int id){
+	public BallView(double centerXCM, double centerYCM, double radius_inches, 
+					int id){
 
 		this.centerX = centerXCM * GameConstants.IN_TO_PIXEL;
 		this.centerY = centerYCM * GameConstants.IN_TO_PIXEL;
