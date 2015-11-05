@@ -1,5 +1,6 @@
 package edu.andover.coolpool.view;
 
+//This class is not used in Version 0, but will be implemented in the final.
 import edu.andover.coolpool.GameConstants;
 import javafx.scene.shape.Line;
 

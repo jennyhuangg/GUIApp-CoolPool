@@ -1,16 +1,15 @@
 package edu.andover.coolpool.model;
 
 import edu.andover.coolpool.view.BallView;
-import javafx.scene.Node;
 import javafx.scene.shape.Shape;
 
 public class Ball {
 	private boolean isPocketed;
 	private double centerX;
 	private double centerY;
-	private double xVelocity; //in IN/s
-	private double yVelocity; //in IN/s
-	private final double radius = 1.125; //in IN
+	private double xVelocity; //in in/s
+	private double yVelocity; //in in/s
+	private final double radius = 1.125; //in in
 
 	private BallView ballView;
 
@@ -29,9 +28,10 @@ public class Ball {
 	public double getXVelocity(){ return xVelocity; }
 	public double getYVelocity(){ return yVelocity; }
 	public double getRadius(){ return radius; }
-	public Shape getView(){ return ballView.getCircle(); }
 	public double getCenterX(){ return centerX; }
 	public double getCenterY() { return centerY; }
+	
+	public Shape getView(){ return ballView.getCircle(); }
 
 	public void setCenterX(double centerX) {
 		this.centerX = centerX;
@@ -43,9 +43,10 @@ public class Ball {
 		ballView.setCenterY(this.centerY);
 	}
 
-	public void setXVelocity(double xVel) {xVelocity = xVel;}
-	public void setYVelocity(double yVel) {yVelocity = yVel;}
-
+	public void setXVelocity(double xVel) { xVelocity = xVel;}
+	public void setYVelocity(double yVel) { yVelocity = yVel;}
+	
+	//pockets or unpockets a ball
 	public void setPocketed() {
 		isPocketed = !isPocketed;
 		if (isPocketed) {

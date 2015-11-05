@@ -1,5 +1,13 @@
 package edu.andover.coolpool;
 
+/*
+ * Proj 2: Version 0
+ * 
+ * Amy Chou, Jenny Huang, and Eric Lee
+ * COMP-630: Software Design, Instructor: Dr. Miles
+ * 5 October 2015
+ */
+
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
@@ -11,12 +19,15 @@ public class MainApp extends Application {
 	@Override
 	public void start(Stage primaryStage){
 		Pane root = new Pane();
-	
-		scene = new Scene(root, 1280, 730);
+		
+		int width = 1280;
+		int length = 730;
+		
+		scene = new Scene(root, width, length);
 		
 		primaryStage.setTitle("Cool Pool");
-		primaryStage.setWidth(1280);
-		primaryStage.setHeight(720);
+		primaryStage.setWidth(width);
+		primaryStage.setHeight(length);
 		primaryStage.setScene(scene);
 		primaryStage.setResizable(false);
 		primaryStage.show();

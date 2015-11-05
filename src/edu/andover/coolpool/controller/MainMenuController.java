@@ -10,7 +10,6 @@ public class MainMenuController {
 	@FXML
 	public void handleButtonAction() {
 		GameManager gm = new GameManager(btn_Go.getScene());
-		
 		gm.initPoolScreen();
 	}
 }

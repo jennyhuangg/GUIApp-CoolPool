@@ -1,5 +1,6 @@
 package edu.andover.coolpool.model;
 
+//This class is not used in Version 0, but will be implemented in the final.
 public class Pocket {
 	private double xPosition;
 	private double yPosition;
@@ -11,7 +12,8 @@ public class Pocket {
 	private double minX;
 	private double minY;
 
-	public Pocket(int id, double boardLength, double boardWidth, double boardX, double boardY){
+	public Pocket(int id, double boardLength, double boardWidth, double boardX, 
+			double boardY){
 		setPocketLocation(id);
 		minX = boardX;
 		minY = boardY;

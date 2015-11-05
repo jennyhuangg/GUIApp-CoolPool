@@ -1,5 +1,6 @@
 package edu.andover.coolpool.model;
 
+//This class is not used in Version 0, but will be implemented in the final.
 import edu.andover.coolpool.view.CueStickView;
 
 public class CueStick {
@@ -43,6 +44,5 @@ public class CueStick {
 		this.endY = endY;
 		cueStickView.setEndY(endY);
 	}
-
 
 }

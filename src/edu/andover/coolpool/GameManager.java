@@ -15,7 +15,6 @@ public class GameManager {
 
 	private BorderPane rootLayout;
 
-
 	public GameManager(Scene scene){
 	    this.scene = scene;
 
@@ -23,7 +22,6 @@ public class GameManager {
 
 	    scene.setRoot(rootLayout);
 	}
-
 
 	public void initStartScreen(Scene scene){
 		FXMLLoader loader = new FXMLLoader();
@@ -62,7 +60,6 @@ public class GameManager {
 		}
 	}
 	
-
 	public void initEndScreen(){
 		FXMLLoader loader = new FXMLLoader();
 		loader.setLocation(
