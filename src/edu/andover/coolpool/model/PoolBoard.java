@@ -27,6 +27,8 @@ public class PoolBoard {
 	private double boardY;
 
 	AnimationTimer timer;
+	
+	private int mode = 0;
 
 	public PoolBoard() {
 		length = 92; //Inches
@@ -110,6 +112,8 @@ public class PoolBoard {
 		balls[15] = new Ball(length * 1/4 + boardX, width / 2 + boardY, 3);
 		balls[15].setXVelocity(0);
 
+		poolController.addMouseEventHandler(balls[15]);
+
 	}
 
 	public void checkPockets(){
@@ -135,9 +139,9 @@ public class PoolBoard {
 		checkCollisions();
 		checkPockets();
 		decelerateBalls();
-		poolController.addMouseEventHandler(balls[15]);
-		if (stable()) { 
+		if (stable() && mode != 0) { 
 			timer.stop();
+			mode = (mode+1)%2;
 		}
 	}
 

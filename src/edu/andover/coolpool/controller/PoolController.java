@@ -12,19 +12,13 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 public class PoolController {
-	
-	private Ball cueBall;
 
 	public void addMouseEventHandler(Ball cueBall) {
-	    this.cueBall = cueBall;
-	    Circle circle = new Circle();
-	    circle.setCenterX(cueBall.getCenterX());
-	    circle.setCenterY(cueBall.getCenterY());
-	    circle.setRadius(cueBall.getRadius());
+	    Circle circle = (Circle) cueBall.getView();
 	    circle.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 	    	@Override
 	    	public void handle(MouseEvent me) {
-	    		cueBall.setYVelocity(-100);
+	    		cueBall.setXVelocity(100);
 	    	}
 	    });
 	}
