@@ -2,11 +2,15 @@ package edu.andover.coolpool.model;
 
 import static java.lang.Math.sqrt;
 import edu.andover.coolpool.GameConstants;
+import edu.andover.coolpool.controller.PoolController;
 import edu.andover.coolpool.view.PoolBoardView;
 import javafx.animation.AnimationTimer;
 import javafx.beans.property.LongProperty;
 import javafx.beans.property.SimpleLongProperty;
+import javafx.event.EventHandler;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.Circle;
 
 public class PoolBoard {
 
@@ -15,6 +19,8 @@ public class PoolBoard {
 	private Pocket[] pockets;
 	private double length;
 	private double width;
+	
+	private PoolController poolController = new PoolController();
 	private PoolBoardView poolBoardView;
 
 	private double boardX;
@@ -33,7 +39,6 @@ public class PoolBoard {
 				update();
 			}
 		};
-
 		setView();
 
 		poolBoardView.getBigRectangle().getX();
@@ -48,11 +53,10 @@ public class PoolBoard {
 			poolBoardView.getPane().getChildren().add(ball.getView());
 		}
 		
-
-
 		pockets = new Pocket[6];
 		for (int i = 0; i < 6; i ++) {pockets[i] = new Pocket(i, 
 				this.length, this.width, boardX, boardY); }
+		
 	}
 
 	public void setUpBalls() {
@@ -104,7 +108,8 @@ public class PoolBoard {
 
 		//CueBall
 		balls[15] = new Ball(length * 1/4 + boardX, width / 2 + boardY, 3);
-		balls[15].setXVelocity(100);
+		balls[15].setXVelocity(0);
+
 	}
 
 	public void checkPockets(){
@@ -130,6 +135,7 @@ public class PoolBoard {
 		checkCollisions();
 		checkPockets();
 		decelerateBalls();
+		poolController.addMouseEventHandler(balls[15]);
 		if (stable()) { 
 			timer.stop();
 		}
