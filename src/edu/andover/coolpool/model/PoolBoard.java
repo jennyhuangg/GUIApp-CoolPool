@@ -219,19 +219,19 @@ public class PoolBoard {
 				{
 					if (xVel < 0){
 						ball.setXVelocity(Math.min(xVel - 
-								3*elapsedSeconds*xVel/speed, 0));
+								2*elapsedSeconds*xVel/speed, 0));
 					}
 					if (yVel < 0){
 						ball.setYVelocity(Math.min(yVel - 
-								3*elapsedSeconds*yVel/speed, 0));
+								2*elapsedSeconds*yVel/speed, 0));
 					}
 					if (xVel > 0){
 						ball.setXVelocity(Math.max(xVel - 
-								3*elapsedSeconds*xVel/speed, 0));
+								2*elapsedSeconds*xVel/speed, 0));
 					}
 					if (yVel > 0){
 						ball.setYVelocity(Math.max(yVel - 
-								3*elapsedSeconds*yVel/speed, 0));
+								2*elapsedSeconds*yVel/speed, 0));
 					}
 				}
 			}
