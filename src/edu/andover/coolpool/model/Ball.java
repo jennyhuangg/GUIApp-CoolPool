@@ -17,12 +17,6 @@ public class Ball {
 	public Ball(double centerX, double centerY, int id) {
 		this.centerX = centerX;
 		this.centerY = centerY;
-		
-		switch (id){
-		default:
-			
-			break;
-		}
 
 		ballView = new BallView(centerX, centerY, radius, id);
 		isPocketed = false;
