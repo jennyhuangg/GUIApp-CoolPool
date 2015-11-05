@@ -132,9 +132,6 @@ public class PoolBoard {
 		}
 	}
 
-	public void setAnimationTimer(){
-	}
-
 	public void animate() {
 		timer.start();
 	}
@@ -164,6 +161,7 @@ public class PoolBoard {
 					width + boardY & ball.getYVelocity() > 0)) {
 				ball.setYVelocity(ball.getYVelocity()*(-1));
 			}
+			
 			for (Ball b2: balls){
 					final double deltaX = b2.getCenterX() - ball.getCenterX() ;
 					final double deltaY = b2.getCenterY() - ball.getCenterY() ;
@@ -176,11 +174,8 @@ public class PoolBoard {
 	
 	
     public boolean colliding(final Ball b1, final Ball b2, final double deltaX, final double deltaY) {
-        // square of distance between balls is s^2 = (x2-x1)^2 + (y2-y1)^2
-        // balls are "overlapping" if s^2 < (r1 + r2)^2
-        // We also check that distance is decreasing, i.e.
-        // d/dt(s^2) < 0:
-        // 2(x2-x1)(x2'-x1') + 2(y2-y1)(y2'-y1') < 0
+        // balls are colliding if (x2-x1)^2 + (y2-y1)^2 < (r1 + r2)^2
+        // and if distance between them is decreasing
 
         final double radiusSum = b1.getRadius() + b2.getRadius();
         if (deltaX * deltaX + deltaY * deltaY <= radiusSum * radiusSum) {
