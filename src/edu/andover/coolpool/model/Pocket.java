@@ -1,5 +1,8 @@
 package edu.andover.coolpool.model;
 
+import edu.andover.coolpool.view.PocketView;
+import javafx.scene.shape.Shape;
+
 //This class is not used in Version 0, but will be implemented in the final.
 public class Pocket {
 	private double xPosition;
@@ -11,6 +14,8 @@ public class Pocket {
 	private double maxY;
 	private double minX;
 	private double minY;
+	
+	private PocketView view;
 
 	public Pocket(int id, double boardLength, double boardWidth, double boardX, 
 			double boardY){
@@ -19,6 +24,8 @@ public class Pocket {
 		minY = boardY;
 		maxX = boardX + boardLength;
 		maxY = boardY + boardLength;
+		
+		view = new PocketView(xPosition, yPosition);
 	}
 
 	public void setPocketLocation(int id){
@@ -59,4 +66,6 @@ public class Pocket {
 	public double getXPosition(){ return xPosition; }
 
 	public double getYPosition(){ return yPosition; }
+	
+	public Shape getView() { return view.getCircle(); }
 }

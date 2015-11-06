@@ -11,9 +11,11 @@ import javafx.animation.AnimationTimer;
 
 public class PoolBoard {
 
-	private Ball[] balls; //16 balls
+	private Ball[] balls; //Array of balls
+	private Pocket[] pockets; //Array of pockets
+	
 	private boolean isPaused;
-	private Pocket[] pockets;
+	
 	private double length; 
 	private double width;
 	
@@ -47,9 +49,14 @@ public class PoolBoard {
 				GameConstants.PIXEL_TO_IN;
 		
 		setUpBalls();
+		setUpPockets();
 
 		for (Ball ball: balls){
 			poolBoardView.getPane().getChildren().add(ball.getView());
+		}
+		
+		for (Pocket pocket: pockets){
+			poolBoardView.getPane().getChildren().add(pocket.getView());
 		}
 		
 		pockets = new Pocket[6];
@@ -57,9 +64,17 @@ public class PoolBoard {
 				this.length, this.width, boardX, boardY); }
 	}
 
+	private void setUpPockets() {
+		pockets = new Pocket[6];
+		
+		for (int i = 0; i < pockets.length; i++) {
+			pockets[i] = new Pocket(i, length, width, boardX, boardY);
+		}
+	}
+	
 	// Intializes the array of balls and places the balls in the correct
 	// locations on the pool board
-	public void setUpBalls() {
+	private void setUpBalls() {
 		double centerY = width / 2 + boardY;
 		double incrementX = 2.25 * Math.cos(30) * GameConstants.IN_TO_PIXEL;
 		double radius = 1.125;
@@ -71,7 +86,6 @@ public class PoolBoard {
 		}
 		
 		// Place balls in triangle formation.
-		balls[1].setYVelocity(-100);
 		balls[0] = new Ball(length * 3/4 + boardX, centerY, 1);
 
 		balls[1] = new Ball(length * 3/4 + boardX + 1 * incrementX, 
