@@ -9,22 +9,24 @@ public class Pocket {
 	private double yPosition;
 
 	private final double radius = 5;
-	
+
 	private double maxX;
 	private double maxY;
 	private double minX;
 	private double minY;
-	
+
 	private PocketView view;
 
 	public Pocket(int id, double boardLength, double boardWidth, double boardX, 
 			double boardY){
+
+		//TODO: Get this working because pockets don't show up.
 		setPocketLocation(id);
 		minX = boardX;
 		minY = boardY;
 		maxX = boardX + boardLength;
 		maxY = boardY + boardLength;
-		
+
 		view = new PocketView(xPosition, yPosition);
 	}
 
@@ -60,12 +62,12 @@ public class Pocket {
 			break;
 		}
 	}
-	
+
 	public double getRadius(){ return radius; }
 
 	public double getXPosition(){ return xPosition; }
 
 	public double getYPosition(){ return yPosition; }
-	
+
 	public Shape getView() { return view.getCircle(); }
 }
