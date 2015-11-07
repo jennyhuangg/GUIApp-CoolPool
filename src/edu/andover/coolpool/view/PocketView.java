@@ -8,7 +8,10 @@ public class PocketView {
 	private Circle shape;
 	
 	public PocketView(double x, double y, double radius) {
-		shape = new Circle(x, y, radius * GameConstants.IN_TO_PIXEL);
+		x = x * GameConstants.IN_TO_PIXEL;
+		y = y * GameConstants.IN_TO_PIXEL;
+		radius = radius * GameConstants.IN_TO_PIXEL;
+		shape = new Circle(x, y, radius);
 		
 		Color lightBrown = Color.web("0x665847");
 		shape.setFill(lightBrown);

@@ -1,6 +1,5 @@
 package edu.andover.coolpool.model;
 
-import edu.andover.coolpool.GameConstants;
 import edu.andover.coolpool.view.PocketView;
 import javafx.scene.shape.Shape;
 
@@ -21,12 +20,12 @@ public class Pocket {
 	public Pocket(int id, double boardLength, double boardWidth, double boardX, 
 			double boardY){
 		
-		radius = 2;//inches
+		radius = 2.25;//inches
 		
-		minX = boardX * GameConstants.IN_TO_PIXEL;
-		minY = boardY * GameConstants.IN_TO_PIXEL;
-		maxX = minX + boardLength * GameConstants.IN_TO_PIXEL;
-		maxY = minY + boardWidth * GameConstants.IN_TO_PIXEL;
+		minX = boardX;
+		minY = boardY;
+		maxX = minX + boardLength;
+		maxY = minY + boardWidth;
 		setPocketLocation(id);
 
 		view = new PocketView(xPosition, yPosition, radius);

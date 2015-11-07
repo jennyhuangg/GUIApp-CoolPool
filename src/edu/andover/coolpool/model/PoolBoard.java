@@ -132,7 +132,8 @@ public class PoolBoard {
 				double distance = Math.sqrt(Math.pow(pocket.getXPosition() -
 						ball.getCenterX(), 2) + 
 						Math.pow(pocket.getYPosition() - ball.getCenterY(), 2));
-				if(distance <= Math.abs(pocket.getRadius() - ball.getRadius())
+				
+				if(distance <= pocket.getRadius()
 						&& !ball.getIsPocketed()){
 					ball.setPocketed();
 				}
