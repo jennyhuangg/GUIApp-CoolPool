@@ -14,12 +14,12 @@ public class PoolBoard {
 
 	private Ball[] balls; //Array of balls
 	private Pocket[] pockets; //Array of pockets
-	
+
 	private boolean isPaused;
-	
+
 	private double length; 
 	private double width;
-	
+
 	private PoolController poolController = new PoolController();
 	private PoolBoardView poolBoardView;
 
@@ -27,7 +27,7 @@ public class PoolBoard {
 	private double boardY; //Y coordinate of top left corner of playable board
 
 	AnimationTimer timer;
-	
+
 	private int mode = 0;
 
 	public PoolBoard() {
@@ -48,14 +48,14 @@ public class PoolBoard {
 				GameConstants.PIXEL_TO_IN;
 		boardY = poolBoardView.getRectangle().getY() *
 				GameConstants.PIXEL_TO_IN;
-		
+
 		setUpBalls();
 		setUpPockets();
 
 		for (Pocket pocket: pockets){
 			poolBoardView.getPane().getChildren().add(pocket.getView());
 		}
-		
+
 		for (Ball ball: balls){
 			poolBoardView.getPane().getChildren().add(ball.getView());
 		}
@@ -63,25 +63,25 @@ public class PoolBoard {
 
 	private void setUpPockets() {
 		pockets = new Pocket[6];
-		
+
 		for (int i = 0; i < pockets.length; i++) {
 			pockets[i] = new Pocket(i, length, width, boardX, boardY);
 		}
 	}
-	
+
 	// Intializes the array of balls and places the balls in the correct
 	// locations on the pool board
 	private void setUpBalls() {
 		double centerY = width / 2 + boardY;
 		double incrementX = 2.25 * Math.cos(30) * GameConstants.IN_TO_PIXEL;
 		double radius = 1.125;
-		
+
 		// Creates balls on table.
 		balls = new Ball[16];
 		for (int i = 0; i < 16; i ++) {
 			balls[i] = new Ball(110 + i * 2, 110 + i * 2, i);
 		}
-		
+
 		// Place balls in triangle formation.
 		balls[0] = new Ball(length * 3/4 + boardX, centerY, 1);
 
@@ -89,7 +89,7 @@ public class PoolBoard {
 				centerY + radius, 1);
 		balls[2] = new Ball(length * 3/4 + boardX + 1 * incrementX, 
 				centerY - radius, 2);
-		
+
 		balls[3] = new Ball(length * 3/4 + boardX + 2 * incrementX, 
 				centerY + 2 * radius, 2);
 		balls[4] = new Ball(length * 3/4 + boardX + 2 * incrementX, 
@@ -119,28 +119,9 @@ public class PoolBoard {
 
 		// Places cue ball in correct spot.
 		balls[15] = new Ball(length * 1/4 + boardX, width / 2 + boardY, 3);
-		
+
 		// Allows mouse click to move cue ball.
 		poolController.addMouseEventHandler(balls[15]);
-	}
-
-	// Checks to see if any balls have fallen inside the pockets
-	// Falls inside pockets if (distance between ball and pocket) <=
-	// (radius_of_pocket - radius_of_ball)
-	public void checkPockets(){
-		for (Pocket pocket: pockets){
-			for (Ball ball: balls){
-				double distance = Math.sqrt(Math.pow(pocket.getXPosition() -
-						ball.getCenterX(), 2) + 
-						Math.pow(pocket.getYPosition() - ball.getCenterY(), 2));
-				
-				if(distance <= pocket.getRadius()
-						&& !ball.getIsPocketed()){
-					ball.setPocketed();
-					GameSounds.BALL_FALLING_IN_POCKET.play();
-				}
-			}
-		}
 	}
 
 	//updates positions and states of the balls at each time step of 
@@ -160,19 +141,23 @@ public class PoolBoard {
 		}
 	}
 
-	public void animate() {
-		timer.start();
-	}
+	// Checks to see if any balls have fallen inside the pockets
+	// Falls inside pockets if (distance between ball and pocket) <=
+	// (radius_of_pocket - radius_of_ball)
+	public void checkPockets(){
+		for (Pocket pocket: pockets){
+			for (Ball ball: balls){
+				double distance = Math.sqrt(Math.pow(pocket.getXPosition() -
+						ball.getCenterX(), 2) + 
+						Math.pow(pocket.getYPosition() - ball.getCenterY(), 2));
 	
-	// Returns true if no balls are moving.
-	public boolean stable(){
-		boolean isStable = true;
-		for (Ball ball: balls){
-			if (ball.getXVelocity() != 0 || ball.getYVelocity() != 0) {
-				isStable = false;
+				if(distance <= pocket.getRadius()
+						&& !ball.getIsPocketed()){
+					ball.setPocketed();
+					GameSounds.BALL_FALLING_IN_POCKET.play();
+				}
 			}
 		}
-		return isStable;
 	}
 
 	public void checkCollisions() {
@@ -192,7 +177,7 @@ public class PoolBoard {
 					width + boardY & ball.getYVelocity() > 0)) {
 				ball.setYVelocity(ball.getYVelocity()*(-1));
 			}
-			
+	
 			// Changes velocity when ball collides with other balls.
 			for (Ball b2: balls){
 				final double deltaX = b2.getCenterX() - ball.getCenterX() ;
@@ -204,55 +189,12 @@ public class PoolBoard {
 			}
 		}
 	}
-	
-	
-	// Returns true if b1 and b2 are colliding. 
-    public boolean colliding(final Ball b1, final Ball b2, final double deltaX, 
-    							final double deltaY) {
-        // Balls are colliding if (x2-x1)^2 + (y2-y1)^2 < (r1 + r2)^2
-        // and if distance between them is decreasing.
-        final double radiusSum = b1.getRadius() + b2.getRadius();
-        if (deltaX * deltaX + deltaY * deltaY <= radiusSum * radiusSum) {
-            if ( deltaX * (b2.getXVelocity() - b1.getXVelocity()) 
-                    + deltaY * (b2.getYVelocity() - b1.getYVelocity()) < 0) {
-                return true;
-            }
-        }
-        return false;
-    }
-    
-    // Processes a collision with momentum equations. Updates velocities of 
-    // the balls after collisions
-    private void bounce(final Ball b1, final Ball b2, final double deltaX, 
-    					final double deltaY) {
-    	// Direction of collision is <deltaX, deltaY>.
-    
-        double distance = sqrt(deltaX * deltaX + deltaY * deltaY);
-        
-        //Collision vector is <unitContactX, unitContactY>.
-        double unitContactX = deltaX / distance; 
-        double unitContactY = deltaY / distance;
-        
-        double b1_i = b1.getXVelocity()*unitContactX + b1.getYVelocity()*
-        														unitContactY;
-        double b2_i = b2.getXVelocity()*unitContactX + b2.getYVelocity()*
-        														unitContactY;
-        
-        double b1_f = b2_i;
-        double b2_f = b1_i;
-        
-        b1.setXVelocity(b1.getXVelocity() +  unitContactX*(b1_f - b1_i));
-        b1.setYVelocity(b1.getYVelocity() +  unitContactY*(b1_f - b1_i));
-        b2.setXVelocity(b2.getXVelocity() +  unitContactX*(b2_f - b2_i));
-        b2.setYVelocity(b2.getYVelocity() +  unitContactY*(b2_f - b2_i));
-        
-    }
 
-    // Decreases the speed of all balls uniformly due to kinetic friction
-    // with the pool board unless speed of ball is already 0.
+	// Decreases the speed of all balls uniformly due to kinetic friction
+	// with the pool board unless speed of ball is already 0.
 	public void decelerateBalls(){
 		double elapsedSeconds = 0.1;
-
+	
 		for (Ball ball: balls){
 			double xVel = ball.getXVelocity();
 			double yVel = ball.getYVelocity();
@@ -280,33 +222,82 @@ public class PoolBoard {
 		}
 	}
 
+	public void animate() {
+		timer.start();
+	}
+
+	// Returns true if no balls are moving.
+	public boolean stable(){
+		boolean isStable = true;
+		for (Ball ball: balls){
+			if (ball.getXVelocity() != 0 || ball.getYVelocity() != 0) {
+				isStable = false;
+			}
+		}
+		return isStable;
+	}
+
+	// Returns true if b1 and b2 are colliding. 
+	public boolean colliding(final Ball b1, final Ball b2, final double deltaX, 
+			final double deltaY) {
+		// Balls are colliding if (x2-x1)^2 + (y2-y1)^2 < (r1 + r2)^2
+		// and if distance between them is decreasing.
+		final double radiusSum = b1.getRadius() + b2.getRadius();
+		if (deltaX * deltaX + deltaY * deltaY <= radiusSum * radiusSum) {
+			if ( deltaX * (b2.getXVelocity() - b1.getXVelocity()) 
+					+ deltaY * (b2.getYVelocity() - b1.getYVelocity()) < 0) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	// Processes a collision with momentum equations. Updates velocities of 
+	// the balls after collisions
+	private void bounce(final Ball b1, final Ball b2, final double deltaX, 
+			final double deltaY) {
+		// Direction of collision is <deltaX, deltaY>.
+
+		double distance = sqrt(deltaX * deltaX + deltaY * deltaY);
+
+		//Collision vector is <unitContactX, unitContactY>.
+		double unitContactX = deltaX / distance; 
+		double unitContactY = deltaY / distance;
+
+		double b1_i = b1.getXVelocity()*unitContactX + b1.getYVelocity()*
+				unitContactY;
+		double b2_i = b2.getXVelocity()*unitContactX + b2.getYVelocity()*
+				unitContactY;
+
+		double b1_f = b2_i;
+		double b2_f = b1_i;
+
+		b1.setXVelocity(b1.getXVelocity() +  unitContactX*(b1_f - b1_i));
+		b1.setYVelocity(b1.getYVelocity() +  unitContactY*(b1_f - b1_i));
+		b2.setXVelocity(b2.getXVelocity() +  unitContactX*(b2_f - b2_i));
+		b2.setYVelocity(b2.getYVelocity() +  unitContactY*(b2_f - b2_i));
+
+	}
+
 	public void pauseGame() {
 		timer.stop();
 	}
 
-	public double getLength(){
-		return length;
-	}
+	public double getLength(){ return length; }
 
-	public double getWidth(){
-		return width;
-	}
+	public double getWidth(){ return width; }
+
+	public PoolBoardView getView(){ return poolBoardView; }
+
+	public Ball[] getBalls() { return balls; }
 
 	public void setView(){
 		poolBoardView = new PoolBoardView(length, width);
-
+	
 		poolBoardView.getRectangle().setX(180);
 		poolBoardView.getRectangle().setY(177);
-
+	
 		poolBoardView.getBigRectangle().setX(180);
 		poolBoardView.getBigRectangle().setY(177);
-	}
-
-	public PoolBoardView getView(){
-		return poolBoardView;
-	}
-	
-	public Ball[] getBalls() {
-		return balls;
 	}
 }

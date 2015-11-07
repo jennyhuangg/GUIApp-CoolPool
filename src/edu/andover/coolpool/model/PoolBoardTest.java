@@ -59,6 +59,7 @@ public class PoolBoardTest {
 		assertEquals(16, balls.length);
 	}
 
+	@Test
 	public void decelerateBallsWhenVelocityIsZeroShouldDoNothing(){
 
 		PoolBoard poolBoard = new PoolBoard();
@@ -69,8 +70,7 @@ public class PoolBoardTest {
 
 			double speed = Math.sqrt(Math.pow(balls[i].getXVelocity(), 2) + Math.pow(balls[1].getYVelocity(), 2));
 
-			assertEquals(speed, 0);
-
+			assertEquals(0, speed);
 		}
 
 		poolBoard.decelerateBalls();
@@ -79,8 +79,7 @@ public class PoolBoardTest {
 
 			double speed = Math.sqrt(Math.pow(balls[i].getXVelocity(), 2) + Math.pow(balls[1].getYVelocity(), 2));
 
-			assertEquals(speed, 0);
-
+			assertEquals(0, speed);
 		}
 	}
 

@@ -4,7 +4,7 @@ package edu.andover.coolpool.model;
 import java.util.ArrayList;
 
 public class Player {
-	int ballType; //1 if striped, 0 if solid, null otherwise
+	int ballType; //0 if solid, 1 if stripe, null otherwise
 
 	ArrayList<Ball> pocketedBalls; 
 
