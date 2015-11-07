@@ -18,14 +18,18 @@ public class PoolBoardView {
 		this.length = length*GameConstants.IN_TO_PIXEL;
 		this.width = width*GameConstants.IN_TO_PIXEL;
 		
+		Color brown = Color.web("0x3D362D");
 		bigRectangle = new Rectangle(0, 0, this.length, this.width);
 		bigRectangle.setScaleX(1.09);
 		bigRectangle.setScaleY(1.157);
-		bigRectangle.setFill(Color.BURLYWOOD);
+		bigRectangle.setFill(brown);
 		view.getChildren().add(bigRectangle);
 		
 		rectangle = new Rectangle(0, 0, this.length, this.width);
-		rectangle.setFill(Color.GREEN);
+		
+		Color green = Color.web("0x27AE60");
+
+		rectangle.setFill(green);
 		view.getChildren().add(rectangle);
 	}
 	
