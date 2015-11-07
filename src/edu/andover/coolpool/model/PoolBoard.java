@@ -3,6 +3,7 @@ package edu.andover.coolpool.model;
 import static java.lang.Math.sqrt;
 import edu.andover.coolpool.GameConstants;
 import edu.andover.coolpool.controller.PoolController;
+import edu.andover.coolpool.view.GameSounds;
 import edu.andover.coolpool.view.PoolBoardView;
 import javafx.animation.AnimationTimer;
 
@@ -136,6 +137,7 @@ public class PoolBoard {
 				if(distance <= pocket.getRadius()
 						&& !ball.getIsPocketed()){
 					ball.setPocketed();
+					GameSounds.BALL_FALLING_IN_POCKET.play();
 				}
 			}
 		}
@@ -196,6 +198,7 @@ public class PoolBoard {
 				final double deltaX = b2.getCenterX() - ball.getCenterX() ;
 				final double deltaY = b2.getCenterY() - ball.getCenterY() ;
 				if (colliding(ball, b2, deltaX, deltaY)) {
+					GameSounds.BALL_HIT_BALL.play();
 					bounce(ball, b2, deltaX, deltaY);
 				}
 			}
