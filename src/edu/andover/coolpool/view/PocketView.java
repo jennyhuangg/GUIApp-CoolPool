@@ -1,16 +1,16 @@
 package edu.andover.coolpool.view;
 
+import edu.andover.coolpool.GameConstants;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
 public class PocketView {
 	private Circle shape;
-	private final double radius = 3;
 	
-	public PocketView(double x, double y) {
-		shape = new Circle(x, y, radius);
+	public PocketView(double x, double y, double radius) {
+		shape = new Circle(x, y, radius * GameConstants.IN_TO_PIXEL);
 		
-		shape.setFill(Color.BLACK);
+		shape.setFill(Color.DARKSLATEGRAY);
 	}
 	
 	public Circle getCircle() { return shape; }

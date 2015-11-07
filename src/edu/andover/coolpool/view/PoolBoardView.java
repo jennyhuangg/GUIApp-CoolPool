@@ -19,8 +19,8 @@ public class PoolBoardView {
 		this.width = width*GameConstants.IN_TO_PIXEL;
 		
 		bigRectangle = new Rectangle(0, 0, this.length, this.width);
-		bigRectangle.setScaleX(1.07);
-		bigRectangle.setScaleY(1.107);
+		bigRectangle.setScaleX(1.09);
+		bigRectangle.setScaleY(1.157);
 		bigRectangle.setFill(Color.BURLYWOOD);
 		view.getChildren().add(bigRectangle);
 		

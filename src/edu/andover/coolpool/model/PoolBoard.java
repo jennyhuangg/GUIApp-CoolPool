@@ -51,17 +51,13 @@ public class PoolBoard {
 		setUpBalls();
 		setUpPockets();
 
-		for (Ball ball: balls){
-			poolBoardView.getPane().getChildren().add(ball.getView());
-		}
-		
 		for (Pocket pocket: pockets){
 			poolBoardView.getPane().getChildren().add(pocket.getView());
 		}
 		
-		pockets = new Pocket[6];
-		for (int i = 0; i < 6; i ++) {pockets[i] = new Pocket(i, 
-				this.length, this.width, boardX, boardY); }
+		for (Ball ball: balls){
+			poolBoardView.getPane().getChildren().add(ball.getView());
+		}
 	}
 
 	private void setUpPockets() {
