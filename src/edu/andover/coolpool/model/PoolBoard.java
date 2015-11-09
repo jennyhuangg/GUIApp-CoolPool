@@ -150,7 +150,7 @@ public class PoolBoard {
 				double distance = Math.sqrt(Math.pow(pocket.getXPosition() -
 						ball.getCenterX(), 2) + 
 						Math.pow(pocket.getYPosition() - ball.getCenterY(), 2));
-	
+
 				if(distance <= pocket.getRadius()
 						&& !ball.getIsPocketed()){
 					ball.setPocketed();
@@ -177,7 +177,7 @@ public class PoolBoard {
 					width + boardY & ball.getYVelocity() > 0)) {
 				ball.setYVelocity(ball.getYVelocity()*(-1));
 			}
-	
+
 			// Changes velocity when ball collides with other balls.
 			for (Ball b2: balls){
 				final double deltaX = b2.getCenterX() - ball.getCenterX() ;
@@ -194,7 +194,7 @@ public class PoolBoard {
 	// with the pool board unless speed of ball is already 0.
 	public void decelerateBalls(){
 		double elapsedSeconds = 0.1;
-	
+
 		for (Ball ball: balls){
 			double xVel = ball.getXVelocity();
 			double yVel = ball.getYVelocity();
@@ -293,10 +293,10 @@ public class PoolBoard {
 
 	public void setView(){
 		poolBoardView = new PoolBoardView(length, width);
-	
+
 		poolBoardView.getRectangle().setX(180);
 		poolBoardView.getRectangle().setY(177);
-	
+
 		poolBoardView.getBigRectangle().setX(180);
 		poolBoardView.getBigRectangle().setY(177);
 	}
