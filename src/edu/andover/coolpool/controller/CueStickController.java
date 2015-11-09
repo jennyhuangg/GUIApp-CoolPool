@@ -5,13 +5,14 @@ import edu.andover.coolpool.model.CueStick;
 import edu.andover.coolpool.view.PoolBoardView;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
 
 public class CueStickController {
 
 	public void addMouseEventHandler(PoolBoardView pbv, CueStick cueStick) {
-	    Rectangle r = pbv.getRectangle();
-	    r.addEventHandler(MouseEvent.MOUSE_MOVED, new EventHandler<MouseEvent>() {
+	    Rectangle r = pbv.getCueStickRectangle();
+		r.addEventHandler(MouseEvent.MOUSE_MOVED, new EventHandler<MouseEvent>() {
 	    	@Override
 	    	public void handle(MouseEvent me) {
 	    		double mouseX = me.getX()*GameConstants.PIXEL_TO_IN;

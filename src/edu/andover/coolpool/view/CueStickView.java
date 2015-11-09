@@ -26,7 +26,7 @@ public class CueStickView {
 
 		line = new Line(startX, startY, endX, endY);
 		line.setStrokeWidth(10.0);
-		line.setFill(Color.BROWN);
+		line.setStroke(Color.BROWN);
 	}
 
 	public double getStartX() { return startX; }
