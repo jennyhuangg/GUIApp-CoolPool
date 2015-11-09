@@ -112,7 +112,7 @@ public class PoolBoard {
 		balls[11] = new Ball(length * 3/4 + boardX + 4 * incrementX, 
 				centerY + 2 * radius, 0);
 		balls[12] = new Ball(length * 3/4 + boardX + 4 * incrementX, 
-				centerY, 0);
+				centerY, 1);
 		balls[13] = new Ball(length * 3/4 + boardX + 4 * incrementX, 
 				centerY - 2 * radius, 1);
 		balls[14] = new Ball(length * 3/4 + boardX + 4 * incrementX, 
