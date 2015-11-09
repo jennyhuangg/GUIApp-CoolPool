@@ -6,7 +6,6 @@ import java.util.ArrayList;
 
 import edu.andover.coolpool.GameConstants;
 import edu.andover.coolpool.controller.CueStickController;
-import edu.andover.coolpool.controller.PoolController;
 import edu.andover.coolpool.view.GameSounds;
 import edu.andover.coolpool.view.PoolBoardView;
 import javafx.animation.AnimationTimer;
@@ -26,7 +25,6 @@ public class PoolBoard {
 	private double length; 
 	private double width;
 
-	private PoolController poolController = new PoolController();
 	private CueStickController cueStickController = new CueStickController();
 	
 	private PoolBoardView poolBoardView;
@@ -139,8 +137,6 @@ public class PoolBoard {
 		// Places cue ball in correct spot.
 		balls[15] = new Ball(length * 1/4 + boardX, width / 2 + boardY, 2);
 
-		// Allows mouse click to move cue ball.
-		poolController.addMouseEventHandler(balls[15]);
 	}
 
 	//updates positions and states of the balls at each time step of 
