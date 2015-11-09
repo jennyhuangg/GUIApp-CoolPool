@@ -12,6 +12,7 @@ public class PoolGame {
 	Player[] players = new Player[2];
 	int currPlayerInd = 0;
 	boolean gameHasEnded = false;
+	boolean sidesAreSet = false;
 	
 	AnimationTimer timer;
 	private CueStickController cueStickController;
@@ -42,7 +43,13 @@ public class PoolGame {
 
 	public void turn(){
 		timer.start();
-		
+	}
+	
+	public void setSides(int ballId){
+		players[currPlayerInd].setBallType(ballId);
+		players[(currPlayerInd+1)%2].setBallType((ballId + 1)%2);
+		poolScreenController.setBallColorText(currPlayerInd, ballId);
+		sidesAreSet = true;
 	}
 
 	public void updatePoints(ArrayList<Ball> pocketedBalls){
@@ -51,9 +58,8 @@ public class PoolGame {
 			for (int i = 0; i < size; i ++){
 				int ballId = pocketedBalls.get(i).getId();
 				if (ballId == 0 || ballId == 1){
-					if (players[currPlayerInd].getBallType() == -1){
-						players[currPlayerInd].setBallType(ballId);
-						players[(currPlayerInd+1)%2].setBallType((ballId + 1)%2);
+					if (!sidesAreSet){
+						setSides(ballId);
 					}
 					players[ballId].addPoint();
 				}
