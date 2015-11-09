@@ -119,7 +119,7 @@ public class PoolBoard {
 				centerY - 4 * radius, 0);
 
 		// Places cue ball in correct spot.
-		balls[15] = new CueBall(length * 1/4 + boardX, width / 2 + boardY);
+		balls[15] = new Ball(length * 1/4 + boardX, width / 2 + boardY, 2);
 
 		// Allows mouse click to move cue ball.
 		poolController.addMouseEventHandler(balls[15]);
@@ -305,4 +305,11 @@ public class PoolBoard {
 	}
 	
 	public ArrayList<Ball> pocketedBalls() { return pocketedBalls; }
+	
+	public void resetCueBall() { //will change to get User Input Later
+		balls[15].setPocketed();
+		balls[15].setCenterX(length * 1/4 + boardX);
+		balls[15].setCenterY(width / 2 + boardY);
+	}
+	
 }

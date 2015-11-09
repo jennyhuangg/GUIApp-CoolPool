@@ -9,6 +9,7 @@ public class Player {
 	ArrayList<Ball> pocketedBalls; 
 
 	boolean canPocketEightBall;
+	int points = 0;
 
 
 	public Player() {
@@ -41,6 +42,6 @@ public class Player {
 		canPocketEightBall = true; 
 	}
 	
-	public void addPoint() { }
+	public void addPoint() { points += 1; }
 	
 }

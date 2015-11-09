@@ -40,7 +40,10 @@ public class PoolGame {
 					}
 					players[ballId].addPoint();
 				}
-				if (ballId == 2) { }//cueBall
+				
+				if (ballId == 2) { 
+					poolBoard.resetCueBall(); 
+				}
 				
 				if (ballId == 3) {
 					gameHasEnded = true;
