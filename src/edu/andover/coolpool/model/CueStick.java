@@ -1,5 +1,6 @@
 package edu.andover.coolpool.model;
 
+import edu.andover.coolpool.GameConstants;
 import edu.andover.coolpool.view.CueStickView;
 import javafx.scene.shape.Shape;
 
