@@ -17,6 +17,7 @@ public class PoolGame {
 	AnimationTimer timer;
 	private CueStickController cueStickController;
 	private PoolScreenController poolScreenController;
+	boolean streak = false;
 
 
 	public PoolGame(PoolScreenController poolScreenController){
@@ -33,9 +34,18 @@ public class PoolGame {
 				if (poolBoard.stable()) { 
 					this.stop();
 					updatePoints(poolBoard.pocketedBalls());
+					if (poolBoard.pocketedBalls().size() == 0){
+						poolScreenController.setStatusPlayerFailed(currPlayerInd);
+						currPlayerInd = (currPlayerInd + 1)%2;
+						streak = false;
+						poolScreenController.setPlayerTurnText(currPlayerInd, streak);
+					}
+					else{
+						poolScreenController.setStatusPlayerSucceeded(currPlayerInd);
+						streak = true;
+						poolScreenController.setPlayerTurnText(currPlayerInd, streak);
+					}
 					poolBoard.resetPocketedBalls();
-					currPlayerInd = (currPlayerInd + 1)%2;
-					poolScreenController.setPlayerTurnText(currPlayerInd);
 				}
 			}
 		};

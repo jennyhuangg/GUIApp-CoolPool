@@ -48,9 +48,27 @@ public class PoolScreenController {
     }
     
     @FXML
-    public void setPlayerTurnText(int currPlayerInd){
+    public void setPlayerTurnText(int currPlayerInd, boolean streak){
     	int playerNum = currPlayerInd + 1;
-    	playerTurnText.setText("Player " + playerNum + ", your turn!");
+    	String streakText = "";
+    	if (streak) {
+    		streakText = " again";
+    	}
+    	playerTurnText.setText("Player " + playerNum + ", your turn" + streakText + "!");
+    }
+    
+    @FXML
+    public void setStatusPlayerFailed(int currPlayerInd){
+    	int playerNum = currPlayerInd + 1;
+    	statusText.setText("Player " + playerNum + " did not "
+    			+ "pocket a ball.");
+    }
+    
+    @FXML
+    public void setStatusPlayerSucceeded(int currPlayerInd){
+    	int playerNum = currPlayerInd + 1;
+    	statusText.setText("Player " + playerNum + " has pocketed "
+    			+ "a ball.");
     }
 			
 

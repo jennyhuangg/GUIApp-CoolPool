@@ -10,7 +10,7 @@
       <Pane prefHeight="720.0" prefWidth="250.0" style="-fx-background-color: #d3d3d3;">
          <children>
             <Text fx:id="player1BallColorText" layoutX="21.0" layoutY="115.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ball color: N/A" textAlignment="CENTER" wrappingWidth="68.76564025878906" />
-            <Text fx:id="statusText" layoutX="22.0" layoutY="347.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Click and drag the cue stick to take a shot." textAlignment="CENTER" wrappingWidth="203.03045654296875">
+            <Text fx:id="statusText" layoutX="23.0" layoutY="216.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Click and drag the cue stick to take a shot." textAlignment="CENTER" wrappingWidth="203.03045654296875">
                <font>
                   <Font size="27.0" />
                </font>
@@ -37,7 +37,7 @@
                </font>
             </Text>
             <Text fx:id="player2BallColorText" layoutX="158.0" layoutY="115.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ball color: N/A" textAlignment="CENTER" wrappingWidth="68.76564025878906" />
-            <Text fx:id="playerTurnText" layoutY="285.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Player 1, your turn!" textAlignment="CENTER" wrappingWidth="250.0">
+            <Text fx:id="playerTurnText" layoutY="410.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Player 1, your turn!" textAlignment="CENTER" wrappingWidth="250.0">
                <font>
                   <Font size="21.0" />
                </font>
