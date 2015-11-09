@@ -36,18 +36,22 @@ public class CueStickView {
 
 	public void setStartX(double startX) {
 		this.startX = startX*GameConstants.IN_TO_PIXEL;
+		line.setStartX(this.startX);
 	}
 
 	public void setStartY(double startY) {
 		this.startY = startY*GameConstants.IN_TO_PIXEL;
+		line.setStartY(this.startY);
 	}
 
 	public void setEndX(double endX) {
 		this.endX = endX*GameConstants.IN_TO_PIXEL;
+		line.setEndX(this.endX);
 	}
 
 	public void setEndY(double endY) {
 		this.endY = endY*GameConstants.IN_TO_PIXEL;
+		line.setEndY(this.endY);
 	}
 	
 	public Shape getLine() {return line; }
