@@ -28,23 +28,23 @@ public class BallView {
 		// Open up different image files for the sprite.
 		switch(id) {
 		
-		// 1 = red
-		// 2 = blue
-		// 3 = cue
-		// 4 = black/8 ball
-		case 1:
+		// 0 = red
+		// 1 = blue
+		// 2 = cue
+		// 3 = black/8 ball
+		case 0:
 			circle.setFill(Color.RED);
 			break;
 
-		case 2:
+		case 1:
 			circle.setFill(Color.BLUE);
 			break;
 
-		case 3:
+		case 2:
 			circle.setFill(Color.WHITE);
 			break;
 
-		case 4:
+		case 3:
 			circle.setFill(Color.BLACK);
 			break;
 
