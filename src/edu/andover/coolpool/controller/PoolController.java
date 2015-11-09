@@ -12,12 +12,12 @@ public class PoolController {
 	// ball to 100 in/s horizontally
 	
 	public void addMouseEventHandler(Ball cueBall) {
-	    Circle circle = (Circle) cueBall.getView();
+	    /*Circle circle = (Circle) cueBall.getView();
 	    circle.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 	    	@Override
 	    	public void handle(MouseEvent me) {
 	    		cueBall.setXVelocity(100);
 	    	}
-	    });
+	    });*/
 	}
 }

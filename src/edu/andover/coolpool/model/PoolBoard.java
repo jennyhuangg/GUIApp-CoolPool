@@ -85,7 +85,10 @@ public class PoolBoard {
 	
 	private void setUpCueStick() {
 		cueStick = new CueStick(balls[15]);
-		cueStickController.addMouseEventHandler(poolBoardView, cueStick);
+		cueStickController.addMouseHoverEventHandler(poolBoardView, cueStick);
+		cueStickController.addMousePressedEventHandler(poolBoardView, cueStick);
+		cueStickController.addMouseReleasedEventHandler(poolBoardView, cueStick);
+		cueStickController.addMouseDraggedEventHandler(poolBoardView, cueStick);
 	}
 
 	// Initializes the array of balls and places the balls in the correct

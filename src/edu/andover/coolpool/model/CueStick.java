@@ -4,16 +4,15 @@ import edu.andover.coolpool.view.CueStickView;
 import javafx.scene.shape.Shape;
 
 public class CueStick {
-	private double xVelocity;
-	private double yVelocity;
+	
 	private double startX;
 	private double startY;
 	private double endX;
 	private double endY;
 	
-	private static final double distanceTipFromCueBall = 3.0;
+	private double distanceTipFromCueBall = 3.0;
 	private static final double cueStickLength = 37.0;
-	private static final double distanceEndFromCueBall = distanceTipFromCueBall +
+	private double distanceEndFromCueBall = distanceTipFromCueBall +
 			cueStickLength;
 
 	private Ball cueBall;
@@ -36,9 +35,7 @@ public class CueStick {
 	public double getStartY() { return startY; }
 	public double getEndX() { return endX; }
 	public double getEndY() { return endY; }
-	public double getXVelocity() { return xVelocity; }
-	public double getYVelocity() { return yVelocity; }
-	
+
 	public void setStartX(double startX) {
 		this.startX = startX;
 		cueStickView.setStartX(startX);
@@ -57,14 +54,6 @@ public class CueStick {
 	public void setEndY(double endY) {
 		this.endY = endY;
 		cueStickView.setEndY(endY);
-	}
-	
-	public void setXVelocity(double xVelocity) {
-		this.xVelocity = xVelocity;
-	}
-	
-	public void setYVelocity(double yVelocity) {
-		this.yVelocity = yVelocity;
 	}
 	
 	public void setCueStickLocation(double mouseX, double mouseY) {
@@ -87,6 +76,68 @@ public class CueStick {
 		this.setEndY(endY);
 	}
 	
+	public void setCueStickLocationOnDrag(double initMouseX, double initMouseY,
+			double endMouseX, double endMouseY) {
+		double cueBallX = cueBall.getCenterX();
+		double cueBallY = cueBall.getCenterY();
+		
+		
+		//convert mouse coordinates so that they stay on the same line
+		
+		
+		
+		double distanceBalltoMouse = getDistance(cueBallX, cueBallY, endMouseX, endMouseY);
+		
+		double distanceInitToEnd = getDistance(initMouseX, initMouseY,
+				endMouseX, endMouseY);
+		
+		double newDistanceTipFromCueBall = distanceTipFromCueBall + distanceInitToEnd;
+		double newDistanceEndFromCueBall = newDistanceTipFromCueBall + cueStickLength;
+		
+		startX = (newDistanceTipFromCueBall / distanceBalltoMouse) * (endMouseX-
+				cueBallX) + cueBallX;
+		startY = (newDistanceTipFromCueBall / distanceBalltoMouse) * (endMouseY-
+				cueBallY) + cueBallY;
+		endX = (newDistanceEndFromCueBall / distanceBalltoMouse) * (endMouseX-
+				cueBallX) + cueBallX;
+		endY = (newDistanceEndFromCueBall / distanceBalltoMouse) * (endMouseY-
+				cueBallY) + cueBallY;
+		
+		this.setStartX(startX);
+		this.setStartY(startY);
+		this.setEndX(endX);
+		this.setEndY(endY);
+	}
+	
+	public void setCueStickLocationAfterHit(double mouseX, double mouseY) {
+		double cueBallX = cueBall.getCenterX();
+		double cueBallY = cueBall.getCenterY();
+		distanceTipFromCueBall = 1;
+		double distanceBalltoMouse = getDistance(cueBallX, cueBallY, mouseX, mouseY);
+		startX = (distanceTipFromCueBall / distanceBalltoMouse) * (mouseX-
+				cueBallX) + cueBallX;
+		startY = (distanceTipFromCueBall / distanceBalltoMouse) * (mouseY-
+				cueBallY) + cueBallY;
+		endX = (distanceEndFromCueBall / distanceBalltoMouse) * (mouseX-
+				cueBallX) + cueBallX;
+		endY = (distanceEndFromCueBall / distanceBalltoMouse) * (mouseY-
+				cueBallY) + cueBallY;
+		
+		this.setStartX(startX);
+		this.setStartY(startY);
+		this.setEndX(endX);
+		this.setEndY(endY);
+	}
+	public void updateCueBallVelocity(double initMouseDragX, double endMouseDragX, 
+			double initMouseDragY, double endMouseDragY) {
+		double amplifier = 2.5;
+		double xVel = amplifier*(initMouseDragX - endMouseDragX);
+		double yVel = amplifier*(initMouseDragY - endMouseDragY);
+		
+		cueBall.setXVelocity(xVel);
+		cueBall.setYVelocity(yVel);
+	}
+
 	public double getDistance(double x1, double y1, double x2, double y2) {
 		return Math.sqrt((x1-x2)*(x1-x2) + (y1-y2)*(y1-y2));
 	}
@@ -97,6 +148,5 @@ public class CueStick {
 	
 	public void setCueBallVelocity(Ball cueBall){ 
 		cueBall.setXVelocity(100);
-		
 	}
 }
