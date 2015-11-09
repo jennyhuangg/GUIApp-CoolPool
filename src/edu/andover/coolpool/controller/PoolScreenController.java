@@ -46,6 +46,12 @@ public class PoolScreenController {
     		player2BallColorText.setText("Ball color: RED");
     	}
     }
+    
+    @FXML
+    public void setPlayerTurnText(int currPlayerInd){
+    	int playerNum = currPlayerInd + 1;
+    	playerTurnText.setText("Player " + playerNum + ", your turn!");
+    }
 			
 
 }

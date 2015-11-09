@@ -34,6 +34,8 @@ public class PoolGame {
 					this.stop();
 					updatePoints(poolBoard.pocketedBalls());
 					poolBoard.resetPocketedBalls();
+					currPlayerInd = (currPlayerInd + 1)%2;
+					poolScreenController.setPlayerTurnText(currPlayerInd);
 				}
 			}
 		};
