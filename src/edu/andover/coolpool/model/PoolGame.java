@@ -26,7 +26,10 @@ public class PoolGame {
 		timer = new AnimationTimer() {
 			@Override
 			public void handle(long timestamp) {
-				poolBoard.update(this);
+				poolBoard.update();
+				if (poolBoard.stable()) { 
+					this.stop();
+				}
 			}
 		};
 	}

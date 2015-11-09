@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import edu.andover.coolpool.GameConstants;
 import edu.andover.coolpool.view.GameSounds;
 import edu.andover.coolpool.view.PoolBoardView;
-import javafx.animation.AnimationTimer;
 
 // Model class for a pool board, including interactions between the
 // pool balls.
@@ -25,8 +24,6 @@ public class PoolBoard {
 
 	private double boardX; //X coordinate of top left corner of playable board
 	private double boardY; //Y coordinate of top left corner of playable board
-
-	private int mode = 0;
 
 	public static boolean isStable;
 	
@@ -113,7 +110,7 @@ public class PoolBoard {
 
 	//updates positions and states of the balls at each time step of 
 	//0.01 seconds
-	public void update(AnimationTimer timer) {
+	public void update() {
 		double elapsedSeconds = 0.01;
 		for (Ball b : balls) {
 			b.setCenterX(b.getCenterX() + elapsedSeconds * b.getXVelocity());
@@ -122,9 +119,6 @@ public class PoolBoard {
 		checkPockets();
 		checkCollisions();
 		decelerateBalls();
-		if (stable()) { 
-			timer.stop();
-		}
 	}
 
 	// Checks to see if any balls have fallen inside the pockets
@@ -286,10 +280,6 @@ public class PoolBoard {
 		balls[15].setPocketed();
 		balls[15].setCenterX(length * 1/4 + boardX);
 		balls[15].setCenterY(width / 2 + boardY);
-	}
-	
-	public void updateGame(){
-		
 	}
 	
 	
