@@ -18,22 +18,13 @@ public class PoolGame {
 	}
 
 	public void run(){
-		for (int i = 0; i < 5; i ++)
-		{
-			cueStick.setCueBallVelocity(poolBoard.getBalls()[15]); //cue stick has a timer
-			poolBoard.animate();
-			ArrayList<Ball> pocketedBalls = poolBoard.pocketedBalls();
-			updatePoints(pocketedBalls);
-			System.out.println(poolBoard.getBalls()[15].getXVelocity());
-		}
 		
-		/*
-		while (!gameHasEnded){
-			cueStick.setCueBallVelocity(poolBoard.getBalls()[1]); //cue stick has a timer
-			poolBoard.animate();
-			ArrayList<Ball> pocketedBalls = poolBoard.pocketedBalls();
-			updatePoints(pocketedBalls);
-		}*/
+		
+		cueStick.setCueBallVelocity(poolBoard.getBalls()[1]); //cue stick has a timer
+		poolBoard.animate();
+		ArrayList<Ball> pocketedBalls = poolBoard.pocketedBalls();
+		updatePoints(pocketedBalls);
+
 	}
 
 	public void updatePoints(ArrayList<Ball> pocketedBalls){
@@ -48,20 +39,20 @@ public class PoolGame {
 					}
 					players[ballId].addPoint();
 				}
-				
+
 				if (ballId == 2) { 
 					poolBoard.resetCueBall(); 
 				}
-				
+
 				if (ballId == 3) {
 					gameHasEnded = true;
 				}
-				
+
 
 			}
 		}
 	}
-	
+
 	public PoolBoard getPoolBoard(){
 		return poolBoard;
 	}

@@ -52,7 +52,7 @@ public class GameManager {
 			
 			Parent poolScreen = (Parent) loader.load();
 
-			/*
+			
 			PoolGame poolGame = new PoolGame();
 			PoolBoard poolBoard = poolGame.getPoolBoard();
 			
@@ -64,9 +64,9 @@ public class GameManager {
 			pane.getChildren().add(poolBoardView.getPane());
 			scene.setRoot(rootLayout);
 			
-			poolGame.run();*/
+			poolGame.run();
 			
-			
+			/*
 			PoolBoard poolBoard = new PoolBoard();
 
 			rootLayout.setCenter(poolScreen);
@@ -77,7 +77,7 @@ public class GameManager {
 			pane.getChildren().add(poolBoardView.getPane());
 			scene.setRoot(rootLayout);
 			
-			poolBoard.animate();
+			poolBoard.animate();*/
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
