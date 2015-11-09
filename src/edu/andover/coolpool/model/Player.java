@@ -4,11 +4,12 @@ package edu.andover.coolpool.model;
 import java.util.ArrayList;
 
 public class Player {
-	int ballType; //0 if solid, 1 if stripe, null otherwise
+	int ballType; //0 if solid, 1 if stripe, -1 otherwise
 
 	ArrayList<Ball> pocketedBalls; 
 
 	boolean canPocketEightBall;
+	int points = 0;
 
 
 	public Player() {
@@ -40,4 +41,8 @@ public class Player {
 	public void setCanPocketEightBall(){ 
 		canPocketEightBall = true; 
 	}
+	
+	public void addPoint() { points += 1; }
+	
 }
+

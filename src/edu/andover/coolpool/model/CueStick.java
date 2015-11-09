@@ -70,7 +70,7 @@ public class CueStick {
 	public void setCueStickLocation(double mouseX, double mouseY) {
 		double cueBallX = cueBall.getCenterX();
 		double cueBallY = cueBall.getCenterY();
-		//Line2D line = new Line2D.Double(cueBallX, cueBallY, mouseX, mouseY);
+		
 		double distanceBalltoMouse = getDistance(cueBallX, cueBallY, mouseX, mouseY);
 		startX = (distanceTipFromCueBall / distanceBalltoMouse) * (mouseX-
 				cueBallX) + cueBallX;
@@ -88,5 +88,10 @@ public class CueStick {
 	
 	public double getSlope(double x1, double y1, double x2, double y2) {
 		return (y2-y1)/(x2-x1);
+	}
+	
+	public void setCueBallVelocity(Ball cueBall){ 
+		cueBall.setXVelocity(100);
+		
 	}
 }

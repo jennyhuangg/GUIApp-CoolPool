@@ -1,14 +1,15 @@
 package edu.andover.coolpool.model;
 
 import static java.lang.Math.sqrt;
+
+import java.util.ArrayList;
+
 import edu.andover.coolpool.GameConstants;
 import edu.andover.coolpool.controller.MouseController;
 import edu.andover.coolpool.controller.PoolController;
 import edu.andover.coolpool.view.GameSounds;
 import edu.andover.coolpool.view.PoolBoardView;
 import javafx.animation.AnimationTimer;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
 
 // Model class for a pool board, including interactions between the
 // pool balls.
@@ -16,6 +17,7 @@ import javafx.scene.layout.Pane;
 public class PoolBoard {
 
 	private Ball[] balls; //Array of balls
+	private ArrayList<Ball> pocketedBalls = new ArrayList<Ball>();
 	private Pocket[] pockets; //Array of pockets
 	private CueStick cueStick;
 
@@ -93,47 +95,44 @@ public class PoolBoard {
 
 		// Creates balls on table.
 		balls = new Ball[16];
-		for (int i = 0; i < 16; i ++) {
-			balls[i] = new Ball(110 + i * 2, 110 + i * 2, i);
-		}
 
 		// Place balls in triangle formation.
-		balls[0] = new Ball(length * 3/4 + boardX, centerY, 1);
+		balls[0] = new Ball(length * 3/4 + boardX, centerY, 0);
 
 		balls[1] = new Ball(length * 3/4 + boardX + 1 * incrementX, 
-				centerY + radius, 1);
+				centerY + radius, 0);
 		balls[2] = new Ball(length * 3/4 + boardX + 1 * incrementX, 
-				centerY - radius, 2);
+				centerY - radius, 1);
 
 		balls[3] = new Ball(length * 3/4 + boardX + 2 * incrementX, 
-				centerY + 2 * radius, 2);
+				centerY + 2 * radius, 1);
 		balls[4] = new Ball(length * 3/4 + boardX + 2 * incrementX, 
-				centerY, 4); //8 Ball
+				centerY, 3); //8 Ball
 		balls[5] = new Ball(length * 3/4 + boardX + 2 * incrementX, 
-				centerY - 2 * radius, 1);
+				centerY - 2 * radius, 0);
 
 		balls[6] = new Ball(length * 3/4 + boardX + 3 * incrementX, 
-				centerY + 3 * radius, 1);
+				centerY + 3 * radius, 0);
 		balls[7] = new Ball(length * 3/4 + boardX + 3 * incrementX, 
-				centerY + radius, 2);
+				centerY + radius, 1);
 		balls[8] = new Ball(length * 3/4 + boardX + 3 * incrementX, 
-				centerY - radius, 1);
+				centerY - radius, 0);
 		balls[9] = new Ball(length * 3/4 + boardX + 3 * incrementX, 
-				centerY - 3 * radius, 2);
+				centerY - 3 * radius, 1);
 
 		balls[10] = new Ball(length * 3/4 + boardX + 4 * incrementX, 
-				centerY + 4 * radius, 2);
+				centerY + 4 * radius, 1);
 		balls[11] = new Ball(length * 3/4 + boardX + 4 * incrementX, 
-				centerY + 2 * radius, 1);
+				centerY + 2 * radius, 0);
 		balls[12] = new Ball(length * 3/4 + boardX + 4 * incrementX, 
 				centerY, 1);
 		balls[13] = new Ball(length * 3/4 + boardX + 4 * incrementX, 
-				centerY - 2 * radius, 2);
+				centerY - 2 * radius, 1);
 		balls[14] = new Ball(length * 3/4 + boardX + 4 * incrementX, 
-				centerY - 4 * radius, 1);
+				centerY - 4 * radius, 0);
 
 		// Places cue ball in correct spot.
-		balls[15] = new Ball(length * 1/4 + boardX, width / 2 + boardY, 3);
+		balls[15] = new Ball(length * 1/4 + boardX, width / 2 + boardY, 2);
 
 		// Allows mouse click to move cue ball.
 		poolController.addMouseEventHandler(balls[15]);
@@ -165,10 +164,11 @@ public class PoolBoard {
 				double distance = Math.sqrt(Math.pow(pocket.getXPosition() -
 						ball.getCenterX(), 2) + 
 						Math.pow(pocket.getYPosition() - ball.getCenterY(), 2));
-	
+
 				if(distance <= pocket.getRadius()
 						&& !ball.getIsPocketed()){
 					ball.setPocketed();
+					pocketedBalls.add(ball);
 					GameSounds.BALL_FALLING_IN_POCKET.play();
 				}
 			}
@@ -192,7 +192,7 @@ public class PoolBoard {
 					width + boardY & ball.getYVelocity() > 0)) {
 				ball.setYVelocity(ball.getYVelocity()*(-1));
 			}
-	
+
 			// Changes velocity when ball collides with other balls.
 			for (Ball b2: balls){
 				final double deltaX = b2.getCenterX() - ball.getCenterX() ;
@@ -209,7 +209,7 @@ public class PoolBoard {
 	// with the pool board unless speed of ball is already 0.
 	public void decelerateBalls(){
 		double elapsedSeconds = 0.1;
-	
+
 		for (Ball ball: balls){
 			double xVel = ball.getXVelocity();
 			double yVel = ball.getYVelocity();
@@ -238,6 +238,7 @@ public class PoolBoard {
 	}
 
 	public void animate() {
+		pocketedBalls = new ArrayList<Ball>();
 		timer.start();
 	}
 
@@ -308,11 +309,20 @@ public class PoolBoard {
 
 	public void setView(){
 		poolBoardView = new PoolBoardView(length, width);
-	
+
 		poolBoardView.getRectangle().setX(180);
 		poolBoardView.getRectangle().setY(177);
-	
+
 		poolBoardView.getBigRectangle().setX(180);
 		poolBoardView.getBigRectangle().setY(177);
 	}
+	
+	public ArrayList<Ball> pocketedBalls() { return pocketedBalls; }
+	
+	public void resetCueBall() { //will change to get User Input Later
+		balls[15].setPocketed();
+		balls[15].setCenterX(length * 1/4 + boardX);
+		balls[15].setCenterY(width / 2 + boardY);
+	}
+	
 }

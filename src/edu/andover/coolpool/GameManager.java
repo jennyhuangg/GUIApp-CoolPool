@@ -4,6 +4,7 @@ package edu.andover.coolpool;
 import java.io.IOException;
 
 import edu.andover.coolpool.model.PoolBoard;
+import edu.andover.coolpool.model.PoolGame;
 import edu.andover.coolpool.view.PoolBoardView;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -50,6 +51,22 @@ public class GameManager {
 		try {
 			
 			Parent poolScreen = (Parent) loader.load();
+
+			/*
+			PoolGame poolGame = new PoolGame();
+			PoolBoard poolBoard = poolGame.getPoolBoard();
+			
+			rootLayout.setCenter(poolScreen);
+			Pane pane = (Pane) poolScreen.getChildrenUnmodifiable().get(1);
+			
+			PoolBoardView poolBoardView = poolBoard.getView();
+			
+			pane.getChildren().add(poolBoardView.getPane());
+			scene.setRoot(rootLayout);
+			
+			poolGame.run();*/
+			
+			
 			PoolBoard poolBoard = new PoolBoard();
 
 			rootLayout.setCenter(poolScreen);

@@ -14,6 +14,7 @@ public class Ball {
 	private double xVelocity; //in in/s
 	private double yVelocity; //in in/s
 	private final double radius = 1.125; //in in
+	private int id;
 
 	private BallView ballView;
 
@@ -26,6 +27,7 @@ public class Ball {
 	
 		xVelocity = 0;
 		yVelocity = 0;
+		this.id = id;
 	}
 
 	public boolean getIsPocketed(){ return isPocketed; }
@@ -60,4 +62,6 @@ public class Ball {
 			yVelocity = 0;
 		}
 	}
+	
+	public int getId(){ return id;}
 }
