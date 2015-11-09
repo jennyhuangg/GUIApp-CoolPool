@@ -46,7 +46,7 @@ public class CueStickController {
 				if (!isMousePressed) {
 	    		mouseX = me.getX()*GameConstants.PIXEL_TO_IN;
 	    		mouseY = me.getY()*GameConstants.PIXEL_TO_IN;
-	    		cueStick.setCueStickLocation(mouseX, mouseY);
+	    		cueStick.setHoverCueStickLocation(mouseX, mouseY);
 				}
 	    	}
 	    });
@@ -112,6 +112,10 @@ public class CueStickController {
 	    		
 	    		double endMouseDragX = me.getX()*GameConstants.PIXEL_TO_IN;
 	    		double endMouseDragY = me.getY()*GameConstants.PIXEL_TO_IN;
+	    		
+	    		cueStick.setCueStickLocationAfterHit(mouseX, mouseY);
+	    		cueStick.updateCueBallVelocity(initMouseDragX, endMouseDragX, 
+	    				initMouseDragY, endMouseDragY);
 	    		
 	    		cueStick.updateCueBallVelocity(initMouseDragX, endMouseDragX, 
 	    				initMouseDragY, endMouseDragY);
