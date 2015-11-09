@@ -5,7 +5,6 @@ import static java.lang.Math.sqrt;
 import java.util.ArrayList;
 
 import edu.andover.coolpool.GameConstants;
-import edu.andover.coolpool.GameManager;
 import edu.andover.coolpool.controller.CueStickController;
 import edu.andover.coolpool.controller.PoolController;
 import edu.andover.coolpool.view.GameSounds;
