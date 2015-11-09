@@ -68,12 +68,7 @@ public class PoolBoard {
 		}
 		
 		poolBoardView.getPane().getChildren().add(cueStick.getView());
-		
-		//mouseController.addMouseEventHandler(poolBoardView.getPane(), cueStick);
-	}
-	
-	private void addMouseEventCueStick(BorderPane rl) {
-		mouseController.addMouseEventHandler(rl, cueStick);
+
 	}
 	
 	private void setUpPockets() {
@@ -86,6 +81,7 @@ public class PoolBoard {
 	
 	private void setUpCueStick() {
 		cueStick = new CueStick(balls[15]);
+		mouseController.addMouseEventHandler(poolBoardView, cueStick);
 	}
 
 	// Intializes the array of balls and places the balls in the correct
