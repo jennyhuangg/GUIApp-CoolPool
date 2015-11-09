@@ -21,13 +21,12 @@ public class CueStick {
 	private CueStickView cueStickView;
 
 	public CueStick(Ball cueBall) {
-		
-		cueStickView = new CueStickView(startX, startY, endX, endY);
 		this.cueBall = cueBall;
 		startX = cueBall.getCenterX() - distanceTipFromCueBall;
 		startY = cueBall.getCenterY();
 		endX = startX - cueStickLength;
 		endY = startY;
+		cueStickView = new CueStickView(startX, startY, endX, endY);
 	}
 	
 	public Shape getView(){ return cueStickView.getLine(); }
