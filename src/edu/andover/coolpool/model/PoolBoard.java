@@ -5,8 +5,6 @@ import static java.lang.Math.sqrt;
 import java.util.ArrayList;
 
 import edu.andover.coolpool.GameConstants;
-import edu.andover.coolpool.controller.CueStickController;
-import edu.andover.coolpool.controller.PoolController;
 import edu.andover.coolpool.view.GameSounds;
 import edu.andover.coolpool.view.PoolBoardView;
 import javafx.animation.AnimationTimer;
@@ -19,22 +17,14 @@ public class PoolBoard {
 	private Ball[] balls; //Array of balls
 	private ArrayList<Ball> pocketedBalls = new ArrayList<Ball>();
 	private Pocket[] pockets; //Array of pockets
-	private CueStick cueStick;
-
-	private boolean isPaused;
 
 	private double length; 
 	private double width;
-
-	private PoolController poolController = new PoolController();
-	private CueStickController cueStickController = new CueStickController();
 	
 	private PoolBoardView poolBoardView;
 
 	private double boardX; //X coordinate of top left corner of playable board
 	private double boardY; //Y coordinate of top left corner of playable board
-
-	AnimationTimer timer;
 
 	private int mode = 0;
 
@@ -43,14 +33,6 @@ public class PoolBoard {
 	public PoolBoard() {
 		length = 92; //Inches
 		width = 46; //Inches
-		isPaused = false;
-
-		timer = new AnimationTimer() {
-			@Override
-			public void handle(long timestamp) {
-				update();
-			}
-		};
 		setView();
 
 		poolBoardView.getBigRectangle().getX();
@@ -61,7 +43,6 @@ public class PoolBoard {
 
 		setUpBalls();
 		setUpPockets();
-		setUpCueStick();
 
 		for (Pocket pocket: pockets){
 			poolBoardView.getPane().getChildren().add(pocket.getView());
@@ -70,8 +51,6 @@ public class PoolBoard {
 		for (Ball ball: balls){
 			poolBoardView.getPane().getChildren().add(ball.getView());
 		}
-		
-		poolBoardView.getPane().getChildren().add(cueStick.getView());
 
 	}
 	
@@ -81,14 +60,6 @@ public class PoolBoard {
 		for (int i = 0; i < pockets.length; i++) {
 			pockets[i] = new Pocket(i, length, width, boardX, boardY);
 		}
-	}
-	
-	private void setUpCueStick() {
-		cueStick = new CueStick(balls[15]);
-		cueStickController.addMouseHoverEventHandler(poolBoardView, cueStick);
-		cueStickController.addMousePressedEventHandler(poolBoardView, cueStick);
-		cueStickController.addMouseReleasedEventHandler(poolBoardView, cueStick);
-		cueStickController.addMouseDraggedEventHandler(poolBoardView, cueStick);
 	}
 
 	// Initializes the array of balls and places the balls in the correct
@@ -138,14 +109,11 @@ public class PoolBoard {
 
 		// Places cue ball in correct spot.
 		balls[15] = new Ball(length * 1/4 + boardX, width / 2 + boardY, 2);
-
-		// Allows mouse click to move cue ball.
-		poolController.addMouseEventHandler(balls[15]);
 	}
 
 	//updates positions and states of the balls at each time step of 
 	//0.01 seconds
-	public void update() {
+	public void update(AnimationTimer timer) {
 		double elapsedSeconds = 0.01;
 		for (Ball b : balls) {
 			b.setCenterX(b.getCenterX() + elapsedSeconds * b.getXVelocity());
@@ -154,9 +122,8 @@ public class PoolBoard {
 		checkPockets();
 		checkCollisions();
 		decelerateBalls();
-		if (stable() && mode != 0) { 
+		if (stable()) { 
 			timer.stop();
-			mode = (mode+1)%2;
 		}
 	}
 
@@ -242,11 +209,6 @@ public class PoolBoard {
 		}
 	}
 
-	public void animate() {
-		pocketedBalls = new ArrayList<Ball>();
-		timer.start();
-	}
-
 	// Returns true if no balls are moving.
 	public boolean stable(){
 		isStable = true;
@@ -300,10 +262,6 @@ public class PoolBoard {
 
 	}
 
-	public void pauseGame() {
-		timer.stop();
-	}
-
 	public double getLength(){ return length; }
 
 	public double getWidth(){ return width; }
@@ -329,5 +287,10 @@ public class PoolBoard {
 		balls[15].setCenterX(length * 1/4 + boardX);
 		balls[15].setCenterY(width / 2 + boardY);
 	}
+	
+	public void updateGame(){
+		
+	}
+	
 	
 }

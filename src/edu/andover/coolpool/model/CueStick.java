@@ -19,8 +19,9 @@ public class CueStick {
 	private Ball cueBall;
 	
 	private CueStickView cueStickView;
+	private PoolGame poolGame;
 
-	public CueStick(Ball cueBall) {
+	public CueStick(Ball cueBall, PoolGame poolGame) {
 		double distanceTipFromCueBall = 3.0;
 		this.cueBall = cueBall;
 		startX = cueBall.getCenterX() - distanceTipFromCueBall;
@@ -28,6 +29,7 @@ public class CueStick {
 		endX = startX - cueStickLength;
 		endY = startY;
 		cueStickView = new CueStickView(startX, startY, endX, endY);
+		this.poolGame = poolGame;
 	}
 	
 	public Shape getView(){ return cueStickView.getLine(); }
@@ -109,6 +111,8 @@ public class CueStick {
 		
 		cueBall.setXVelocity(xVel);
 		cueBall.setYVelocity(yVel);
+		
+		poolGame.run();
 	}
 
 	public double getDistance(double x1, double y1, double x2, double y2) {
@@ -117,9 +121,5 @@ public class CueStick {
 	
 	public double getSlope(double x1, double y1, double x2, double y2) {
 		return (y2-y1)/(x2-x1);
-	}
-	
-	public void setCueBallVelocity(Ball cueBall){ 
-		cueBall.setXVelocity(100);
 	}
 }
