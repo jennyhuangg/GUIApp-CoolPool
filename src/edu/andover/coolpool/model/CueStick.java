@@ -32,6 +32,7 @@ public class CueStick {
 	
 	public Shape getView(){ return cueStickView.getLine(); }
 	
+	public Ball getCueBall() { return cueBall; }
 	public double getStartX() { return startX; }
 	public double getStartY() { return startY; }
 	public double getEndX() { return endX; }
@@ -70,7 +71,7 @@ public class CueStick {
 	public void setCueStickLocation(double mouseX, double mouseY) {
 		double cueBallX = cueBall.getCenterX();
 		double cueBallY = cueBall.getCenterY();
-		
+				
 		double distanceBalltoMouse = getDistance(cueBallX, cueBallY, mouseX, mouseY);
 		startX = (distanceTipFromCueBall / distanceBalltoMouse) * (mouseX-
 				cueBallX) + cueBallX;
