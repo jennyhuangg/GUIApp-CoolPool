@@ -5,7 +5,7 @@ import static java.lang.Math.sqrt;
 import java.util.ArrayList;
 
 import edu.andover.coolpool.GameConstants;
-import edu.andover.coolpool.controller.MouseController;
+import edu.andover.coolpool.controller.CueStickController;
 import edu.andover.coolpool.controller.PoolController;
 import edu.andover.coolpool.view.GameSounds;
 import edu.andover.coolpool.view.PoolBoardView;
@@ -27,7 +27,7 @@ public class PoolBoard {
 	private double width;
 
 	private PoolController poolController = new PoolController();
-	private MouseController mouseController = new MouseController();
+	private CueStickController cueStickController = new CueStickController();
 	
 	private PoolBoardView poolBoardView;
 
@@ -83,7 +83,7 @@ public class PoolBoard {
 	
 	private void setUpCueStick() {
 		cueStick = new CueStick(balls[15]);
-		mouseController.addMouseEventHandler(poolBoardView, cueStick);
+		cueStickController.addMouseEventHandler(poolBoardView, cueStick);
 	}
 
 	// Intializes the array of balls and places the balls in the correct

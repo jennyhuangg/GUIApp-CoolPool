@@ -10,7 +10,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 
-public class MouseController {
+public class CueStickController {
 	
 	public void addMouseEventHandler(PoolBoardView pbv, CueStick cueStick) {
 		Rectangle r = pbv.getRectangle();

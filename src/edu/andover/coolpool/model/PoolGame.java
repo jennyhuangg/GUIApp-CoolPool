@@ -20,7 +20,6 @@ public class PoolGame {
 	public void run(){
 		for (int i = 0; i < 5; i ++)
 		{
-
 			cueStick.setCueBallVelocity(poolBoard.getBalls()[15]); //cue stick has a timer
 			poolBoard.animate();
 			ArrayList<Ball> pocketedBalls = poolBoard.pocketedBalls();
