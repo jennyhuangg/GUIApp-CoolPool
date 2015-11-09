@@ -18,6 +18,8 @@ public class PoolGame {
 	}
 
 	public void run(){
+		
+		/*
 		for (int i = 0; i < 5; i ++)
 		{
 			cueStick.setCueBallVelocity(poolBoard.getBalls()[15]); //cue stick has a timer
@@ -25,15 +27,15 @@ public class PoolGame {
 			ArrayList<Ball> pocketedBalls = poolBoard.pocketedBalls();
 			updatePoints(pocketedBalls);
 			System.out.println(poolBoard.getBalls()[15].getXVelocity());
-		}
+		}*/
 		
-		/*
-		while (!gameHasEnded){
+		
+		while (!gameHasEnded && !poolBoard.stable()){
 			cueStick.setCueBallVelocity(poolBoard.getBalls()[1]); //cue stick has a timer
 			poolBoard.animate();
 			ArrayList<Ball> pocketedBalls = poolBoard.pocketedBalls();
 			updatePoints(pocketedBalls);
-		}*/
+		}
 	}
 
 	public void updatePoints(ArrayList<Ball> pocketedBalls){
