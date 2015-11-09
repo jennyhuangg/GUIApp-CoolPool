@@ -5,7 +5,6 @@ import edu.andover.coolpool.model.CueStick;
 import edu.andover.coolpool.view.PoolBoardView;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
 
 public class CueStickController {

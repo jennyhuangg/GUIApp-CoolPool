@@ -38,6 +38,8 @@ public class PoolBoard {
 
 	private int mode = 0;
 
+	public static boolean isStable;
+	
 	public PoolBoard() {
 		length = 92; //Inches
 		width = 46; //Inches
@@ -244,7 +246,7 @@ public class PoolBoard {
 
 	// Returns true if no balls are moving.
 	public boolean stable(){
-		boolean isStable = true;
+		isStable = true;
 		for (Ball ball: balls){
 			if (ball.getXVelocity() != 0 || ball.getYVelocity() != 0) {
 				isStable = false;
