@@ -2,7 +2,9 @@ package edu.andover.coolpool.view;
 
 //This class is not used in Version 0, but will be implemented in the final.
 import edu.andover.coolpool.GameConstants;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
+import javafx.scene.shape.Shape;
 
 public class CueStickView {
 	private Line line;
@@ -23,6 +25,8 @@ public class CueStickView {
 		this.endY = endYCM*GameConstants.IN_TO_PIXEL;
 
 		line = new Line(startX, startY, endX, endY);
+		line.setStrokeWidth(2.0);
+		line.setFill(Color.BROWN);
 	}
 
 	public double getStartX() { return startX; }
@@ -45,4 +49,6 @@ public class CueStickView {
 	public void setEndY(double endY) {
 		this.endY = endY*GameConstants.IN_TO_PIXEL;
 	}
+	
+	public Shape getLine() {return line; }
 }

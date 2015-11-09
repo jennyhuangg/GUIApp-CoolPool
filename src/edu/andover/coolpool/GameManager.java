@@ -5,9 +5,11 @@ import java.io.IOException;
 
 import edu.andover.coolpool.model.PoolBoard;
 import edu.andover.coolpool.view.PoolBoardView;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 

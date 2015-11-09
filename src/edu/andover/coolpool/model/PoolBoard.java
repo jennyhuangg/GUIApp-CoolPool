@@ -2,10 +2,13 @@ package edu.andover.coolpool.model;
 
 import static java.lang.Math.sqrt;
 import edu.andover.coolpool.GameConstants;
+import edu.andover.coolpool.controller.MouseController;
 import edu.andover.coolpool.controller.PoolController;
 import edu.andover.coolpool.view.GameSounds;
 import edu.andover.coolpool.view.PoolBoardView;
 import javafx.animation.AnimationTimer;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 
 // Model class for a pool board, including interactions between the
 // pool balls.
@@ -14,6 +17,7 @@ public class PoolBoard {
 
 	private Ball[] balls; //Array of balls
 	private Pocket[] pockets; //Array of pockets
+	private CueStick cueStick;
 
 	private boolean isPaused;
 
@@ -21,6 +25,8 @@ public class PoolBoard {
 	private double width;
 
 	private PoolController poolController = new PoolController();
+	private MouseController mouseController = new MouseController();
+	
 	private PoolBoardView poolBoardView;
 
 	private double boardX; //X coordinate of top left corner of playable board
@@ -51,6 +57,7 @@ public class PoolBoard {
 
 		setUpBalls();
 		setUpPockets();
+		setUpCueStick();
 
 		for (Pocket pocket: pockets){
 			poolBoardView.getPane().getChildren().add(pocket.getView());
@@ -59,14 +66,26 @@ public class PoolBoard {
 		for (Ball ball: balls){
 			poolBoardView.getPane().getChildren().add(ball.getView());
 		}
+		
+		poolBoardView.getPane().getChildren().add(cueStick.getView());
+		
+		//mouseController.addMouseEventHandler(poolBoardView.getPane(), cueStick);
 	}
-
+	
+	private void addMouseEventCueStick(BorderPane rl) {
+		mouseController.addMouseEventHandler(rl, cueStick);
+	}
+	
 	private void setUpPockets() {
 		pockets = new Pocket[6];
 
 		for (int i = 0; i < pockets.length; i++) {
 			pockets[i] = new Pocket(i, length, width, boardX, boardY);
 		}
+	}
+	
+	private void setUpCueStick() {
+		cueStick = new CueStick(balls[15]);
 	}
 
 	// Intializes the array of balls and places the balls in the correct
