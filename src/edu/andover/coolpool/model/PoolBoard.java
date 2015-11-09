@@ -119,7 +119,7 @@ public class PoolBoard {
 				centerY - 4 * radius, 0);
 
 		// Places cue ball in correct spot.
-		balls[15] = new Ball(length * 1/4 + boardX, width / 2 + boardY, 2);
+		balls[15] = new CueBall(length * 1/4 + boardX, width / 2 + boardY);
 
 		// Allows mouse click to move cue ball.
 		poolController.addMouseEventHandler(balls[15]);
