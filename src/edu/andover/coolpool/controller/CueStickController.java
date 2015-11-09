@@ -14,7 +14,17 @@ public class CueStickController {
 	
 	public void addMouseEventHandler(PoolBoardView pbv, CueStick cueStick) {
 		Rectangle r = pbv.getRectangle();
-	    r.setOnMouseMoved(new EventHandler<MouseEvent>() {
+	    r.addEventHandler(MouseEvent.MOUSE_MOVED, new EventHandler<MouseEvent>() {
+	    	@Override
+	    	public void handle(MouseEvent me) {
+	    		cueStick.setCueStickLocation(me.getX(), me.getY());
+	    	}
+	    });
+	}
+	
+	public void addMouseClickEventHandler(PoolBoardView pbv, CueStick cueStick) {
+		Rectangle r = pbv.getRectangle();
+	    r.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 	    	@Override
 	    	public void handle(MouseEvent me) {
 	    		cueStick.setCueStickLocation(me.getX(), me.getY());
