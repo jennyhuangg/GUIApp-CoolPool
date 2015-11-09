@@ -79,6 +79,11 @@ public class CueStick {
 				cueBallX) + cueBallX;
 		endY = (distanceEndFromCueBall / distanceBalltoMouse) * (mouseY-
 				cueBallY) + cueBallY;
+		
+		this.setStartX(startX);
+		this.setStartY(startY);
+		this.setEndX(endX);
+		this.setEndY(endY);
 	}
 	
 	public double getDistance(double x1, double y1, double x2, double y2) {
