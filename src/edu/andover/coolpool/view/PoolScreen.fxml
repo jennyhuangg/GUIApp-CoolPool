@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.*?>
 <?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
@@ -8,9 +9,20 @@
    <children>
       <Pane prefHeight="720.0" prefWidth="250.0" style="-fx-background-color: #d3d3d3;">
          <children>
-            <Text layoutX="14.0" layoutY="347.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Click on the cue ball to make it move." textAlignment="CENTER" wrappingWidth="203.03045654296875">
+            <Text layoutX="22.0" layoutY="347.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Click and drag the cue stick to take a shot" textAlignment="CENTER" wrappingWidth="203.03045654296875">
                <font>
                   <Font size="27.0" />
+               </font>
+            </Text>
+            <Pane layoutY="437.0" prefHeight="283.0" prefWidth="250.0" />
+            <Text layoutX="22.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Player 1">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Text>
+            <Text layoutX="158.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Player 2">
+               <font>
+                  <Font size="18.0" />
                </font>
             </Text>
          </children></Pane>
