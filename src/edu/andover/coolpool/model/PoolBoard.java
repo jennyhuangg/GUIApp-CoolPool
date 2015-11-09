@@ -282,5 +282,7 @@ public class PoolBoard {
 		balls[15].setCenterY(width / 2 + boardY);
 	}
 	
+	public void resetPocketedBalls() {pocketedBalls = new ArrayList<Ball>(); }
+	
 	
 }

@@ -3,6 +3,7 @@ package edu.andover.coolpool;
 // This class contains methods to set each scene.
 import java.io.IOException;
 
+import edu.andover.coolpool.controller.PoolScreenController;
 import edu.andover.coolpool.model.PoolBoard;
 import edu.andover.coolpool.model.PoolGame;
 import edu.andover.coolpool.view.PoolBoardView;
@@ -49,9 +50,9 @@ public class GameManager {
 		try {
 			
 			Parent poolScreen = (Parent) loader.load();
-
+			PoolScreenController poolScreenController = loader.getController();
 			
-			PoolGame poolGame = new PoolGame();
+			PoolGame poolGame = new PoolGame(poolScreenController);
 			PoolBoard poolBoard = poolGame.getPoolBoard();
 			
 			rootLayout.setCenter(poolScreen);
@@ -61,22 +62,6 @@ public class GameManager {
 			
 			pane.getChildren().add(poolBoardView.getPane());
 			scene.setRoot(rootLayout);
-			
-			poolGame.run();
-			
-			/*
-			PoolBoard poolBoard = new PoolBoard();
-
-			rootLayout.setCenter(poolScreen);
-			Pane pane = (Pane) poolScreen.getChildrenUnmodifiable().get(1);
-			
-			PoolBoardView poolBoardView = poolBoard.getView();
-			
-			pane.getChildren().add(poolBoardView.getPane());
-			scene.setRoot(rootLayout);
-
-			
-			poolBoard.animate();*/
 
 		} catch (IOException e) {
 			e.printStackTrace();

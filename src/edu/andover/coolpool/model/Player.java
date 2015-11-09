@@ -44,5 +44,7 @@ public class Player {
 	
 	public void addPoint() { points += 1; }
 	
+	public int getPoints() { return points; }
+	
 }
 

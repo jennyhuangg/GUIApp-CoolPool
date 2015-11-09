@@ -114,7 +114,7 @@ public class CueStick {
 		cueBall.setXVelocity(xVel);
 		cueBall.setYVelocity(yVel);
 		
-		poolGame.run();
+		poolGame.turn();
 	}
 
 	public double getDistance(double x1, double y1, double x2, double y2) {

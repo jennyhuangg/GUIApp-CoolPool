@@ -3,6 +3,7 @@ package edu.andover.coolpool.model;
 import java.util.ArrayList;
 
 import edu.andover.coolpool.controller.CueStickController;
+import edu.andover.coolpool.controller.PoolScreenController;
 import javafx.animation.AnimationTimer;
 
 public class PoolGame {
@@ -14,9 +15,10 @@ public class PoolGame {
 	
 	AnimationTimer timer;
 	private CueStickController cueStickController;
+	private PoolScreenController poolScreenController;
 
 
-	public PoolGame(){
+	public PoolGame(PoolScreenController poolScreenController){
 		poolBoard = new PoolBoard();
 		setUpCueStick();
 		
@@ -29,14 +31,18 @@ public class PoolGame {
 				poolBoard.update();
 				if (poolBoard.stable()) { 
 					this.stop();
+					updatePoints(poolBoard.pocketedBalls());
+					poolBoard.resetPocketedBalls();
 				}
 			}
 		};
+		
+		this.poolScreenController = poolScreenController;
 	}
 
-	public void run(){
+	public void turn(){
 		timer.start();
-
+		
 	}
 
 	public void updatePoints(ArrayList<Ball> pocketedBalls){
@@ -61,6 +67,9 @@ public class PoolGame {
 				}
 			}
 		}
+		
+		poolScreenController.setPointsText(players[0].getPoints(), 
+				players[1].getPoints());
 	}
 
 	public PoolBoard getPoolBoard(){
@@ -76,4 +85,6 @@ public class PoolGame {
 		cueStickController.addMouseDraggedEventHandler(poolBoard.getView(), cueStick);
 		poolBoard.getView().getPane().getChildren().add(cueStick.getView());
 	}
+	
+	public Player[] getPlayers(){ return players; }
 }
