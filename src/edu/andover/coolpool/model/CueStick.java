@@ -67,13 +67,15 @@ public class CueStick {
 	public void setCueStickLocationOnDrag(double initMouseX, double initMouseY,
 			double endMouseX, double endMouseY) {
 		
-		//convert mouse coordinates so that they stay on the same line
-		
-		double distanceInitToEnd = getDistance(initMouseX, initMouseY,
-				endMouseX, endMouseY);
+		//vector projection
+		double distanceInitToEnd = (1 / cueStickLength)*(endMouseX - 
+				this.getStartX())*(this.getEndX() - this.getStartX()) + 
+				(endMouseY - this.getEndY())*(this.getEndY() - this.getEndY());
+
 		double newDistanceTipFromCueBall = distanceTipFromCueBall + distanceInitToEnd;
 		
-		setNewCueStickLocation(newDistanceTipFromCueBall, endMouseX, endMouseY);
+		setNewCueStickLocation( newDistanceTipFromCueBall, initMouseX, initMouseY);
+		
 	}
 	
 	public void setCueStickLocationAfterHit(double mouseX, double mouseY) {
@@ -81,21 +83,21 @@ public class CueStick {
 		setNewCueStickLocation(newDistanceTipFromCueBall, mouseX, mouseY);
 	}
 	
-	public void setNewCueStickLocation(double distanceTipFromCueBall, double mouseX, double mouseY) {
+	public void setNewCueStickLocation(double distanceTipFromCueBall, double x, double y) {
 		double cueBallX = cueBall.getCenterX();
 		double cueBallY = cueBall.getCenterY();
 		
-		double distanceBalltoMouse = getDistance(cueBallX, cueBallY, mouseX, mouseY);
+		double distanceBalltoMouse = getDistance(cueBallX, cueBallY, x, y);
 		
 		double distanceEndFromCueBall = distanceTipFromCueBall + cueStickLength;
 		
-		startX = (distanceTipFromCueBall / distanceBalltoMouse) * (mouseX-
+		startX = (distanceTipFromCueBall / distanceBalltoMouse) * (x -
 				cueBallX) + cueBallX;
-		startY = (distanceTipFromCueBall / distanceBalltoMouse) * (mouseY-
+		startY = (distanceTipFromCueBall / distanceBalltoMouse) * (y -
 				cueBallY) + cueBallY;
-		endX = (distanceEndFromCueBall / distanceBalltoMouse) * (mouseX-
+		endX = (distanceEndFromCueBall / distanceBalltoMouse) * (x -
 				cueBallX) + cueBallX;
-		endY = (distanceEndFromCueBall / distanceBalltoMouse) * (mouseY-
+		endY = (distanceEndFromCueBall / distanceBalltoMouse) * (y -
 				cueBallY) + cueBallY;
 		
 		this.setStartX(startX);
@@ -117,6 +119,18 @@ public class CueStick {
 
 	public double getDistance(double x1, double y1, double x2, double y2) {
 		return Math.sqrt((x1-x2)*(x1-x2) + (y1-y2)*(y1-y2));
+	}
+	
+	public double getAngle (double x1, double y1, double x2, double y2) {
+	    double xdiff = x1 - x2;
+	    double ydiff = y1 - y2;
+	    double tan = xdiff / ydiff;
+	    double atan = Math.atan2(ydiff, xdiff);
+	    return atan;
+	}
+	
+	public static double getPerpendicularAngle (double angle) {
+	    return angle + Math.PI / 2;
 	}
 	
 	public double getSlope(double x1, double y1, double x2, double y2) {
