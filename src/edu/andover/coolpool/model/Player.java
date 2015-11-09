@@ -40,4 +40,7 @@ public class Player {
 	public void setCanPocketEightBall(){ 
 		canPocketEightBall = true; 
 	}
+	
+	public void addPoint() { }
+	
 }

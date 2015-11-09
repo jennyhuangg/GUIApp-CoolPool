@@ -44,5 +44,7 @@ public class CueStick {
 		this.endY = endY;
 		cueStickView.setEndY(endY);
 	}
+	
+	public void setCueBallVelocity(Ball cueBall){ }
 
 }
