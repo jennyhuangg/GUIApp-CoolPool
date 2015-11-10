@@ -136,12 +136,13 @@ public class CueStick {
 	}
 	public void updateCueBallVelocity(double initMouseDragX, double endMouseDragX, 
 			double initMouseDragY, double endMouseDragY) {
-		double amplifier = .5;
+		double amplifier = .2;
 		double xVel = amplifier*Math.abs(initMouseDragX - endMouseDragX)*dirX;
 		double yVel = amplifier*Math.abs(initMouseDragY - endMouseDragY)*dirY;
 		cueBall.setXVelocity(xVel);
 		cueBall.setYVelocity(yVel);
-		System.out.println(cueBall.getXVelocity());
+		
+		poolGame.turn();
 	}
 	
 	public void setDirection(double mouseX, double mouseY) {

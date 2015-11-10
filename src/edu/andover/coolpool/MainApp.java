@@ -25,7 +25,6 @@ public class MainApp extends Application {
 		
 		scene = new Scene(root, width, length);
 		
-		
 		primaryStage.setTitle("Cool Pool");
 		primaryStage.setWidth(width);
 		primaryStage.setHeight(length);
