@@ -13,7 +13,7 @@ public class CueStick {
 	private double dirX;
 	private double dirY;
 	
-	//for drag method
+	//for when cuestick is dragging
 	private double initStartX;
 	private double initStartY;
 	private double initEndX;
@@ -94,17 +94,17 @@ public class CueStick {
 				*(initEndY - initStartY)));
 		}
 		else if (endMouseX < initMouseX && endMouseY > initMouseY) {
-			distanceInitToEnd = Math.abs((1 / cueStickLength)*((- endMouseX + 
+			distanceInitToEnd = Math.abs((1 / cueStickLength)*((-endMouseX + 
 				initStartX)*(initEndX - initStartX) + (endMouseY - initStartY)
 				*(initEndY - initStartY)));
 		}
 		else if (endMouseX > initMouseX && endMouseY < initMouseY) {
 			distanceInitToEnd = Math.abs((1 / cueStickLength)*((endMouseX - 
-				initStartX)*(initEndX - initStartX) + (-endMouseY + initStartY)
+				initStartX)*(initEndX - initStartX) + (- endMouseY + initStartY)
 				*(initEndY - initStartY)));
 		}
 		else if (endMouseX < initMouseX && endMouseY < initMouseY) {
-			distanceInitToEnd = Math.abs((1 / cueStickLength)*((-endMouseX + 
+			distanceInitToEnd = Math.abs((1 / cueStickLength)*((- endMouseX + 
 	 				initStartX)*(initEndX - initStartX) + (-endMouseY + initStartY)
 	 				*(initEndY - initStartY)));
 		}
@@ -151,21 +151,26 @@ public class CueStick {
 			else if (cueBallY < initMouseY ) {
 				if (endMouseX >=initMouseX && endMouseY <= initMouseY) {
 					distanceInitToEnd = distanceInit;
+					System.out.println("TR past init");
 				}	
-				else
+				else {
 					distanceInitToEnd = calcDistanceInitToEnd(endMouseX, endMouseY);
+					System.out.println("TR not past init" + distanceInitToEnd);
+				}
 			}
 			else {
 				distanceInitToEnd = distanceInit;
 
 			}
 		}
-		else { //cueBallX < initMouseX mouse is right
+		//cueBallX < initMouseX
+		//mouse is right
+		else { 
 			//mouse is higher
 			if (cueBallY > initMouseY) {
 				if (endMouseX <=initMouseX && endMouseY >= initMouseY) {
 					distanceInitToEnd = distanceInit;
-					System.out.println("TR past init");
+					System.out.println("TR past init" );
 				}	
 				else {
 					distanceInitToEnd = calcDistanceInitToEnd(endMouseX, endMouseY);
@@ -177,10 +182,11 @@ public class CueStick {
 				//end mouse is to left of init mous, end mouse ishigher than init mouse
 				if (endMouseX <=initMouseX && endMouseY <= initMouseY) {
 					distanceInitToEnd = distanceInit;
+					System.out.println("BL past init");
 				}	
 				else {
 					distanceInitToEnd = calcDistanceInitToEnd(endMouseX, endMouseY);
-					
+					System.out.println("BL not past init" + distanceInitToEnd);
 				}
 			}
 			else {
@@ -237,8 +243,6 @@ public class CueStick {
 	public void setDirection(double mouseX, double mouseY) {
 		dirX = -mouseX + cueBall.getCenterX();
 		dirY = -mouseY + cueBall.getCenterY();
-		//dirX = Math.abs(distanceX) / distanceX;
-		//dirY = Math.abs(distanceY) / distanceY;
 	}
 	
 	public double getDistance(double x1, double y1, double x2, double y2) {
