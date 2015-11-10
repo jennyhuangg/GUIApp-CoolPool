@@ -29,14 +29,16 @@ public class CueStick {
 	private Ball cueBall;
 	
 	private CueStickView cueStickView;
+	private PoolGame poolGame;
 
-	public CueStick(Ball cueBall) {
+	public CueStick(Ball cueBall, PoolGame poolGame) {
 		this.cueBall = cueBall;
 		startX = cueBall.getCenterX() - distanceTipFromCueBall;
 		startY = cueBall.getCenterY();
 		endX = startX - cueStickLength;
 		endY = startY;
 		cueStickView = new CueStickView(startX, startY, endX, endY);
+		this.poolGame = poolGame;
 	}
 	
 	public Shape getView(){ return cueStickView.getLine(); }
@@ -148,5 +150,9 @@ public class CueStick {
 	}
 	public double getDistance(double x1, double y1, double x2, double y2) {
 		return Math.sqrt((x1-x2)*(x1-x2) + (y1-y2)*(y1-y2));
+	}
+	
+	public void setCueBall(Ball cueBall){
+		this.cueBall = cueBall;
 	}
 }

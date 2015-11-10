@@ -14,9 +14,9 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 
 public class GameManager {
-	private Scene scene;
+	private static Scene scene;
 
-	private BorderPane rootLayout;
+	private static BorderPane rootLayout;
 
 	public GameManager(Scene scene){
 	    this.scene = scene;
@@ -69,7 +69,7 @@ public class GameManager {
 	}
 	
 	// Implementation not yet finished; not used in version 0
-	public void initEndScreen(){
+	public static void initEndScreen(){
 		FXMLLoader loader = new FXMLLoader();
 		loader.setLocation(
 				GameManager.class.getResource("view/EndScreen.fxml"));

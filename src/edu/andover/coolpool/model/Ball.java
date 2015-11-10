@@ -57,9 +57,9 @@ public class Ball {
 	public void setPocketed() {
 		isPocketed = !isPocketed;
 		if (isPocketed) {
-			ballView.remove();
 			xVelocity = 0;
 			yVelocity = 0;
+			ballView.remove();
 		}
 	}
 	

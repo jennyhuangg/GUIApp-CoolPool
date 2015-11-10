@@ -70,6 +70,13 @@ public class PoolScreenController {
     	statusText.setText("Player " + playerNum + " has pocketed "
     			+ "a ball.");
     }
+    
+    @FXML
+    public void setStatusPocketedCueBall(int currPlayerInd){
+    	int playerNum = currPlayerInd + 1;
+    	statusText.setText("Player " + playerNum + " pocketed "
+    			+ "the cue ball. Scratch!");
+    }
 			
 
 }

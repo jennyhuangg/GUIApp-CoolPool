@@ -39,7 +39,7 @@ public class CueStickController {
 	    		mouseX = me.getX()*GameConstants.PIXEL_TO_IN;
 	    		mouseY = me.getY()*GameConstants.PIXEL_TO_IN;
 	    		cueStick.setInitMouse(mouseX, mouseY);
-	    		cueStick.setDirection(mouseX, mouseY);
+	    		
 	    	}
 	    });
 	}
