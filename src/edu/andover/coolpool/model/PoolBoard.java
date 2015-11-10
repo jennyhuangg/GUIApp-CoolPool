@@ -15,6 +15,7 @@ public class PoolBoard {
 
 	private Ball[] balls; //Array of balls
 	private ArrayList<Ball> pocketedBalls = new ArrayList<Ball>();
+	private ArrayList<Ball> unpocketedBalls = new ArrayList<Ball>();
 	private Pocket[] pockets; //Array of pockets
 
 	private double length; 
@@ -106,13 +107,17 @@ public class PoolBoard {
 
 		// Places cue ball in correct spot.
 		balls[15] = new Ball(length * 1/4 + boardX, width / 2 + boardY, 2);
+		
+		for (Ball b: balls) {
+			unpocketedBalls.add(b);
+			}
 	}
 
 	//updates positions and states of the balls at each time step of 
 	//0.01 seconds
 	public void update() {
 		double elapsedSeconds = 0.01;
-		for (Ball b : balls) {
+		for (Ball b : unpocketedBalls) {
 			b.setCenterX(b.getCenterX() + elapsedSeconds * b.getXVelocity());
 			b.setCenterY(b.getCenterY() + elapsedSeconds * b.getYVelocity());
 		}
@@ -135,6 +140,7 @@ public class PoolBoard {
 						&& !ball.getIsPocketed()){
 					ball.setPocketed();
 					pocketedBalls.add(ball);
+					unpocketedBalls.remove(ball);
 					GameSounds.BALL_FALLING_IN_POCKET.play();
 				}
 			}
@@ -142,7 +148,7 @@ public class PoolBoard {
 	}
 
 	public void checkCollisions() {
-		for (Ball ball: balls)
+		for (Ball ball: unpocketedBalls)
 		{
 			// Changes velocity when ball collides with vertical edges.
 			if ((ball.getCenterX() - ball.getRadius() <= 
@@ -160,7 +166,7 @@ public class PoolBoard {
 			}
 
 			// Changes velocity when ball collides with other balls.
-			for (Ball b2: balls){
+			for (Ball b2: unpocketedBalls){
 				final double deltaX = b2.getCenterX() - ball.getCenterX() ;
 				final double deltaY = b2.getCenterY() - ball.getCenterY() ;
 				if (colliding(ball, b2, deltaX, deltaY)) {
@@ -176,7 +182,7 @@ public class PoolBoard {
 	public void decelerateBalls(){
 		double elapsedSeconds = 0.1;
 
-		for (Ball ball: balls){
+		for (Ball ball: unpocketedBalls){
 			double xVel = ball.getXVelocity();
 			double yVel = ball.getYVelocity();
 			double speed = Math.sqrt(Math.pow(xVel, 2) + Math.pow(yVel, 2));
@@ -206,7 +212,7 @@ public class PoolBoard {
 	// Returns true if no balls are moving.
 	public boolean stable(){
 		isStable = true;
-		for (Ball ball: balls){
+		for (Ball ball: unpocketedBalls){
 			if (ball.getXVelocity() != 0 || ball.getYVelocity() != 0) {
 				isStable = false;
 			}
@@ -277,12 +283,14 @@ public class PoolBoard {
 	public ArrayList<Ball> pocketedBalls() { return pocketedBalls; }
 	
 	public void resetCueBall() { //will change to get User Input Later
-		balls[15].setPocketed();
-		balls[15].setCenterX(length * 1/4 + boardX);
-		balls[15].setCenterY(width / 2 + boardY);
+		pocketedBalls.remove(balls[15]);
+		balls[15] = new Ball(length * 1/4 + boardX, width / 2 + boardY, 2);
+		poolBoardView.getPane().getChildren().add(balls[15].getView());
+		unpocketedBalls.add(balls[15]);
 	}
 	
 	public void resetPocketedBalls() {pocketedBalls = new ArrayList<Ball>(); }
+	
 	
 	
 }
