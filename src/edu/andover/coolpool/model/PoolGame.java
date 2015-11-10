@@ -21,8 +21,7 @@ public class PoolGame {
 	private PoolScreenController poolScreenController;
 	private CueBallController cueBallController;
 	boolean streak = false;
-
-
+	
 	public PoolGame(PoolScreenController poolScreenController){
 		poolBoard = new PoolBoard();
 		setUpCueStick();
@@ -42,13 +41,14 @@ public class PoolGame {
 					this.stop();
 					updatePoints(poolBoard.pocketedBalls());
 					poolBoard.resetPocketedBalls();
+					cueStick.setCanMove(true);
 				}
 			}
 		};
 		
 		this.poolScreenController = poolScreenController;
 	}
-
+	
 	public void turn(){
 		timer.start();
 	}

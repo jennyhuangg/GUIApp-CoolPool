@@ -125,6 +125,7 @@ public class PoolBoard {
 		checkPockets();
 		checkCollisions();
 		decelerateBalls();
+		
 	}
 
 	// Checks to see if any balls have fallen inside the pockets

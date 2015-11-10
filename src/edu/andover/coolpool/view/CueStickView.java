@@ -59,5 +59,10 @@ public class CueStickView {
 		Pane parentNode = (Pane) line.getParent();
 		parentNode.getChildren().remove(line);
 	}
+	
+	public void add() {
+		Pane parentNode = (Pane) line.getParent();
+		parentNode.getChildren().add(line);
+	}
 	public Shape getLine() {return line; }
 }
