@@ -1,6 +1,5 @@
 package edu.andover.coolpool.controller;
 
-import com.sun.javafx.geom.Shape;
 
 import edu.andover.coolpool.GameConstants;
 import edu.andover.coolpool.model.CueStick;
@@ -24,7 +23,10 @@ public class CueStickController {
 	    	public void handle(MouseEvent me) {
 	    		isMousePressed = true;
 	    		cueStick.getView().setStroke(Color.PINK);
-	    		
+	    		mouseX = me.getX()*GameConstants.PIXEL_TO_IN;
+	    		mouseY = me.getY()*GameConstants.PIXEL_TO_IN;
+	    		cueStick.setInitMouse(mouseX, mouseY);
+	    		cueStick.setDirection(mouseX, mouseY);
 	    	}
 	    });
 		
@@ -34,6 +36,9 @@ public class CueStickController {
 	    	public void handle(MouseEvent me) {
 	    		isMousePressed = true;
 	    		cueStick.getView().setStroke(Color.PINK);
+	    		mouseX = me.getX()*GameConstants.PIXEL_TO_IN;
+	    		mouseY = me.getY()*GameConstants.PIXEL_TO_IN;
+	    		cueStick.setInitMouse(mouseX, mouseY);
 	    	}
 	    });
 	}
@@ -57,13 +62,15 @@ public class CueStickController {
 		r.addEventHandler(MouseEvent.MOUSE_DRAGGED, new EventHandler<MouseEvent>() {
 	    	@Override
 	    	public void handle(MouseEvent me) {
+	    		isMousePressed = false;
 	    		double initMouseX = mouseX;
 	    		double initMouseY = mouseY;
 	    		double endMouseX = me.getX()*GameConstants.PIXEL_TO_IN;
 	    		double endMouseY = me.getY()*GameConstants.PIXEL_TO_IN;
-	    		if (cueStick.getDistance(initMouseX, initMouseY, endMouseX, endMouseY) < 20) {
-	    		cueStick.setCueStickLocationOnDrag(initMouseX, initMouseY, endMouseX, endMouseY);
-	    		cueStick.getView().setStroke(Color.BLUE);
+	    		double stretchLimit = 15.0;
+	    		if (cueStick.getDistance(initMouseX, initMouseY, endMouseX, endMouseY) < stretchLimit) {
+	    		cueStick.setCueStickLocationOnDrag( endMouseX, endMouseY);
+	    		cueStick.getView().setStroke(Color.PINK);
 	    		}
 	    	}
 	    });
@@ -72,13 +79,15 @@ public class CueStickController {
 		l.addEventHandler(MouseEvent.MOUSE_DRAGGED, new EventHandler<MouseEvent>() {
 	    	@Override
 	    	public void handle(MouseEvent me) {
+	    		isMousePressed = false;
 	    		double initMouseX = mouseX;
 	    		double initMouseY = mouseY;
 	    		double endMouseX = me.getX()*GameConstants.PIXEL_TO_IN;
 	    		double endMouseY = me.getY()*GameConstants.PIXEL_TO_IN;
-	    		if (cueStick.getDistance(initMouseX, initMouseY, endMouseX, endMouseY) < 20) {
-	    		cueStick.setCueStickLocationOnDrag(initMouseX, initMouseY, endMouseX, endMouseY);
-	    		cueStick.getView().setStroke(Color.BLUE);
+	    		double stretchLimit = 15.0;
+	    		if (cueStick.getDistance(initMouseX, initMouseY, endMouseX, endMouseY) < stretchLimit) {
+	    		cueStick.setCueStickLocationOnDrag( endMouseX, endMouseY);
+	    		cueStick.getView().setStroke(Color.PINK);
 	    		}
 	    	}
 	    });
