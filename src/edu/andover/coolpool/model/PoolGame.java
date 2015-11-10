@@ -27,6 +27,7 @@ public class PoolGame {
 		players[0] = new Player();
 		players[1] = new Player();
 		
+		
 		timer = new AnimationTimer() {
 			@Override
 			public void handle(long timestamp) {

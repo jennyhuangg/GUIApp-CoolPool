@@ -41,6 +41,7 @@ public class PoolBoard {
 		setUpBalls();
 		setUpPockets();
 
+
 		for (Pocket pocket: pockets){
 			poolBoardView.getPane().getChildren().add(pocket.getView());
 		}

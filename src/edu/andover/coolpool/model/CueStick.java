@@ -98,7 +98,7 @@ public class CueStick {
 		double newDistanceTipFromCueBall = distanceTipFromCueBall + distanceInitToEnd;
 			//	- distanceInitMouseToCueBall- getDistance(initStartX, initStartY,);
 		//System.out.println(distanceInitMouseToCueBall);
-		System.out.println(distanceInitToEnd);
+		//System.out.println(distanceInitToEnd);
 		setNewCueStickLocation(newDistanceTipFromCueBall, initMouseX, initMouseY);
 	
 		isSet = false;
@@ -144,6 +144,7 @@ public class CueStick {
 	public void setDirection(double mouseX, double mouseY) {
 		dirX = cueBall.getCenterX()-mouseX;
 		dirY = cueBall.getCenterY()-mouseY;
+		System.out.println(dirX);
 	}
 	public double getDistance(double x1, double y1, double x2, double y2) {
 		return Math.sqrt((x1-x2)*(x1-x2) + (y1-y2)*(y1-y2));
