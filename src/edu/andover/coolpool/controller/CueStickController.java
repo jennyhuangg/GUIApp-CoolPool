@@ -126,10 +126,7 @@ public class CueStickController {
 	    		cueStick.setCueStickLocationAfterHit(mouseX, mouseY);
 	    		cueStick.updateCueBallVelocity(initMouseDragX, endMouseDragX, 
 	    				initMouseDragY, endMouseDragY);
-	    		
-	    		cueStick.updateCueBallVelocity(initMouseDragX, endMouseDragX, 
-	    				initMouseDragY, endMouseDragY);
-	    		
+
 	    		isMousePressed = false;
 	    		cueStick.getView().setStroke(Color.BROWN);
 	    	}

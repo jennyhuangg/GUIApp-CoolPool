@@ -136,17 +136,17 @@ public class CueStick {
 	}
 	public void updateCueBallVelocity(double initMouseDragX, double endMouseDragX, 
 			double initMouseDragY, double endMouseDragY) {
-		double amplifier = 4;
-		double xVel = amplifier*(initMouseDragX - endMouseDragX)*dirX;
-		double yVel = amplifier*(initMouseDragY - endMouseDragY)*dirY;
+		double amplifier = .5;
+		double xVel = amplifier*Math.abs(initMouseDragX - endMouseDragX)*dirX;
+		double yVel = amplifier*Math.abs(initMouseDragY - endMouseDragY)*dirY;
 		cueBall.setXVelocity(xVel);
 		cueBall.setYVelocity(yVel);
+		System.out.println(cueBall.getXVelocity());
 	}
 	
 	public void setDirection(double mouseX, double mouseY) {
 		dirX = cueBall.getCenterX()-mouseX;
 		dirY = cueBall.getCenterY()-mouseY;
-		System.out.println(dirX);
 	}
 	public double getDistance(double x1, double y1, double x2, double y2) {
 		return Math.sqrt((x1-x2)*(x1-x2) + (y1-y2)*(y1-y2));
