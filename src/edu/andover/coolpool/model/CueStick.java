@@ -136,7 +136,7 @@ public class CueStick {
 	}
 	public void updateCueBallVelocity(double initMouseDragX, double endMouseDragX, 
 			double initMouseDragY, double endMouseDragY) {
-		double amplifier = .2;
+		double amplifier = .35;
 		double xVel = amplifier*Math.abs(initMouseDragX - endMouseDragX)*dirX;
 		double yVel = amplifier*Math.abs(initMouseDragY - endMouseDragY)*dirY;
 		cueBall.setXVelocity(xVel);
