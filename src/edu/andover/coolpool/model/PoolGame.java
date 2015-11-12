@@ -42,6 +42,7 @@ public class PoolGame {
 					updatePoints(poolBoard.pocketedBalls());
 					poolBoard.resetPocketedBalls();
 					cueStick.setCanMove(true);
+					cueStick.setCanReset(true);
 				}
 			}
 		};

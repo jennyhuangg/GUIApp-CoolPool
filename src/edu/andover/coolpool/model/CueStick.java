@@ -20,9 +20,9 @@ public class CueStick {
 	private double initEndY;
 	private double initMouseX;
 	private double initMouseY;
-	
-	private boolean isSet = false;
-	
+	private double distanceInit;
+
+	private boolean canReset = true;
 	private boolean canMove = true;
 	
 	private static final double distanceTipFromCueBall = 3.0;
@@ -53,6 +53,7 @@ public class CueStick {
 	public double getEndX() { return endX; }
 	public double getEndY() { return endY; }
 
+	public void setCanReset(boolean canReset) { this.canReset = canReset; }
 	public void setStartX(double startX) {
 		this.startX = startX;
 		cueStickView.setStartX(startX);
@@ -86,50 +87,34 @@ public class CueStick {
 	
 	public double calcDistanceInitToEnd (double endMouseX, double endMouseY) {
  		//vector projection to maintain angle that the ball is hit at
-		double distanceInitToEnd = 0;
+		double distanceInitToEnd = Math.abs((1 / cueStickLength)*((endMouseX - 
+				initStartX)*(initEndX - initStartX) + (endMouseY - initStartY)
+				*(initEndY - initStartY)));
 		
-		if (endMouseX > initMouseX && endMouseY > initMouseY) {
-			distanceInitToEnd = Math.abs((1 / cueStickLength)*((endMouseX - 
-				initStartX)*(initEndX - initStartX) + (endMouseY - initStartY)
-				*(initEndY - initStartY)));
-		}
-		else if (endMouseX < initMouseX && endMouseY > initMouseY) {
-			distanceInitToEnd = Math.abs((1 / cueStickLength)*((-endMouseX + 
-				initStartX)*(initEndX - initStartX) + (endMouseY - initStartY)
-				*(initEndY - initStartY)));
-		}
-		else if (endMouseX > initMouseX && endMouseY < initMouseY) {
-			distanceInitToEnd = Math.abs((1 / cueStickLength)*((endMouseX - 
-				initStartX)*(initEndX - initStartX) + (- endMouseY + initStartY)
-				*(initEndY - initStartY)));
-		}
-		else if (endMouseX < initMouseX && endMouseY < initMouseY) {
-			distanceInitToEnd = Math.abs((1 / cueStickLength)*((- endMouseX + 
-	 				initStartX)*(initEndX - initStartX) + (-endMouseY + initStartY)
-	 				*(initEndY - initStartY)));
-		}
 		return distanceInitToEnd;
 	}
 	
 	public double getDistanceInit(double initMouseX, double initMouseY) {
-	if (!isSet) {
-		initStartX = this.getStartX();
-		initStartY = this.getStartY();
-		initEndX = this.getEndX();
-		initEndY = this.getEndY();
+		if (canReset) {
+			initStartX = this.getStartX();
+			initStartY = this.getStartY();
+			initEndX = this.getEndX();
+			initEndY = this.getEndY();
+			this.initMouseX =  initMouseX;
+			this.initMouseY = initMouseY;
+			
+			distanceInit = Math.abs((1 / cueStickLength)*((initMouseX - 
+				initStartX)*(initEndX - initStartX) + (initMouseY - initStartY)
+				*(initEndY - initStartY)));
+		}
+		
+		canReset = false;
+		return distanceInit;
 	}
-	isSet = true;
 	
-	double distanceInit = Math.abs((1 / cueStickLength)*((initMouseX - 
-			initStartX)*(initEndX - initStartX) + (initMouseY - initStartY)
-			*(initEndY - initStartY)));
-	
-	return distanceInit;
-	
-	}
 	public void setCueStickLocationOnDrag(double initMouseX, double initMouseY,
 			double endMouseX, double endMouseY) {
-		
+		if (canMove){
 		double cueBallX = cueBall.getCenterX();
 		double cueBallY = cueBall.getCenterY();
 		
@@ -141,21 +126,17 @@ public class CueStick {
 			if (cueBallY > initMouseY) {
 				if (endMouseX >=initMouseX && endMouseY >= initMouseY) {
 					distanceInitToEnd = distanceInit;
-					System.out.println("TL past init");
 				}	
 				else {
 					distanceInitToEnd = calcDistanceInitToEnd(endMouseX, endMouseY);
-					System.out.println("TL not past init" + distanceInitToEnd);
 				}
 			}	
 			else if (cueBallY < initMouseY ) {
 				if (endMouseX >=initMouseX && endMouseY <= initMouseY) {
 					distanceInitToEnd = distanceInit;
-					System.out.println("TR past init");
 				}	
 				else {
 					distanceInitToEnd = calcDistanceInitToEnd(endMouseX, endMouseY);
-					System.out.println("TR not past init" + distanceInitToEnd);
 				}
 			}
 			else {
@@ -163,30 +144,21 @@ public class CueStick {
 
 			}
 		}
-		//cueBallX < initMouseX
-		//mouse is right
 		else { 
-			//mouse is higher
 			if (cueBallY > initMouseY) {
 				if (endMouseX <=initMouseX && endMouseY >= initMouseY) {
 					distanceInitToEnd = distanceInit;
-					System.out.println("TR past init" );
 				}	
 				else {
 					distanceInitToEnd = calcDistanceInitToEnd(endMouseX, endMouseY);
-					System.out.println("TR not past init" + distanceInitToEnd);
 				}
 			}	
-			//mouse is lower
 			else if (cueBallY < initMouseY ) {
-				//end mouse is to left of init mous, end mouse ishigher than init mouse
 				if (endMouseX <=initMouseX && endMouseY <= initMouseY) {
 					distanceInitToEnd = distanceInit;
-					System.out.println("BL past init");
 				}	
 				else {
 					distanceInitToEnd = calcDistanceInitToEnd(endMouseX, endMouseY);
-					System.out.println("BL not past init" + distanceInitToEnd);
 				}
 			}
 			else {
@@ -197,6 +169,7 @@ public class CueStick {
  		double newDistanceTipFromCueBall = distanceTipFromCueBall + distanceInitToEnd
  				- distanceInit;
 		setNewCueStickLocation(newDistanceTipFromCueBall, initMouseX, initMouseY);
+		}
 	}
 	
 	public void setCueStickLocationAfterHit(double mouseX, double mouseY) {
@@ -227,17 +200,21 @@ public class CueStick {
 		this.setEndY(endY);
 	}
 	
-	public void updateCueBallVelocity(double initMouseDragX, double endMouseDragX, 
-			double initMouseDragY, double endMouseDragY) {
+	public void updateCueBallVelocity(double initMouseDragX, double initMouseDragY, 
+			double endMouseDragX, double endMouseDragY) {
+		
 		double amplifier = .35;
-		double velocity = getDistance(initMouseDragX,initMouseDragY, 
-				endMouseDragX, endMouseDragY);
+		double velocity = Math.abs(calcDistanceInitToEnd(endMouseDragX, endMouseDragY)
+				- getDistanceInit(initMouseDragX, initMouseDragY));
+		/*System.out.println("init to end: " + calcDistanceInitToEnd(endMouseDragX, endMouseDragY));
+		System.out.println("init: " + getDistanceInit(initMouseDragX, initMouseDragY));
+		System.out.println("inittoend-init: " + velocity);*/
 		double xVel = amplifier*velocity*dirX;
 		double yVel = amplifier*velocity*dirY;
 		cueBall.setXVelocity(xVel);
 		cueBall.setYVelocity(yVel);
 		
-		poolGame.turn();
+		poolGame.turn(); 
 	}
 	
 	public void setDirection(double mouseX, double mouseY) {

@@ -21,12 +21,14 @@ public class CueStickController {
 		l.addEventHandler(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
 	    	@Override
 	    	public void handle(MouseEvent me) {
+	    		if (cueStick.canMove()) {
 	    		isMousePressed = true;
 	    		mouseX = me.getX()*GameConstants.PIXEL_TO_IN;
 	    		mouseY = me.getY()*GameConstants.PIXEL_TO_IN;	    		
 	    		cueStick.getView().setStroke(Color.PINK);
 	    		cueStick.setHoverCueStickLocation(mouseX, mouseY);
 	    		cueStick.setDirection(mouseX, mouseY);
+	    		}
 	    	}
 	    });
 		
@@ -34,12 +36,14 @@ public class CueStickController {
 		r.addEventHandler(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
 	    	@Override
 	    	public void handle(MouseEvent me) {
+	    		if (cueStick.canMove()) {
 	    		isMousePressed = true;
 	    		mouseX = me.getX()*GameConstants.PIXEL_TO_IN;
-	    		mouseY = me.getY()*GameConstants.PIXEL_TO_IN;
+	    		mouseY = me.getY()*GameConstants.PIXEL_TO_IN;	    		
 	    		cueStick.getView().setStroke(Color.PINK);
 	    		cueStick.setHoverCueStickLocation(mouseX, mouseY);
 	    		cueStick.setDirection(mouseX, mouseY);
+	    		}
 	    	}
 	    });
 	}
@@ -63,6 +67,7 @@ public class CueStickController {
 		r.addEventHandler(MouseEvent.MOUSE_DRAGGED, new EventHandler<MouseEvent>() {
 	    	@Override
 	    	public void handle(MouseEvent me) {
+	    		if (cueStick.canMove()) {
 	    		isMousePressed = false;
 	    		double initMouseX = mouseX;
 	    		double initMouseY = mouseY;
@@ -73,6 +78,7 @@ public class CueStickController {
 	    		cueStick.setCueStickLocationOnDrag(initMouseX, initMouseY, endMouseX, endMouseY);
 	    		cueStick.getView().setStroke(Color.PINK);
 	    		}
+	    		}
 	    	}
 	    });
 		
@@ -80,6 +86,7 @@ public class CueStickController {
 		l.addEventHandler(MouseEvent.MOUSE_DRAGGED, new EventHandler<MouseEvent>() {
 	    	@Override
 	    	public void handle(MouseEvent me) {
+	    		if (cueStick.canMove()) {
 	    		isMousePressed = false;
 	    		double initMouseX = mouseX;
 	    		double initMouseY = mouseY;
@@ -89,6 +96,7 @@ public class CueStickController {
 	    		if (cueStick.getDistance(initMouseX, initMouseY, endMouseX, endMouseY) < stretchLimit) {
 	    		cueStick.setCueStickLocationOnDrag(initMouseX, initMouseY, endMouseX, endMouseY);
 	    		cueStick.getView().setStroke(Color.PINK);
+	    		}
 	    		}
 	    	}
 	    });
@@ -99,15 +107,12 @@ public class CueStickController {
 		l.addEventHandler(MouseEvent.MOUSE_RELEASED, new EventHandler<MouseEvent>() {
 	    	@Override
 	    	public void handle(MouseEvent me) {
-	    		double initMouseDragX = mouseX;
-	    		double initMouseDragY = mouseY;
-	    		
+
 	    		double endMouseDragX = me.getX()*GameConstants.PIXEL_TO_IN;
 	    		double endMouseDragY = me.getY()*GameConstants.PIXEL_TO_IN;
 	    		
 	    		cueStick.setCueStickLocationAfterHit(mouseX, mouseY);
-	    		cueStick.updateCueBallVelocity(initMouseDragX, endMouseDragX, 
-	    				initMouseDragY, endMouseDragY);
+	    		cueStick.updateCueBallVelocity(mouseX, mouseY, endMouseDragX, endMouseDragY);
 	    		
 	    		isMousePressed = false;
 	    		cueStick.getView().setStroke(Color.BROWN);
@@ -118,15 +123,11 @@ public class CueStickController {
 		r.addEventHandler(MouseEvent.MOUSE_RELEASED, new EventHandler<MouseEvent>() {
 	    	@Override
 	    	public void handle(MouseEvent me) {
-	    		double initMouseDragX = mouseX;
-	    		double initMouseDragY = mouseY;
-	    		
 	    		double endMouseDragX = me.getX()*GameConstants.PIXEL_TO_IN;
 	    		double endMouseDragY = me.getY()*GameConstants.PIXEL_TO_IN;
 	    		
 	    		cueStick.setCueStickLocationAfterHit(mouseX, mouseY);
-	    		cueStick.updateCueBallVelocity(initMouseDragX, endMouseDragX, 
-	    				initMouseDragY, endMouseDragY);
+	    		cueStick.updateCueBallVelocity(mouseX, mouseY, endMouseDragX, endMouseDragY);
 
 	    		isMousePressed = false;
 	    		cueStick.getView().setStroke(Color.BROWN);
