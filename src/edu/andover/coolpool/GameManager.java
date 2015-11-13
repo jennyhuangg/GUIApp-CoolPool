@@ -13,12 +13,34 @@ import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 
+/* 
+ * TODO: Add JavaDoc comments
+ * 
+ * Dr. Miles:
+ * GameManager should have know about all the model, view, and controllers.
+ * If you need to change scene, pass information up the chain of command to
+ * the game manager so that the game manager knows when to change scenes.
+ */
 public class GameManager {
-	private static Scene scene;
+	private Scene scene;
+	private BorderPane rootLayout;
 
-	private static BorderPane rootLayout;
-
-	public GameManager(Scene scene){
+	private static GameManager instance = null;
+	
+	public static GameManager getInstance(Scene scene) {
+		if(instance == null) {
+			instance = new GameManager(scene);
+		}
+		
+		return instance;
+	}
+	
+	//TODO: Can I do this? Overload a singleton's getInstance?
+	public static GameManager getInstance() {
+		return instance;
+	}
+	
+	private GameManager(Scene scene){
 	    this.scene = scene;
 
 	    rootLayout = new BorderPane();
@@ -69,7 +91,7 @@ public class GameManager {
 	}
 	
 	// Implementation not yet finished; not used in version 0
-	public static void initEndScreen(){
+	public void initEndScreen(){
 		FXMLLoader loader = new FXMLLoader();
 		loader.setLocation(
 				GameManager.class.getResource("view/EndScreen.fxml"));
@@ -82,6 +104,7 @@ public class GameManager {
 		}
 	}
 	
+	//TODO: Clean this
 	/*public BorderPane getRootLayout() {
 		return rootLayout;
 	}*/
