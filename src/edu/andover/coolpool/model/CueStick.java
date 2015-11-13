@@ -5,15 +5,15 @@ import javafx.scene.shape.Shape;
 
 public class CueStick {
 	
-	//Start is position of tip of cue stick (end close to cue ball).
+	// Start is position of tip of cue stick (end close to cue ball).
 	private double startX;
 	private double startY;
 	
-	//End is position of end of cue stick (end far from cue ball).
+	// End is position of end of cue stick (end far from cue ball).
 	private double endX;
 	private double endY;
 	
-	// 1 for positive direction, -1 for negative direction
+	// Proportional directions of x and y velocities.
 	private double dirX;
 	private double dirY;
 	
