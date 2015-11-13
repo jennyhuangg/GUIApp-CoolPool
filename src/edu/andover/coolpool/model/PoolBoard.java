@@ -125,7 +125,6 @@ public class PoolBoard {
 		checkPockets();
 		checkCollisions();
 		decelerateBalls();
-		
 	}
 
 	// Checks to see if any balls have fallen inside the pockets
@@ -152,14 +151,16 @@ public class PoolBoard {
 	public void checkCollisions() {
 		for (Ball ball: unpocketedBalls)
 		{
-			// Changes velocity when ball collides with vertical edges.
+			// Changes velocity when ball collides with the vertical walls of
+			// the pool board (i.e the vertical bumpers).
 			if ((ball.getCenterX() - ball.getRadius() <= 
 					boardX && ball.getXVelocity() < 0) 
 					|| (ball.getCenterX() + ball.getRadius() >= 
 					length + boardX && ball.getXVelocity() > 0)) {
 				ball.setXVelocity(ball.getXVelocity()*(-1));
 			}
-			// Changes velocity when ball collides with horizontal edges.
+			// Changes velocity when ball collides with horizontal walls of the
+			// pool board (i.e the horizontal bumpers).
 			if ((ball.getCenterY() - ball.getRadius() <= 
 					boardY && ball.getYVelocity() < 0)
 					|| (ball.getCenterY() + ball.getRadius() >= 

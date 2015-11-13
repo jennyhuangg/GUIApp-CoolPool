@@ -61,7 +61,10 @@ public class CueStick {
 	public double getEndY() { return endY; }
 	
 	public Ball getCueBall() { return cueBall; }
+	
+	//TODO: this should not live in this class. Move to CueStickView.java
 	public CueStickView getCueStickView() { return cueStickView; }
+	//TODO: this should not live in this class. Move to CueStickView.java
 	public Shape getView(){ return cueStickView.getLine(); }
 	
 	public void setStartX(double startX) {

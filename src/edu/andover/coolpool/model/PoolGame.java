@@ -9,6 +9,8 @@ import edu.andover.coolpool.controller.PoolScreenController;
 import javafx.animation.AnimationTimer;
 
 public class PoolGame {
+	//TODO: Add Comments
+	
 	PoolBoard poolBoard;
 	CueStick cueStick;
 	Player[] players = new Player[2];

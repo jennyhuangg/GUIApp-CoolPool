@@ -13,7 +13,17 @@ import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 
+/* 
+ * TODO: Add JavaDoc comments
+ * TODO: Make this a singleton
+ * 
+ * Dr. Miles:
+ * GameManager should have know about all the model, view, and controllers.
+ * If you need to change scene, pass information up the chain of command to
+ * the game manager so that the game manager knows when to change scenes.
+ */
 public class GameManager {
+	//TODO: Review these "static"s because these shouldn't be statics
 	private static Scene scene;
 
 	private static BorderPane rootLayout;
@@ -82,6 +92,7 @@ public class GameManager {
 		}
 	}
 	
+	//TODO: Clean this
 	/*public BorderPane getRootLayout() {
 		return rootLayout;
 	}*/
