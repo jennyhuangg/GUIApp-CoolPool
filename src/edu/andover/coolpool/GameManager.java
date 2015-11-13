@@ -22,7 +22,6 @@ import javafx.scene.layout.Pane;
  * the game manager so that the game manager knows when to change scenes.
  */
 public class GameManager {
-	//TODO: Review these "static"s because these shouldn't be statics
 	private Scene scene;
 	private BorderPane rootLayout;
 

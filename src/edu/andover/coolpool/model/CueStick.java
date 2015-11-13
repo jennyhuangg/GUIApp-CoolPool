@@ -64,6 +64,7 @@ public class CueStick {
 	
 	//TODO: this should not live in this class. Move to CueStickView.java
 	public CueStickView getCueStickView() { return cueStickView; }
+	
 	//TODO: this should not live in this class. Move to CueStickView.java
 	public Shape getView(){ return cueStickView.getLine(); }
 	
