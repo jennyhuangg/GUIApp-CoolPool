@@ -100,8 +100,6 @@ public class CueStick {
 		this.canReset = canReset;
 	}
 	
-	//------------------------- METHODS -------------------------------
-	
 	public void setCueBall(Ball cueBall){
 		this.cueBall = cueBall;
 	}
@@ -178,7 +176,7 @@ public class CueStick {
 		
 		double distanceInitToEnd = 0;
 		
-		//TODO: Refactor.
+		// TODO: Refactor.
 		if (cueBallX > initMouseX) {
 			if (cueBallY > initMouseY) {
 				if (mouseX >=initMouseX && mouseY >= initMouseY) {
@@ -235,7 +233,7 @@ public class CueStick {
 		setNewCueStickLocation(newDistanceTipFromCueBall, initStartX, initStartY);
 	}
 	
-	//Set location when mouse is released.
+	// Set location when mouse is released.
 	public void setCueStickLocationAfterHit() {
 		double newDistanceTipFromCueBall = 1;
 		setNewCueStickLocation(newDistanceTipFromCueBall, initStartX, initStartY);
@@ -243,6 +241,7 @@ public class CueStick {
 	
 	//----------------------- UPDATE CUEBALL METHODS ----------------------
 	
+	// TODO: Comment this.
 	public void updateCueBallVelocity(double finalMouseX, double finalMouseY) {
 		double amplifier = .6;
 		double velocity = Math.abs(getDistanceInitToMouse(finalMouseX, 

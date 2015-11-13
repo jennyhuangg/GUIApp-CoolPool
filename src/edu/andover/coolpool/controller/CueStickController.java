@@ -10,7 +10,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 
-//TODO: Comments and Refactoring.
+// TODO: Comments and Refactoring.
 public class CueStickController {
 
 	private double mouseX;
@@ -75,17 +75,18 @@ public class CueStickController {
 		    		double initMouseY = mouseY;
 		    		double endMouseX = me.getX()*GameConstants.PIXEL_TO_IN;
 		    		double endMouseY = me.getY()*GameConstants.PIXEL_TO_IN;
-		    		//double stretchLimit = 25.0;
 		    		cueStick.setInitialValues(initMouseX, initMouseY);
+		    		
 		    		double distance = cueStick.getDistanceInitToMouse(endMouseX,
 		    				endMouseY);
-		    		//if (distance < stretchLimit) {
-		    			cueStick.setCueStickLocationOnDrag(endMouseX, endMouseY);
-		    			int k = (int) (1900/distance);
-		    			if ( k > 255) { k = 255; }
-		    			cueStick.getView().setStroke(Color.rgb((int)(140+.45*k),k, 0));
-		    		//}
-		    		hasJustDragged = true;
+	    			cueStick.setCueStickLocationOnDrag(endMouseX, endMouseY);
+	    			
+	    			// Set color of cue stick. 
+	    			int k = (int) (1900/distance);
+	    			if ( k > 255) { k = 255; }
+	    			cueStick.getView().setStroke(Color.rgb((int)(140+.45*k),k, 0));
+		    		
+	    			hasJustDragged = true;
 	    		}
 	    	}
 	    });
@@ -100,17 +101,18 @@ public class CueStickController {
 		    		double initMouseY = mouseY;
 		    		double endMouseX = me.getX()*GameConstants.PIXEL_TO_IN;
 		    		double endMouseY = me.getY()*GameConstants.PIXEL_TO_IN;
-		    		double stretchLimit = 25.0;
 		    		cueStick.setInitialValues(initMouseX, initMouseY);
+		    		
 		    		double distance = cueStick.getDistanceInitToMouse(endMouseX,
 		    				endMouseY);
-		    	//	if (distance < stretchLimit) {
-		    			cueStick.setCueStickLocationOnDrag(endMouseX, endMouseY);
-		    			int k = (int) (1900/distance);
-		    			if ( k > 255) { k = 255; }
-		    			cueStick.getView().setStroke(Color.rgb((int)(140+.45*k),k, 0));
-		    	//	}
-		    		hasJustDragged = true;
+	    			cueStick.setCueStickLocationOnDrag(endMouseX, endMouseY);
+	    			
+	    			// Set color of cue stick. 
+	    			int k = (int) (1900/distance);
+	    			if ( k > 255) { k = 255; }
+	    			cueStick.getView().setStroke(Color.rgb((int)(140+.45*k),k, 0));
+		    		
+	    			hasJustDragged = true;
 		    	}
 		    }
 	    });
