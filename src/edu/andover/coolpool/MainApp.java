@@ -20,8 +20,8 @@ public class MainApp extends Application {
 	public void start(Stage primaryStage){
 		Pane root = new Pane();
 		
-		int width = 1280;
-		int length = 730;
+		double width = GameConstants.SCREEN_WIDTH;
+		double length = GameConstants.SCREEN_LENGTH;
 		
 		scene = new Scene(root, width, length);
 		
