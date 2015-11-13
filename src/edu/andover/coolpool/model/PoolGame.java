@@ -11,6 +11,9 @@ import javafx.animation.AnimationTimer;
 public class PoolGame {
 	//TODO: Add Comments
 	
+	// Create a reference to game manager here
+	GameManager gameManager;
+	
 	PoolBoard poolBoard;
 	CueStick cueStick;
 	Player[] players = new Player[2];
@@ -25,6 +28,8 @@ public class PoolGame {
 	boolean streak = false;
 	
 	public PoolGame(PoolScreenController poolScreenController){
+		gameManager = GameManager.getInstance();
+		
 		poolBoard = new PoolBoard();
 		setUpCueStick();
 		
@@ -126,7 +131,7 @@ public class PoolGame {
 			
 			if (pocketedEightBall(pocketedBalls)){
 				gameHasEnded = true;
-				GameManager.initEndScreen();
+				gameManager.initEndScreen();
 			}
 			
 			else if (pocketedCueBall(pocketedBalls)){

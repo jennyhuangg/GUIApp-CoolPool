@@ -15,7 +15,6 @@ import javafx.scene.layout.Pane;
 
 /* 
  * TODO: Add JavaDoc comments
- * TODO: Make this a singleton
  * 
  * Dr. Miles:
  * GameManager should have know about all the model, view, and controllers.
@@ -24,11 +23,25 @@ import javafx.scene.layout.Pane;
  */
 public class GameManager {
 	//TODO: Review these "static"s because these shouldn't be statics
-	private static Scene scene;
+	private Scene scene;
+	private BorderPane rootLayout;
 
-	private static BorderPane rootLayout;
-
-	public GameManager(Scene scene){
+	private static GameManager instance = null;
+	
+	public static GameManager getInstance(Scene scene) {
+		if(instance == null) {
+			instance = new GameManager(scene);
+		}
+		
+		return instance;
+	}
+	
+	//TODO: Can I do this? Overload a singleton's getInstance?
+	public static GameManager getInstance() {
+		return instance;
+	}
+	
+	private GameManager(Scene scene){
 	    this.scene = scene;
 
 	    rootLayout = new BorderPane();
@@ -79,7 +92,7 @@ public class GameManager {
 	}
 	
 	// Implementation not yet finished; not used in version 0
-	public static void initEndScreen(){
+	public void initEndScreen(){
 		FXMLLoader loader = new FXMLLoader();
 		loader.setLocation(
 				GameManager.class.getResource("view/EndScreen.fxml"));

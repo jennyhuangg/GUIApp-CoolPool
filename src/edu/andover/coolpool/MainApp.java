@@ -32,9 +32,9 @@ public class MainApp extends Application {
 		primaryStage.setResizable(false);
 		primaryStage.show();
 
-		GameManager poolGame = new GameManager(scene);
+		GameManager poolGame = GameManager.getInstance(scene);
 
-		poolGame.initStartScreen(scene);
+		poolGame.initStartScreen(scene); //TODO: View concept
 	}
 
 	public static void main(String[] args){
