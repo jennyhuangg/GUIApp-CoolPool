@@ -178,9 +178,7 @@ public class CueStick {
 		
 		double distanceInitToEnd = 0;
 		
-		//TODO: Implement that distance cannot go past a threshold.
 		//TODO: Refactor.
-		
 		if (cueBallX > initMouseX) {
 			if (cueBallY > initMouseY) {
 				if (mouseX >=initMouseX && mouseY >= initMouseY) {
@@ -225,8 +223,15 @@ public class CueStick {
 			}
 		}
 
+		// Subtract distanceInit so cue stick moves with where the mouse clicked it.
  		double newDistanceTipFromCueBall = distanceTipFromCueBall + 
  				distanceInitToEnd - distanceInit;
+ 		
+ 		// Stretch limitation
+ 		double stretchLimit = 20.0;
+ 		if (newDistanceTipFromCueBall > stretchLimit) {
+ 			newDistanceTipFromCueBall = stretchLimit;
+ 		}
 		setNewCueStickLocation(newDistanceTipFromCueBall, initStartX, initStartY);
 	}
 	
@@ -239,14 +244,16 @@ public class CueStick {
 	//----------------------- UPDATE CUEBALL METHODS ----------------------
 	
 	public void updateCueBallVelocity(double finalMouseX, double finalMouseY) {
-		double amplifier = .5;
+		double amplifier = .6;
 		double velocity = Math.abs(getDistanceInitToMouse(finalMouseX, 
 				finalMouseY) - distanceInit);
+		// Stretch limitation. TODO: make it a field.
+		double stretchLimit = 17;
+		if (velocity > stretchLimit) { velocity = stretchLimit; }
 		double xVel = amplifier*velocity*dirX;
 		double yVel = amplifier*velocity*dirY;
 		cueBall.setXVelocity(xVel);
 		cueBall.setYVelocity(yVel);
-		
 		poolGame.turn(); 
 	}
 	

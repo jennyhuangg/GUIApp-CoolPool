@@ -13,10 +13,10 @@ import javafx.scene.shape.Rectangle;
 //TODO: Comments and Refactoring.
 public class CueStickController {
 
-	private boolean isMousePressed;
-	private boolean hasJustDragged = false;
 	private double mouseX;
 	private double mouseY;
+	private boolean isMousePressed = false;
+	private boolean hasJustDragged = false;
 	
 	public void addMouseHoverEventHandler(PoolBoardView pbv, CueStick cueStick) {
 	    Rectangle r = pbv.getCueStickRectangle();
@@ -41,7 +41,7 @@ public class CueStickController {
 	    			isMousePressed = true;
 	    			mouseX = me.getX()*GameConstants.PIXEL_TO_IN;
 	    			mouseY = me.getY()*GameConstants.PIXEL_TO_IN;	    		
-	    			cueStick.getView().setStroke(Color.PINK);
+	    			cueStick.getView().setStroke(Color.rgb(255,255, 0));
 	    			cueStick.setHoverCueStickLocation(mouseX, mouseY);
 	    			cueStick.setDirection(mouseX, mouseY);
 	    		}
@@ -56,8 +56,8 @@ public class CueStickController {
 		    		isMousePressed = true;
 		    		mouseX = me.getX()*GameConstants.PIXEL_TO_IN;
 		    		mouseY = me.getY()*GameConstants.PIXEL_TO_IN;	    		
-		    		cueStick.getView().setStroke(Color.PINK);
-		    		cueStick.setHoverCueStickLocation(mouseX, mouseY);
+	    			cueStick.getView().setStroke(Color.rgb(255,255, 0));
+	    			cueStick.setHoverCueStickLocation(mouseX, mouseY);
 		    		cueStick.setDirection(mouseX, mouseY);
 	    		}
 	    	}
@@ -75,16 +75,19 @@ public class CueStickController {
 		    		double initMouseY = mouseY;
 		    		double endMouseX = me.getX()*GameConstants.PIXEL_TO_IN;
 		    		double endMouseY = me.getY()*GameConstants.PIXEL_TO_IN;
-		    		double stretchLimit = 15.0;
+		    		//double stretchLimit = 25.0;
 		    		cueStick.setInitialValues(initMouseX, initMouseY);
-		    		if (cueStick.getDistance(initMouseX, initMouseY, endMouseX,
-		    				endMouseY) < stretchLimit) {
+		    		double distance = cueStick.getDistanceInitToMouse(endMouseX,
+		    				endMouseY);
+		    		//if (distance < stretchLimit) {
 		    			cueStick.setCueStickLocationOnDrag(endMouseX, endMouseY);
-		    			cueStick.getView().setStroke(Color.PINK);
-		    		}
+		    			int k = (int) (1900/distance);
+		    			if ( k > 255) { k = 255; }
+		    			cueStick.getView().setStroke(Color.rgb((int)(140+.45*k),k, 0));
+		    		//}
 		    		hasJustDragged = true;
-		    	}
-		    }
+	    		}
+	    	}
 	    });
 		
 	    Line l = (Line) cueStick.getView();
@@ -97,13 +100,16 @@ public class CueStickController {
 		    		double initMouseY = mouseY;
 		    		double endMouseX = me.getX()*GameConstants.PIXEL_TO_IN;
 		    		double endMouseY = me.getY()*GameConstants.PIXEL_TO_IN;
-		    		double stretchLimit = 15.0;
+		    		double stretchLimit = 25.0;
 		    		cueStick.setInitialValues(initMouseX, initMouseY);
-		    		if (cueStick.getDistance(initMouseX, initMouseY, endMouseX,
-		    				endMouseY) < stretchLimit) {
+		    		double distance = cueStick.getDistanceInitToMouse(endMouseX,
+		    				endMouseY);
+		    	//	if (distance < stretchLimit) {
 		    			cueStick.setCueStickLocationOnDrag(endMouseX, endMouseY);
-		    			cueStick.getView().setStroke(Color.PINK);
-		    		}
+		    			int k = (int) (1900/distance);
+		    			if ( k > 255) { k = 255; }
+		    			cueStick.getView().setStroke(Color.rgb((int)(140+.45*k),k, 0));
+		    	//	}
 		    		hasJustDragged = true;
 		    	}
 		    }
