@@ -13,6 +13,7 @@ import javafx.scene.shape.Rectangle;
 public class CueStickController {
 
 	private boolean isMousePressed;
+	private boolean hasJustDragged = false;
 	private double mouseX;
 	private double mouseY;
 	
@@ -75,10 +76,12 @@ public class CueStickController {
 		    		double endMouseY = me.getY()*GameConstants.PIXEL_TO_IN;
 		    		double stretchLimit = 15.0;
 		    		cueStick.setInitialValues(initMouseX, initMouseY);
-		    		if (cueStick.getDistance(initMouseX, initMouseY, endMouseX, endMouseY) < stretchLimit) {
+		    		if (cueStick.getDistance(initMouseX, initMouseY, endMouseX,
+		    				endMouseY) < stretchLimit) {
 		    			cueStick.setCueStickLocationOnDrag(endMouseX, endMouseY);
 		    			cueStick.getView().setStroke(Color.PINK);
 		    		}
+		    		hasJustDragged = true;
 		    		}
 		    	}
 	    });
@@ -99,6 +102,7 @@ public class CueStickController {
 	    			cueStick.setCueStickLocationOnDrag(endMouseX, endMouseY);
 	    			cueStick.getView().setStroke(Color.PINK);
 	    		}
+	    		hasJustDragged = true;
 	    		}
 	    	}
 	    });
@@ -109,6 +113,7 @@ public class CueStickController {
 		l.addEventHandler(MouseEvent.MOUSE_RELEASED, new EventHandler<MouseEvent>() {
 	    	@Override
 	    	public void handle(MouseEvent me) {
+	    		if (hasJustDragged) {
 	    		double finalMouseX = me.getX()*GameConstants.PIXEL_TO_IN;
 	    		double finalMouseY = me.getY()*GameConstants.PIXEL_TO_IN;
 	    		
@@ -118,12 +123,15 @@ public class CueStickController {
 	    		isMousePressed = false;
 	    		cueStick.getView().setStroke(Color.BROWN);
 	    		cueStick.setCanMove(false);
+	    		hasJustDragged = false;
+	    	}
 	    	}
 	    });
 		Rectangle r = pbv.getCueStickRectangle();
 		r.addEventHandler(MouseEvent.MOUSE_RELEASED, new EventHandler<MouseEvent>() {
 	    	@Override
 	    	public void handle(MouseEvent me) {	    		
+	    		if (hasJustDragged) {
 	    		double finalMouseX = me.getX()*GameConstants.PIXEL_TO_IN;
 	    		double finalMouseY = me.getY()*GameConstants.PIXEL_TO_IN;
 	    		
@@ -133,6 +141,8 @@ public class CueStickController {
 	    		isMousePressed = false;
 	    		cueStick.getView().setStroke(Color.BROWN);
 	    		cueStick.setCanMove(false);
+	    		hasJustDragged = false;
+	    	}
 	    	}
 	    });
 		
