@@ -21,14 +21,12 @@ public class CueStick {
 	private double initEndY;
 	
 	// Mouse position when first pressed.
+	// Resets every time cue stick is used.
 	private double initMouseX;
 	private double initMouseY;
 	
-	// Distance between initial mouse position and start of cuestick.
+	// Distance between initial mouse position and start of cue stick.
 	private double distanceInit;
-
-	// Upper limit for cue stick drag distance.
-	private final double stretchLimit = 17.0;
 	
 	// True if values of initial mouse click position can be reset, i. e.
 	// True only on first mouse click before drag.
@@ -37,8 +35,11 @@ public class CueStick {
 	// True if cue stick can move on pool board.
 	private boolean canMove = true;
 	
-	private static final double distanceTipFromCueBall = 3.0;
-	private static final double cueStickLength = 37.0;
+	private final double distanceTipFromCueBall = 3.0;
+	private final double cueStickLength = 37.0;
+	
+	// Upper limit for cue stick drag distance.
+	private final double stretchLimit = 17.0;
 
 	private Ball cueBall;
 	private CueStickView cueStickView;
@@ -134,57 +135,62 @@ public class CueStick {
 	// Returns projected distance between initial mouse click and mouse on drag.
 	// Must go in correct direction. Has max stretch limit.
 	public double getDistanceInitToMouse (double mouseX, double mouseY) {
+		
 		// Projected distance between mouse and initial tip of cue stick.
 		double distanceInitTipToMouse = Math.abs((1 / cueStickLength)*((mouseX - 
 				initStartX)*(initEndX - initStartX) + (mouseY - initStartY)
 				*(initEndY - initStartY)));
-		// Projected distance between mouse and initial mouse click position, or
-		// projected distance dragged.
+		
+		// Projected distance between mouse and initial mouse click position
 		double distanceInitToMouse = distanceInitTipToMouse - distanceInit;
-		// If mouse is dragging in incorrect direction, then set drag distance
-		// to 0.
-		if (!getDragInCorrectDirection(mouseX, mouseY)) {
+		
+		// If dragging in incorrect direction, then drag distance is 0.
+		if (!isDraggingInCorrectDirection(mouseX, mouseY)) {
 			distanceInitToMouse = 0;
 		}
+		
 		// Cue stick can only drag as far as the stretch limit.
  		if (distanceInitToMouse > stretchLimit) {
  			distanceInitToMouse = stretchLimit;
  		}
+ 		
 		return Math.abs(distanceInitToMouse);
 	}
-	 public boolean getDragInCorrectDirection(double mouseX, double mouseY) {
-		boolean isDraggingInCorrectDirection = true; 
+	
+	// Returns true if mouse is dragging in the correct direction (away from
+	// cue ball in direction of initial mouse click).
+	public boolean isDraggingInCorrectDirection(double mouseX, double mouseY) {
 		double cueBallX = cueBall.getCenterX();
 		double cueBallY = cueBall.getCenterY();
+		
+		boolean isDraggingInCorrectDirection = true; 
 		if (cueBallX > initMouseX) {
-				if (cueBallY > initMouseY) {
-					if (mouseX >= initMouseX && mouseY >= initMouseY) {
-						isDraggingInCorrectDirection = false;
-					}
-				}	
-				else if (cueBallY < initMouseY ) {
-					if (mouseX >= initMouseX && mouseY <= initMouseY) {
-						isDraggingInCorrectDirection = false;
-					}
+			if (cueBallY > initMouseY) {
+				if (mouseX >= initMouseX && mouseY >= initMouseY) {
+					isDraggingInCorrectDirection = false; 
+				}
+			}	
+			else if (cueBallY < initMouseY ) {
+				if (mouseX >= initMouseX && mouseY <= initMouseY) {
+					isDraggingInCorrectDirection = false; 
 				}
 			}
+		}
 		else { 
-				if (cueBallY > initMouseY) {
-					if (mouseX <= initMouseX && mouseY >= initMouseY) {
-						isDraggingInCorrectDirection = false;					
-					}	
+			if (cueBallY > initMouseY) {
+				if (mouseX <= initMouseX && mouseY >= initMouseY) {
+					isDraggingInCorrectDirection = false;					
 				}	
-				else if (cueBallY < initMouseY ) {
-					if (mouseX <= initMouseX && mouseY <= initMouseY) {
-						isDraggingInCorrectDirection = false;					
-					}	
-				}
+			}	
+			else if (cueBallY < initMouseY ) {
+				if (mouseX <= initMouseX && mouseY <= initMouseY) {
+					isDraggingInCorrectDirection = false;					
+				}	
 			}
+		}
 		return isDraggingInCorrectDirection;
 	 }
 	 
-	// ------------------- SET LOCATION METHODS -----------------------
-	
 	// General method that calculates new position of cue stick based on 
 	// distance of its tip from the cue ball and a point that indicates
 	// direction away from cue ball.
@@ -222,11 +228,12 @@ public class CueStick {
 		// Distance of projected dragging mouse position to initial mouse 
 		// click position.
 		double distanceInitToMouse = getDistanceInitToMouse(mouseX, mouseY);
-		// The new distance of the tip of cue stick to the cue ball is the 
-		// standard distance plus the perpendicular distance of drag.
+		
+		// Distance between the tip of cue stick to the cue ball
  		double newDistanceTipFromCueBall = distanceTipFromCueBall + 
  				distanceInitToMouse;
-		setNewCueStickLocation(newDistanceTipFromCueBall, initStartX, 
+		
+ 		setNewCueStickLocation(newDistanceTipFromCueBall, initStartX, 
 				initStartY);
 	}
 			
@@ -234,18 +241,18 @@ public class CueStick {
 	public void setCueStickLocationAfterHit() {
 		setNewCueStickLocation(distanceTipFromCueBall, initStartX, initStartY);
 	}
-	
-	//----------------------- UPDATE CUEBALL METHODS ----------------------
-	
+
 	// Updates cue ball velocity proportional to the projected distance dragged.
 	public void updateCueBallVelocity(double finalMouseX, double finalMouseY) {
 		// To adjust amplification of cue ball speed.
 		double amplifier = .4; 
 		double projectedDragDistance = getDistanceInitToMouse(finalMouseX,
 				finalMouseY);
+		
 		// Determines proportionally accurate direction of cue ball.
 		double dirX = -finalMouseX + cueBall.getCenterX();
 		double dirY = -finalMouseY + cueBall.getCenterY();
+		
 		// Determines velocity of cue ball.
 		double xVel = amplifier*projectedDragDistance*dirX;
 		double yVel = amplifier*projectedDragDistance*dirY;
