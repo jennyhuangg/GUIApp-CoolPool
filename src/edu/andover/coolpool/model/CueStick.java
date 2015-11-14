@@ -171,11 +171,13 @@ public class CueStick {
 		else { 
 				if (cueBallY > initMouseY) {
 					if (mouseX <= initMouseX && mouseY >= initMouseY) {
-						isDraggingInCorrectDirection = false;					}	
+						isDraggingInCorrectDirection = false;					
+					}	
 				}	
 				else if (cueBallY < initMouseY ) {
 					if (mouseX <= initMouseX && mouseY <= initMouseY) {
-						isDraggingInCorrectDirection = false;					}	
+						isDraggingInCorrectDirection = false;					
+					}	
 				}
 			}
 		return isDraggingInCorrectDirection;
@@ -186,7 +188,8 @@ public class CueStick {
 	// General method that calculates new position of cue stick based on 
 	// distance of its tip from the cue ball and a point that indicates
 	// direction away from cue ball.
-	public void setNewCueStickLocation(double distanceTipFromCueBall, double x, double y) {
+	public void setNewCueStickLocation(double distanceTipFromCueBall, double x, 
+			double y) {
 		double cueBallX = cueBall.getCenterX();
 		double cueBallY = cueBall.getCenterY();
 		
@@ -223,7 +226,8 @@ public class CueStick {
 		// standard distance plus the perpendicular distance of drag.
  		double newDistanceTipFromCueBall = distanceTipFromCueBall + 
  				distanceInitToMouse;
-		setNewCueStickLocation(newDistanceTipFromCueBall, initStartX, initStartY);
+		setNewCueStickLocation(newDistanceTipFromCueBall, initStartX, 
+				initStartY);
 	}
 			
 	// Set location when mouse is released.
@@ -237,8 +241,8 @@ public class CueStick {
 	public void updateCueBallVelocity(double finalMouseX, double finalMouseY) {
 		// To adjust amplification of cue ball speed.
 		double amplifier = .4; 
-		double projectedDragDistance = Math.abs(getDistanceInitToMouse(finalMouseX, 
-				finalMouseY));
+		double projectedDragDistance = getDistanceInitToMouse(finalMouseX,
+				finalMouseY);
 		// Determines proportionally accurate direction of cue ball.
 		double dirX = -finalMouseX + cueBall.getCenterX();
 		double dirY = -finalMouseY + cueBall.getCenterY();
