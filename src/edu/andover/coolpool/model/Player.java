@@ -4,7 +4,6 @@ public class Player {
 	int ballType; //0 if solid, 1 if stripe, -1 otherwise
 	int points = 0;
 
-
 	public Player() {
 	    ballType = -1;
 	}

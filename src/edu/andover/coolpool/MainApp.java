@@ -1,11 +1,11 @@
 package edu.andover.coolpool;
 
 /*
- * Proj 2: Version 0
+ * Project 2: Cool Pool
  * 
- * Amy Chou, Jenny Huang, and Eric Lee
+ * Amy Chou, Jenny Huang, Eric Lee, and Pranav Tadikonda
  * COMP-630: Software Design, Instructor: Dr. Miles
- * 5 November 2015
+ * 17 November 2015
  */
 
 import javafx.application.Application;

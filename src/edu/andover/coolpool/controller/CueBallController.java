@@ -14,7 +14,7 @@ public class CueBallController {
 	
 	public void addMouseHoverEventHandler(PoolBoardView pbv, Ball cueBall) {
 	    Rectangle r = pbv.getRectangle();
-		r.addEventHandler(MouseEvent.MOUSE_MOVED, new EventHandler<MouseEvent>() {		
+		r.setOnMouseMoved(new EventHandler<MouseEvent>() {		
 			@Override
 	    	public void handle(MouseEvent me) {
 				if (!isMousePressed) {

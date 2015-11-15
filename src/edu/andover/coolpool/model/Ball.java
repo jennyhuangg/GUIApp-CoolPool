@@ -11,9 +11,9 @@ public class Ball {
 	private boolean isPocketed;
 	private double centerX;
 	private double centerY;
-	private double xVelocity; //in in/s
-	private double yVelocity; //in in/s
-	private final double radius = 1.125; //in in
+	private double xVelocity; //in inches/sec
+	private double yVelocity; //in inches/sec
+	private final double radius = 1.125; //in inches/sec
 	private int id;
 
 	private BallView ballView;
