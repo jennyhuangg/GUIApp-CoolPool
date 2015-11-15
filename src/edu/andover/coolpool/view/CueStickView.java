@@ -25,7 +25,7 @@ public class CueStickView {
 		this.endY = endYCM*GameConstants.IN_TO_PIXEL;
 
 		line = new Line(startX, startY, endX, endY);
-		line.setStrokeWidth(10.0);
+		line.setStrokeWidth(6.0);
 		line.setStroke(Color.BROWN);
 	}
 

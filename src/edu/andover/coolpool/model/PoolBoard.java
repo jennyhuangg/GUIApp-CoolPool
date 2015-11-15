@@ -18,8 +18,8 @@ public class PoolBoard {
 	private ArrayList<Ball> unpocketedBalls = new ArrayList<Ball>();
 	private Pocket[] pockets; //Array of pockets
 
-	private double length; 
-	private double width;
+	private final double length = GameConstants.POOL_TABLE_LENGTH; 
+	private final double width = GameConstants.POOL_TABLE_LENGTH;
 	
 	private PoolBoardView poolBoardView;
 
@@ -29,8 +29,6 @@ public class PoolBoard {
 	public static boolean isStable;
 	
 	public PoolBoard() {
-		length = 92; //Inches
-		width = 46; //Inches
 		setView();
 
 		poolBoardView.getBigRectangle().getX();
@@ -41,7 +39,6 @@ public class PoolBoard {
 
 		setUpBalls();
 		setUpPockets();
-
 
 		for (Pocket pocket: pockets){
 			poolBoardView.getPane().getChildren().add(pocket.getView());
@@ -57,7 +54,7 @@ public class PoolBoard {
 		pockets = new Pocket[6];
 
 		for (int i = 0; i < pockets.length; i++) {
-			pockets[i] = new Pocket(i, length, width, boardX, boardY);
+			pockets[i] = new Pocket(i, boardX, boardY);
 		}
 	}
 
