@@ -3,17 +3,15 @@ package edu.andover.coolpool;
 // This class contains methods to set each scene.
 import java.io.IOException;
 
-import edu.andover.coolpool.controller.PoolScreenController;
 import edu.andover.coolpool.model.PoolBoard;
 import edu.andover.coolpool.model.PoolGame;
 import edu.andover.coolpool.view.PoolBoardView;
+import edu.andover.coolpool.view.PoolScreenView;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 
 /* 
  * TODO: Add JavaDoc comments
@@ -74,9 +72,9 @@ public class GameManager {
 		try {
 			
 			Parent poolScreen = (Parent) loader.load();
-			PoolScreenController poolScreenController = loader.getController();
+			PoolScreenView poolScreenView = loader.getController();
 			
-			PoolGame poolGame = new PoolGame(poolScreenController);
+			PoolGame poolGame = new PoolGame(poolScreenView);
 			PoolBoard poolBoard = poolGame.getPoolBoard();
 			
 			rootLayout.setCenter(poolScreen);
