@@ -159,10 +159,10 @@ public class PoolGame {
 	private void setUpCueStick() {
 		cueStickController = new CueStickController();
 		cueStick = new CueStick(poolBoard.getBalls()[15], this);
-		cueStickController.addMouseHoverEventHandler(poolBoard.getView(), cueStick);
-		cueStickController.addMousePressedEventHandler(poolBoard.getView(), cueStick);
-		cueStickController.addMouseReleasedEventHandler(poolBoard.getView(), cueStick);
-		cueStickController.addMouseDraggedEventHandler(poolBoard.getView(), cueStick);
+		cueStickController.addMouseHoverEH(poolBoard.getView(), cueStick);
+		cueStickController.addMousePressedEH(poolBoard.getView(), cueStick);
+		cueStickController.addMouseReleasedEH(poolBoard.getView(), cueStick);
+		cueStickController.addMouseDraggedEH(poolBoard.getView(), cueStick);
 		poolBoard.getView().getPane().getChildren().add(cueStick.getView());
 	}
 	
