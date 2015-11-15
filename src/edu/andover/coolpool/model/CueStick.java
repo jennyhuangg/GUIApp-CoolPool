@@ -245,13 +245,13 @@ public class CueStick {
 	// Updates cue ball velocity proportional to the projected distance dragged.
 	public void updateCueBallVelocity(double finalMouseX, double finalMouseY) {
 		// To adjust amplification of cue ball speed.
-		double amplifier = .4; 
+		double amplifier = 3; 
 		double projectedDragDistance = getDistanceInitToMouse(finalMouseX,
 				finalMouseY);
 		
 		// Determines proportionally accurate direction of cue ball.
-		double dirX = -finalMouseX + cueBall.getCenterX();
-		double dirY = -finalMouseY + cueBall.getCenterY();
+		double dirX = -initStartX + cueBall.getCenterX();
+		double dirY = -initStartY + cueBall.getCenterY();
 		
 		// Determines velocity of cue ball.
 		double xVel = amplifier*projectedDragDistance*dirX;
