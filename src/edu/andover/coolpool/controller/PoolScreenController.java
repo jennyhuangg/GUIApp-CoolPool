@@ -48,13 +48,19 @@ public class PoolScreenController {
     }
     
     @FXML
-    public void setPlayerTurnText(int currPlayerInd, boolean streak){
+    public void setPlayerTurnText(int currPlayerInd, boolean streak, 
+    		boolean canPocketEightBall){
     	int playerNum = currPlayerInd + 1;
     	String streakText = "";
     	if (streak) {
     		streakText = " again";
     	}
-    	playerTurnText.setText("Player " + playerNum + ", your turn" + streakText + "!");
+    	
+    	String eightBallPrompt = "";
+    	if (canPocketEightBall) eightBallPrompt = " You may now pocket the "
+    			+ "eight ball to win.";
+    	playerTurnText.setText("Player " + playerNum + ", "
+    			+ "your turn" + streakText + "!" + eightBallPrompt);
     }
     
     @FXML
@@ -85,6 +91,8 @@ public class PoolScreenController {
     	statusText.setText("Player " + playerNum + " pocketed "
     			+ "Player " + otherPlayerNum + "'s ball. Lost turn!" );
     }
+    
+    
 			
 
 }
