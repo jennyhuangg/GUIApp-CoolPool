@@ -2,20 +2,19 @@ package edu.andover.coolpool.controller;
 
 import edu.andover.coolpool.GameConstants;
 import edu.andover.coolpool.model.Ball;
-import edu.andover.coolpool.model.CueStick;
 import edu.andover.coolpool.view.PoolBoardView;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Rectangle;
 
 public class CueBallController {
-	private boolean isMousePressed;
+	private boolean isMousePressed = false;
 	private double mouseX;
 	private double mouseY;
 	
 	public void addMouseHoverEventHandler(PoolBoardView pbv, Ball cueBall) {
 	    Rectangle r = pbv.getRectangle();
-		r.addEventHandler(MouseEvent.MOUSE_MOVED, new EventHandler<MouseEvent>() {
+		r.addEventHandler(MouseEvent.MOUSE_MOVED, new EventHandler<MouseEvent>() {		
 			@Override
 	    	public void handle(MouseEvent me) {
 				if (!isMousePressed) {

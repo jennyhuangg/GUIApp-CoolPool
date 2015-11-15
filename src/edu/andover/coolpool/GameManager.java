@@ -12,6 +12,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 
 /* 
  * TODO: Add JavaDoc comments
@@ -82,7 +84,8 @@ public class GameManager {
 			
 			PoolBoardView poolBoardView = poolBoard.getView();
 			
-			pane.getChildren().add(poolBoardView.getPane());
+			pane.getChildren().add(poolBoardView.getPane());		
+
 			scene.setRoot(rootLayout);
 
 		} catch (IOException e) {
@@ -96,8 +99,8 @@ public class GameManager {
 		loader.setLocation(
 				GameManager.class.getResource("view/EndScreen.fxml"));
 		try {
-			Parent mainMenuScreen = (Parent) loader.load();
-			rootLayout.setCenter(mainMenuScreen);
+			Parent endScreen = (Parent) loader.load();
+			rootLayout.setCenter(endScreen);
 			scene.setRoot(rootLayout);
 		} catch (IOException e) {
 			e.printStackTrace();

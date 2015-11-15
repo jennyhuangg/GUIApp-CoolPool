@@ -12,11 +12,10 @@ public class PoolGame {
 	//TODO: Add Comments
 	
 	// Create a reference to game manager here
-	GameManager gameManager;
-	
-	PoolBoard poolBoard;
-	CueStick cueStick;
-	Player[] players = new Player[2];
+	private GameManager gameManager;
+	private PoolBoard poolBoard = new PoolBoard();
+	private CueStick cueStick;
+	private Player[] players = new Player[2];
 	int currPlayerInd = 0;
 	boolean gameHasEnded = false;
 	boolean sidesAreSet = false;
@@ -30,14 +29,14 @@ public class PoolGame {
 	public PoolGame(PoolScreenController poolScreenController){
 		gameManager = GameManager.getInstance();
 		
-		poolBoard = new PoolBoard();
-		setUpCueStick();
+		setUpCueStick(); //initialize cueStick
 		
 		players[0] = new Player();
 		players[1] = new Player();
 		
 		cueBallController = new CueBallController();
-		cueBallController.addMouseHoverEventHandler(poolBoard.getView(), poolBoard.getBalls()[15]);
+		cueBallController.addMouseHoverEventHandler(poolBoard.getView(), 
+				poolBoard.getBalls()[15]);
 		
 		
 		timer = new AnimationTimer() {
@@ -82,7 +81,8 @@ public class PoolGame {
 	public void switchPlayer(){
 		currPlayerInd = (currPlayerInd + 1)%2;
 		streak = false;
-		poolScreenController.setPlayerTurnText(currPlayerInd, streak);
+		poolScreenController.setPlayerTurnText(currPlayerInd, streak,
+				players[currPlayerInd].canPocketEightBall());
 	}
 	
 	public boolean pocketedCueBall(ArrayList<Ball> pocketedBalls){
@@ -101,7 +101,8 @@ public class PoolGame {
 	
 	public void continuePlayer(){
 		streak = true;
-		poolScreenController.setPlayerTurnText(currPlayerInd, streak);
+		poolScreenController.setPlayerTurnText(currPlayerInd, streak, 
+				players[currPlayerInd].canPocketEightBall());
 	}
 
 	public void updatePoints(ArrayList<Ball> pocketedBalls){
