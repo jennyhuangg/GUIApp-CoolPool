@@ -90,9 +90,5 @@ public class PoolScreenController {
     	int otherPlayerNum = (currPlayerInd+1)%2 + 1;
     	statusText.setText("Player " + playerNum + " pocketed "
     			+ "Player " + otherPlayerNum + "'s ball. Lost turn!" );
-    }
-    
-    
-			
-
+    }	
 }

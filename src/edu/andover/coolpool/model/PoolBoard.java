@@ -72,38 +72,39 @@ public class PoolBoard {
 		balls = new Ball[16];
 
 		// Place balls in triangle formation.
-		balls[0] = new Ball(length * 3/4 + boardX, centerY, 0);
+		double lengthFactor = 0.75;
+		balls[0] = new Ball(length * lengthFactor + boardX, centerY, 0);
 
-		balls[1] = new Ball(length * 3/4 + boardX + 1 * incrementX, 
+		balls[1] = new Ball(length * lengthFactor + boardX + 1 * incrementX, 
 				centerY + radius, 0);
-		balls[2] = new Ball(length * 3/4 + boardX + 1 * incrementX, 
+		balls[2] = new Ball(length * lengthFactor + boardX + 1 * incrementX, 
 				centerY - radius, 1);
 
-		balls[3] = new Ball(length * 3/4 + boardX + 2 * incrementX, 
+		balls[3] = new Ball(length * lengthFactor + boardX + 2 * incrementX, 
 				centerY + 2 * radius, 1);
-		balls[4] = new Ball(length * 3/4 + boardX + 2 * incrementX, 
+		balls[4] = new Ball(length * lengthFactor + boardX + 2 * incrementX, 
 				centerY, 3); //8 Ball
-		balls[5] = new Ball(length * 3/4 + boardX + 2 * incrementX, 
+		balls[5] = new Ball(length * lengthFactor + boardX + 2 * incrementX, 
 				centerY - 2 * radius, 0);
 
-		balls[6] = new Ball(length * 3/4 + boardX + 3 * incrementX, 
+		balls[6] = new Ball(length * lengthFactor + boardX + 3 * incrementX, 
 				centerY + 3 * radius, 0);
-		balls[7] = new Ball(length * 3/4 + boardX + 3 * incrementX, 
+		balls[7] = new Ball(length * lengthFactor + boardX + 3 * incrementX, 
 				centerY + radius, 1);
-		balls[8] = new Ball(length * 3/4 + boardX + 3 * incrementX, 
+		balls[8] = new Ball(length * lengthFactor + boardX + 3 * incrementX, 
 				centerY - radius, 0);
-		balls[9] = new Ball(length * 3/4 + boardX + 3 * incrementX, 
+		balls[9] = new Ball(length * lengthFactor + boardX + 3 * incrementX, 
 				centerY - 3 * radius, 1);
 
-		balls[10] = new Ball(length * 3/4 + boardX + 4 * incrementX, 
+		balls[10] = new Ball(length * lengthFactor + boardX + 4 * incrementX, 
 				centerY + 4 * radius, 1);
-		balls[11] = new Ball(length * 3/4 + boardX + 4 * incrementX, 
+		balls[11] = new Ball(length * lengthFactor + boardX + 4 * incrementX, 
 				centerY + 2 * radius, 0);
-		balls[12] = new Ball(length * 3/4 + boardX + 4 * incrementX, 
+		balls[12] = new Ball(length * lengthFactor + boardX + 4 * incrementX, 
 				centerY, 1);
-		balls[13] = new Ball(length * 3/4 + boardX + 4 * incrementX, 
+		balls[13] = new Ball(length * lengthFactor + boardX + 4 * incrementX, 
 				centerY - 2 * radius, 1);
-		balls[14] = new Ball(length * 3/4 + boardX + 4 * incrementX, 
+		balls[14] = new Ball(length * lengthFactor+ boardX + 4 * incrementX, 
 				centerY - 4 * radius, 0);
 
 		// Places cue ball in correct spot.
