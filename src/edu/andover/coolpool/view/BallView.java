@@ -1,79 +1,76 @@
 package edu.andover.coolpool.view;
+import java.util.Observable;
+import java.util.Observer;
 
 import edu.andover.coolpool.GameConstants;
+import edu.andover.coolpool.model.Ball;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 
-public class BallView {
+public class BallView implements Observer {
 	private Circle circle;
-
 	private double radius;
-
 	private double centerX;
 	private double centerY;
 
+	private Ball ball; //observable value
 
-	public BallView(double centerX_inches, double centerY_inches, 
-					double radius_inches, int id){
+
+	public BallView(Ball ball){
+		
+		this.ball = ball;
+
+		double centerX_inches = ball.getCenterX();
+		double centerY_inches = ball.getCenterY();
+		double radius_inches = ball.getRadius();
+		int id = ball.getId();
 
 		this.centerX = centerX_inches * GameConstants.IN_TO_PIXEL;
 		this.centerY = centerY_inches * GameConstants.IN_TO_PIXEL;
-
 		this.radius = radius_inches * GameConstants.IN_TO_PIXEL;
-
 		circle = new Circle(centerX, centerY, radius);
-
-		// Open up different image files for the sprite.
-		switch(id) {
 		
-		// 0 = red
-		// 1 = blue
-		// 2 = cue
-		// 3 = black/8 ball
-		case 0:
-			circle.setFill(Color.RED);
-			break;
-
-		case 1:
-			circle.setFill(Color.BLUE);
-			break;
-
-		case 2:
-			circle.setFill(Color.WHITE);
-			break;
-
-		case 3:
-			circle.setFill(Color.BLACK);
-			break;
-
-		default: 
-			break;
-		}
+		switch(id) {
+			case 0:
+				circle.setFill(Color.RED);
+				break;
+			case 1:
+				circle.setFill(Color.BLUE);
+				break;
+			case 2:
+				circle.setFill(Color.WHITE); // cueBall
+				break;		
+			case 3:
+				circle.setFill(Color.BLACK); // 8 ball
+				break;
+			default: 
+				break;
+		}			
 	}
 
-	public double getCenterX() {return centerX;}
-	public double getCenterY() {return centerY;}
-
-	public void setCenterX(double centerX_inches) { 
-		this.centerX = centerX_inches * GameConstants.IN_TO_PIXEL; 
+	public void setCenterX() { 
+		this.centerX = ball.getCenterX() * GameConstants.IN_TO_PIXEL; 
 		circle.setCenterX(centerX);
 	}
-	
-	public void setCenterY(double centerY_inches) {
-		this.centerY = centerY_inches * GameConstants.IN_TO_PIXEL;
+
+	public void setCenterY() {
+		this.centerY = ball.getCenterY() * GameConstants.IN_TO_PIXEL;
 		circle.setCenterY(centerY);
 	}
 	public void remove() {
 		Pane parentNode = (Pane) circle.getParent();
 		parentNode.getChildren().remove(circle);
 	}
-	
-	public void add(Rectangle poolBoardRectangle){
-		
-	}
-	
+
 	public Shape getCircle() {return circle; }
+
+	public void update(Observable o, Object arg) {
+		if (ball == o){
+			setCenterX();
+			setCenterY();
+		}
+
+	}
 }
