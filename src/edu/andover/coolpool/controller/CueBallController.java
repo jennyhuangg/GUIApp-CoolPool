@@ -13,7 +13,7 @@ public class CueBallController {
 	private double mouseY;
 	
 	public void addMouseHoverEventHandler(PoolBoardView pbv, Ball cueBall) {
-	    Rectangle r = pbv.getRectangle();
+	    Rectangle r = pbv.getCueStickRectangle();
 		r.setOnMouseMoved(new EventHandler<MouseEvent>() {		
 			@Override
 	    	public void handle(MouseEvent me) {
