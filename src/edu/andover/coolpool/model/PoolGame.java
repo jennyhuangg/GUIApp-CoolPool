@@ -104,11 +104,12 @@ public class PoolGame {
 
 	public void updatePoints(ArrayList<Ball> pocketedBalls) {
 		int size = pocketedBalls.size();
-		if (size == 0){
-			poolScreenView.setStatusPlayerFailed(currPlayerInd);
+		if (poolBoard.getNumBumperCollisions() < 4 && size == 0) {
+			poolBoard.rackBalls(poolBoard.getBalls());
+			poolScreenView.setStatusPlayerIllegalBreak(currPlayerInd);
 			switchPlayer();
 		}
-		else{
+		else {
 			for (int i = 0; i < size; i ++) {
 				int ballId = pocketedBalls.get(i).getId();
 				if (ballId == 0 || ballId == 1){
@@ -131,7 +132,7 @@ public class PoolGame {
 				gameHasEnded = true;
 				gameManager.initEndScreen();
 			}
-
+			
 			else if (pocketedCueBall(pocketedBalls)) {
 				poolScreenView.setStatusPocketedCueBall(currPlayerInd);
 				poolBoard.resetCueBall();

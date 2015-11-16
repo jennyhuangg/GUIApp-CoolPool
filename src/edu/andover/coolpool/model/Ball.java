@@ -18,6 +18,17 @@ public class Ball extends Observable{
 	private double yVelocity; // in inches/sec
 	private final double radius = GameConstants.BALL_RADIUS;
 	private int id;
+	
+	public Ball(int id) {
+		centerX = 0;
+		centerY = 0;
+		
+		isPocketed = false;
+	
+		xVelocity = 0;
+		yVelocity = 0;
+		this.id = id;
+	}
 
 	public Ball(double centerX, double centerY, int id) {
 		this.centerX = centerX;
@@ -48,6 +59,11 @@ public class Ball extends Observable{
 		notifyObservers();
 	}
 
+	public void setCenter(double centerX, double centerY) {
+		this.centerX = centerX;
+		this.centerY = centerY;
+	}
+	
 	public void setXVelocity(double xVel) { xVelocity = xVel;}
 	public void setYVelocity(double yVel) { yVelocity = yVel;}
 	
