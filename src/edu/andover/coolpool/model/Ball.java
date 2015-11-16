@@ -18,6 +18,17 @@ public class Ball {
 
 	private BallView ballView;
 
+	public Ball(int id) {
+		centerX = 0;
+		centerY = 0;
+		
+		ballView = new BallView(centerX, centerY, radius, id);
+		isPocketed = false;
+	
+		xVelocity = 0;
+		yVelocity = 0;
+		this.id = id;
+	}
 	public Ball(double centerX, double centerY, int id) {
 		this.centerX = centerX;
 		this.centerY = centerY;
@@ -49,6 +60,13 @@ public class Ball {
 		ballView.setCenterY(this.centerY);
 	}
 
+	public void setCenter(double centerX, double centerY) {
+		this.centerX = centerX;
+		ballView.setCenterX(this.centerX);
+		this.centerY = centerY;
+		ballView.setCenterY(this.centerY);
+	}
+	
 	public void setXVelocity(double xVel) { xVelocity = xVel;}
 	public void setYVelocity(double yVel) { yVelocity = yVel;}
 	

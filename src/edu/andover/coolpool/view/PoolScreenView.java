@@ -66,6 +66,13 @@ public class PoolScreenView {
     }
     
     @FXML
+    public void setStatusPlayerIllegalBreakNoPocketedBall(int currPlayerInd){
+    	int playerNum = currPlayerInd + 1;
+    	statusText.setText("Player " + playerNum + " did not "
+    			+ "pocket a ball.");
+    }
+    
+    @FXML
     public void setStatusPlayerSucceeded(int currPlayerInd){
     	int playerNum = currPlayerInd + 1;
     	statusText.setText("Player " + playerNum + " has pocketed "

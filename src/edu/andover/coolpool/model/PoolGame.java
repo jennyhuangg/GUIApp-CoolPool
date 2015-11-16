@@ -106,7 +106,8 @@ public class PoolGame {
 
 	public void updatePoints(ArrayList<Ball> pocketedBalls) {
 		int size = pocketedBalls.size();
-		if (size == 0){
+		if (poolBoard.getNumBumperCollisions() < 4 && size == 0) {
+			poolBoard.rackBalls(poolBoard.getBalls());
 			poolScreenView.setStatusPlayerFailed(currPlayerInd);
 			switchPlayer();
 		}

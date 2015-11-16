@@ -17,9 +17,10 @@ public class PoolBoard {
 	private ArrayList<Ball> pocketedBalls = new ArrayList<Ball>();
 	private ArrayList<Ball> unpocketedBalls = new ArrayList<Ball>();
 	private Pocket[] pockets; //Array of pockets
-
+	
 	private double length; 
 	private double width;
+	private int numBumperCollisions;
 	
 	private PoolBoardView poolBoardView;
 
@@ -33,6 +34,8 @@ public class PoolBoard {
 		length = GameConstants.POOL_TABLE_LENGTH;
 		width = GameConstants.POOL_TABLE_WIDTH;
 		setView();
+		
+		numBumperCollisions = 0;
 		
 		poolBoardView.getBigRectangle().getX();
 		boardX = poolBoardView.getRectangle().getX() *
@@ -64,57 +67,70 @@ public class PoolBoard {
 	// Initializes the array of balls and places the balls in the correct
 	// locations on the pool board
 	private void setUpBalls() {
+		// Creates balls on table.
+		balls = new Ball[16];
+		
+		// Set IDs for each ball.
+		for (int k = 0; k < balls.length; k ++) { 
+			balls[k] = new Ball(k);
+		}
+		
+		// Set balls in triangle formation.
+		rackBalls(balls);
+	
+		for (Ball b: balls) {
+			unpocketedBalls.add(b);
+		}
+	}
+	
+	// Sets balls back up in triangle formation. Useful for re-racking after
+	// illegal breaks.
+	public void rackBalls(Ball[] balls) {
 		double centerY = width / 2 + boardY;
 		double incrementX = 2.25 * Math.cos(30) * GameConstants.IN_TO_PIXEL;
 		double radius = 1.125;
-
-		// Creates balls on table.
-		balls = new Ball[16];
-
-		// Place balls in triangle formation.
 		double lengthFactor = 0.75;
-		balls[0] = new Ball(length * lengthFactor + boardX, centerY, 0);
+		
+		balls[0].setCenter(length * lengthFactor + boardX, centerY);
 
-		balls[1] = new Ball(length * lengthFactor + boardX + 1 * incrementX, 
-				centerY + radius, 0);
-		balls[2] = new Ball(length * lengthFactor + boardX + 1 * incrementX, 
-				centerY - radius, 1);
+		balls[1].setCenter(length * lengthFactor + boardX + 1 * incrementX,
+				centerY + radius);
+		
+		balls[2].setCenter(length * lengthFactor + boardX + 1 * incrementX, 
+				centerY - radius);
 
-		balls[3] = new Ball(length * lengthFactor + boardX + 2 * incrementX, 
-				centerY + 2 * radius, 1);
-		balls[4] = new Ball(length * lengthFactor + boardX + 2 * incrementX, 
-				centerY, 3); //8 Ball
-		balls[5] = new Ball(length * lengthFactor + boardX + 2 * incrementX, 
-				centerY - 2 * radius, 0);
+		balls[3].setCenter(length * lengthFactor + boardX + 2 * incrementX, 
+				centerY + 2 * radius);
+		balls[4].setCenter(length * lengthFactor + boardX + 2 * incrementX, 
+				centerY); //8 Ball
+		balls[5].setCenter(length * lengthFactor + boardX + 2 * incrementX, 
+				centerY - 2 * radius);
 
-		balls[6] = new Ball(length * lengthFactor + boardX + 3 * incrementX, 
-				centerY + 3 * radius, 0);
-		balls[7] = new Ball(length * lengthFactor + boardX + 3 * incrementX, 
-				centerY + radius, 1);
-		balls[8] = new Ball(length * lengthFactor + boardX + 3 * incrementX, 
-				centerY - radius, 0);
-		balls[9] = new Ball(length * lengthFactor + boardX + 3 * incrementX, 
-				centerY - 3 * radius, 1);
+		balls[6].setCenter(length * lengthFactor + boardX + 3 * incrementX, 
+				centerY + 3 * radius);
+		balls[7].setCenter(length * lengthFactor + boardX + 3 * incrementX, 
+				centerY + radius);
+		balls[8].setCenter(length * lengthFactor + boardX + 3 * incrementX, 
+				centerY - radius);
+		balls[9].setCenter(length * lengthFactor + boardX + 3 * incrementX, 
+				centerY - 3 * radius);
 
-		balls[10] = new Ball(length * lengthFactor + boardX + 4 * incrementX, 
-				centerY + 4 * radius, 1);
-		balls[11] = new Ball(length * lengthFactor + boardX + 4 * incrementX, 
-				centerY + 2 * radius, 0);
-		balls[12] = new Ball(length * lengthFactor + boardX + 4 * incrementX, 
-				centerY, 1);
-		balls[13] = new Ball(length * lengthFactor + boardX + 4 * incrementX, 
-				centerY - 2 * radius, 1);
-		balls[14] = new Ball(length * lengthFactor+ boardX + 4 * incrementX, 
-				centerY - 4 * radius, 0);
+		balls[10].setCenter(length * lengthFactor + boardX + 4 * incrementX, 
+				centerY + 4 * radius);
+		balls[11].setCenter(length * lengthFactor + boardX + 4 * incrementX, 
+				centerY + 2 * radius);
+		balls[12].setCenter(length * lengthFactor + boardX + 4 * incrementX, 
+				centerY);
+		balls[13].setCenter(length * lengthFactor + boardX + 4 * incrementX, 
+				centerY - 2 * radius);
+		balls[14].setCenter(length * lengthFactor+ boardX + 4 * incrementX, 
+				centerY - 4 * radius);
 
 		// Places cue ball in correct spot.
-		balls[15] = new Ball(length * 1/4 + boardX, width / 2 + boardY, 2);
+		balls[15].setCenter(length * 1/4 + boardX, width / 2 + boardY);
 		
-		for (Ball b: balls) {
-			unpocketedBalls.add(b);
-			}
 	}
-
+	
 	//updates positions and states of the balls at each time step of 
 	//0.01 seconds
 	public void update() {
@@ -159,6 +175,7 @@ public class PoolBoard {
 					|| (ball.getCenterX() + ball.getRadius() >= 
 					length + boardX && ball.getXVelocity() > 0)) {
 				ball.setXVelocity(ball.getXVelocity()*(-1));
+				numBumperCollisions++;
 			}
 			// Changes velocity when ball collides with horizontal walls of the
 			// pool board (i.e the horizontal bumpers).
@@ -167,6 +184,7 @@ public class PoolBoard {
 					|| (ball.getCenterY() + ball.getRadius() >= 
 					width + boardY & ball.getYVelocity() > 0)) {
 				ball.setYVelocity(ball.getYVelocity()*(-1));
+				numBumperCollisions++;
 			}
 
 			// Changes velocity when ball collides with other balls.
@@ -181,6 +199,9 @@ public class PoolBoard {
 		}
 	}
 
+	public int getNumBumperCollisions() {
+		return numBumperCollisions;
+	}
 	// Decreases the speed of all balls uniformly due to kinetic friction
 	// with the pool board unless speed of ball is already 0.
 	public void decelerateBalls(){
