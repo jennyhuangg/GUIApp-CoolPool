@@ -69,7 +69,15 @@ public class PoolScreenView {
     public void setStatusPlayerIllegalBreakNoPocketedBall(int currPlayerInd){
     	int playerNum = currPlayerInd + 1;
     	statusText.setText("Player " + playerNum + " did not "
-    			+ "pocket a ball.");
+    			+ "pocket a ball. Illegal break.");
+    }
+    
+    @FXML
+    public void setStatusPlayerIllegalBreak(int currPlayerInd){
+    	int playerNum = currPlayerInd + 1;
+    	statusText.setText("Player " + playerNum + " did not "
+    			+ "pocket a ball or get four bumper collisions "
+    			+ "- Illegal break.");
     }
     
     @FXML

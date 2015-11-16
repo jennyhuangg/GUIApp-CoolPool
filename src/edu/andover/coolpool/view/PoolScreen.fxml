@@ -12,7 +12,7 @@
          <children>
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a1a1a1" height="178.0" layoutX="16.0" layoutY="32.0" stroke="BLACK" strokeType="INSIDE" width="210.0" />
             <Text fx:id="player1BallColorText" layoutX="31.0" layoutY="172.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ball color: N/A" textAlignment="CENTER" wrappingWidth="68.76564025878906" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#d7b3b3" height="151.0" layoutX="20.0" layoutY="263.0" stroke="BLACK" strokeType="INSIDE" width="210.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#d7b3b3" height="194.0" layoutX="20.0" layoutY="263.0" stroke="BLACK" strokeType="INSIDE" width="210.0" />
             <Text fx:id="statusText" layoutX="23.0" layoutY="303.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Click and drag the cue stick to take a shot at the cue ball." textAlignment="CENTER" wrappingWidth="203.03045654296875">
                <font>
                   <Font size="27.0" />
@@ -20,8 +20,8 @@
             </Text>
             <Pane layoutY="437.0" prefHeight="283.0" prefWidth="250.0">
                <children>
-                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a1a1a1" height="42.0" layoutX="2.0" layoutY="14.0" stroke="BLACK" strokeType="INSIDE" width="244.0" />
-                  <Text fx:id="playerTurnText" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Player 1, your turn!" textAlignment="CENTER" wrappingWidth="250.0">
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a1a1a1" height="42.0" layoutX="3.0" layoutY="69.0" stroke="BLACK" strokeType="INSIDE" width="244.0" />
+                  <Text fx:id="playerTurnText" layoutY="97.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Player 1, your turn!" textAlignment="CENTER" wrappingWidth="250.0">
                      <font>
                         <Font size="21.0" />
                      </font>

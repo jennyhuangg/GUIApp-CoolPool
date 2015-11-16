@@ -28,15 +28,15 @@ public class PoolBoard {
 	private double boardY; //Y coordinate of top left corner of playable board
 
 	public static boolean isStable;
-	
+
 	public PoolBoard() {
 
 		length = GameConstants.POOL_TABLE_LENGTH;
 		width = GameConstants.POOL_TABLE_WIDTH;
 		setView();
-		
+
 		numBumperCollisions = 0;
-		
+
 		poolBoardView.getBigRectangle().getX();
 		boardX = poolBoardView.getRectangle().getX() *
 				GameConstants.PIXEL_TO_IN;
@@ -55,7 +55,7 @@ public class PoolBoard {
 		}
 
 	}
-	
+
 	private void setUpPockets() {
 		pockets = new Pocket[6];
 
@@ -72,7 +72,18 @@ public class PoolBoard {
 		
 		// Set IDs for each ball.
 		for (int k = 0; k < balls.length; k ++) { 
-			balls[k] = new Ball(k);
+			if (k < 7) {
+				balls[k] = new Ball(0);
+			}
+			else if (k >= 7 && k < 14) {
+				balls[k] = new Ball(1);
+			}
+			else if (k == 14) {
+				balls[k] = new Ball(3);
+			}
+			else {
+				balls[k] = new Ball (2);
+			}
 		}
 		
 		// Set balls in triangle formation.
@@ -89,46 +100,45 @@ public class PoolBoard {
 		double centerY = width / 2 + boardY;
 		double incrementX = 2.25 * Math.cos(30) * GameConstants.IN_TO_PIXEL;
 		double radius = 1.125;
-		double lengthFactor = 0.75;
+		double threeQuartersLength = 0.75*length+boardX;
 		
-		balls[0].setCenter(length * lengthFactor + boardX, centerY);
+		balls[0].setCenter(threeQuartersLength, centerY);
 
-		balls[1].setCenter(length * lengthFactor + boardX + 1 * incrementX,
+		balls[1].setCenter(threeQuartersLength + 1 * incrementX,
 				centerY + radius);
 		
-		balls[2].setCenter(length * lengthFactor + boardX + 1 * incrementX, 
+		balls[7].setCenter(threeQuartersLength + 1 * incrementX, 
 				centerY - radius);
 
-		balls[3].setCenter(length * lengthFactor + boardX + 2 * incrementX, 
+		balls[8].setCenter(threeQuartersLength + 2 * incrementX, 
 				centerY + 2 * radius);
-		balls[4].setCenter(length * lengthFactor + boardX + 2 * incrementX, 
+		balls[14].setCenter(threeQuartersLength + 2 * incrementX, 
 				centerY); //8 Ball
-		balls[5].setCenter(length * lengthFactor + boardX + 2 * incrementX, 
+		balls[2].setCenter(threeQuartersLength + 2 * incrementX, 
 				centerY - 2 * radius);
 
-		balls[6].setCenter(length * lengthFactor + boardX + 3 * incrementX, 
+		balls[3].setCenter(threeQuartersLength + 3 * incrementX, 
 				centerY + 3 * radius);
-		balls[7].setCenter(length * lengthFactor + boardX + 3 * incrementX, 
+		balls[9].setCenter(threeQuartersLength + 3 * incrementX, 
 				centerY + radius);
-		balls[8].setCenter(length * lengthFactor + boardX + 3 * incrementX, 
+		balls[4].setCenter(threeQuartersLength + 3 * incrementX, 
 				centerY - radius);
-		balls[9].setCenter(length * lengthFactor + boardX + 3 * incrementX, 
+		balls[10].setCenter(threeQuartersLength + 3 * incrementX, 
 				centerY - 3 * radius);
 
-		balls[10].setCenter(length * lengthFactor + boardX + 4 * incrementX, 
+		balls[11].setCenter(threeQuartersLength + 4 * incrementX, 
 				centerY + 4 * radius);
-		balls[11].setCenter(length * lengthFactor + boardX + 4 * incrementX, 
+		balls[5].setCenter(threeQuartersLength + 4 * incrementX, 
 				centerY + 2 * radius);
-		balls[12].setCenter(length * lengthFactor + boardX + 4 * incrementX, 
+		balls[12].setCenter(threeQuartersLength + 4 * incrementX, 
 				centerY);
-		balls[13].setCenter(length * lengthFactor + boardX + 4 * incrementX, 
+		balls[13].setCenter(threeQuartersLength + 4 * incrementX, 
 				centerY - 2 * radius);
-		balls[14].setCenter(length * lengthFactor+ boardX + 4 * incrementX, 
+		balls[6].setCenter(threeQuartersLength + 4 * incrementX, 
 				centerY - 4 * radius);
 
 		// Places cue ball in correct spot.
 		balls[15].setCenter(length * 1/4 + boardX, width / 2 + boardY);
-		
 	}
 	
 	//updates positions and states of the balls at each time step of 
@@ -304,18 +314,18 @@ public class PoolBoard {
 		poolBoardView.getBigRectangle().setX(180);
 		poolBoardView.getBigRectangle().setY(177);
 	}
-	
+
 	public ArrayList<Ball> pocketedBalls() { return pocketedBalls; }
-	
+
 	public void resetCueBall() { //will change to get User Input Later
 		pocketedBalls.remove(balls[15]);
 		balls[15] = new Ball(length * 1/4 + boardX, width / 2 + boardY, 2);
 		poolBoardView.getPane().getChildren().add(balls[15].getView());
 		unpocketedBalls.add(balls[15]);
 	}
-	
+
 	public void resetPocketedBalls() {pocketedBalls = new ArrayList<Ball>(); }
-	
-	
-	
+
+
+
 }
