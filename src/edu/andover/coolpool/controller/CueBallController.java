@@ -12,8 +12,21 @@ public class CueBallController {
 	private double mouseX;
 	private double mouseY;
 	
+	// EH abbreviation means Event Handler.
+	public void addMousePressedEventHandler(PoolBoardView pbv, Ball cueBall) {
+		Rectangle r = pbv.getScratchRectangle();
+		r.setOnMouseClicked(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent me) {
+				cueBall.setCenterX(mouseY);
+				cueBall.setCenterY(mouseY);
+			}
+		});
+	}
+	
 	public void addMouseHoverEventHandler(PoolBoardView pbv, Ball cueBall) {
-	    Rectangle r = pbv.getCueStickRectangle();
+		pbv.getScratchRectangle().toFront();
+	    Rectangle r = pbv.getScratchRectangle();
 		r.setOnMouseMoved(new EventHandler<MouseEvent>() {		
 			@Override
 	    	public void handle(MouseEvent me) {

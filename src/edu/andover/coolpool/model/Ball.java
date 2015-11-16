@@ -1,5 +1,6 @@
 package edu.andover.coolpool.model;
 
+import edu.andover.coolpool.GameConstants;
 import edu.andover.coolpool.view.BallView;
 import javafx.scene.shape.Shape;
 
@@ -11,9 +12,9 @@ public class Ball {
 	private boolean isPocketed;
 	private double centerX;
 	private double centerY;
-	private double xVelocity; //in inches/sec
-	private double yVelocity; //in inches/sec
-	private final double radius = 1.125; //in inches/sec
+	private double xVelocity; // in inches/sec
+	private double yVelocity; // in inches/sec
+	private final double radius = GameConstants.BALL_RADIUS;
 	private int id;
 
 	private BallView ballView;
