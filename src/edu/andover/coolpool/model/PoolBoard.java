@@ -5,6 +5,7 @@ import static java.lang.Math.sqrt;
 import java.util.ArrayList;
 
 import edu.andover.coolpool.GameConstants;
+import edu.andover.coolpool.view.BallView;
 import edu.andover.coolpool.view.GameSounds;
 import edu.andover.coolpool.view.PoolBoardView;
 
@@ -17,6 +18,7 @@ public class PoolBoard {
 	private ArrayList<Ball> pocketedBalls = new ArrayList<Ball>();
 	private ArrayList<Ball> unpocketedBalls = new ArrayList<Ball>();
 	private Pocket[] pockets; //Array of pockets
+	private BallView[] ballViews;
 
 	private double length; 
 	private double width;
@@ -47,8 +49,11 @@ public class PoolBoard {
 			poolBoardView.getPane().getChildren().add(pocket.getView());
 		}
 
-		for (Ball ball: balls){
-			poolBoardView.getPane().getChildren().add(ball.getView());
+		ballViews = new BallView[16];
+		for (int i = 0; i < 16; i ++){
+			ballViews[i] = new BallView(balls[i]);
+			balls[i].addObserver(ballViews[i]);
+			poolBoardView.getPane().getChildren().add(ballViews[i].getCircle());
 		}
 
 	}
@@ -292,7 +297,7 @@ public class PoolBoard {
 	public void resetCueBall() { //will change to get User Input Later
 		pocketedBalls.remove(balls[15]);
 		balls[15] = new Ball(length * 1/4 + boardX, width / 2 + boardY, 2);
-		poolBoardView.getPane().getChildren().add(balls[15].getView());
+		//poolBoardView.getPane().getChildren().add(balls[15].getView());
 		unpocketedBalls.add(balls[15]);
 	}
 

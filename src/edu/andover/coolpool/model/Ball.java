@@ -1,6 +1,8 @@
 package edu.andover.coolpool.model;
 
+
 import edu.andover.coolpool.GameConstants;
+import java.util.Observable;
 import edu.andover.coolpool.view.BallView;
 import javafx.scene.shape.Shape;
 
@@ -8,8 +10,8 @@ import javafx.scene.shape.Shape;
 // cue ball, or 8 ball depending on the ID passed into the constructor. The
 // ID of the ball does not matter until we implement players.
 
-public class Ball {
-	private boolean isPocketed;
+public class Ball extends Observable{
+	public boolean isPocketed;
 	private double centerX;
 	private double centerY;
 	private double xVelocity; // in inches/sec
@@ -17,13 +19,9 @@ public class Ball {
 	private final double radius = GameConstants.BALL_RADIUS;
 	private int id;
 
-	private BallView ballView;
-
 	public Ball(double centerX, double centerY, int id) {
 		this.centerX = centerX;
 		this.centerY = centerY;
-
-		ballView = new BallView(centerX, centerY, radius, id);
 		isPocketed = false;
 	
 		xVelocity = 0;
@@ -37,17 +35,17 @@ public class Ball {
 	public double getRadius(){ return radius; }
 	public double getCenterX(){ return centerX; }
 	public double getCenterY() { return centerY; }
-	
-	public Shape getView(){ return ballView.getCircle(); }
 
 	public void setCenterX(double centerX) {
 		this.centerX = centerX;
-		ballView.setCenterX(this.centerX);
+		setChanged();
+		notifyObservers();
 	}
 
 	public void setCenterY(double centerY) {
 		this.centerY = centerY;
-		ballView.setCenterY(this.centerY);
+		setChanged();
+		notifyObservers();
 	}
 
 	public void setXVelocity(double xVel) { xVelocity = xVel;}
@@ -60,8 +58,11 @@ public class Ball {
 		if (isPocketed) {
 			xVelocity = 0;
 			yVelocity = 0;
-			ballView.remove();
+			centerX = 0;
+			centerY = 0;
 		}
+		setChanged();
+		notifyObservers();
 	}
 	
 	public int getId(){ return id;}
