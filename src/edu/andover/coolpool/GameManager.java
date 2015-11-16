@@ -92,7 +92,7 @@ public class GameManager {
 	}
 	
 	// Implementation not yet finished; not used in version 0
-	public void initEndScreen(){
+	public void initEndScreen() {
 		FXMLLoader loader = new FXMLLoader();
 		loader.setLocation(
 				GameManager.class.getResource("view/EndScreen.fxml"));

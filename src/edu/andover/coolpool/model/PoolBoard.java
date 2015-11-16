@@ -22,20 +22,20 @@ public class PoolBoard {
 
 	private double length; 
 	private double width;
-	
+
 	private PoolBoardView poolBoardView;
 
 	private double boardX; //X coordinate of top left corner of playable board
 	private double boardY; //Y coordinate of top left corner of playable board
 
 	public static boolean isStable;
-	
+
 	public PoolBoard() {
 
 		length = GameConstants.POOL_TABLE_LENGTH;
 		width = GameConstants.POOL_TABLE_WIDTH;
 		setView();
-		
+
 		poolBoardView.getBigRectangle().getX();
 		boardX = poolBoardView.getRectangle().getX() *
 				GameConstants.PIXEL_TO_IN;
@@ -57,7 +57,7 @@ public class PoolBoard {
 		}
 
 	}
-	
+
 	private void setUpPockets() {
 		pockets = new Pocket[6];
 
@@ -77,47 +77,50 @@ public class PoolBoard {
 		balls = new Ball[16];
 
 		// Place balls in triangle formation.
-		double lengthFactor = 0.75;
-		balls[0] = new Ball(length * lengthFactor + boardX, centerY, 0);
+		
+		// X Position of the third fourth of the board.
+		double lengthFactor = length * 0.75 + boardX;
+		
+		balls[0] = new Ball(lengthFactor, centerY, 0);
 
-		balls[1] = new Ball(length * lengthFactor + boardX + 1 * incrementX, 
+		balls[1] = new Ball(lengthFactor + 1 * incrementX, 
 				centerY + radius, 0);
-		balls[2] = new Ball(length * lengthFactor + boardX + 1 * incrementX, 
+		balls[2] = new Ball(lengthFactor + 1 * incrementX, 
 				centerY - radius, 1);
 
-		balls[3] = new Ball(length * lengthFactor + boardX + 2 * incrementX, 
+		balls[3] = new Ball(lengthFactor + 2 * incrementX, 
 				centerY + 2 * radius, 1);
-		balls[4] = new Ball(length * lengthFactor + boardX + 2 * incrementX, 
+		balls[4] = new Ball(lengthFactor + 2 * incrementX, 
 				centerY, 3); //8 Ball
-		balls[5] = new Ball(length * lengthFactor + boardX + 2 * incrementX, 
+		balls[5] = new Ball(lengthFactor + 2 * incrementX, 
 				centerY - 2 * radius, 0);
 
-		balls[6] = new Ball(length * lengthFactor + boardX + 3 * incrementX, 
+		balls[6] = new Ball(lengthFactor + 3 * incrementX, 
 				centerY + 3 * radius, 0);
-		balls[7] = new Ball(length * lengthFactor + boardX + 3 * incrementX, 
+		balls[7] = new Ball(lengthFactor + 3 * incrementX, 
 				centerY + radius, 1);
-		balls[8] = new Ball(length * lengthFactor + boardX + 3 * incrementX, 
+		balls[8] = new Ball(lengthFactor + 3 * incrementX, 
 				centerY - radius, 0);
-		balls[9] = new Ball(length * lengthFactor + boardX + 3 * incrementX, 
+		balls[9] = new Ball(lengthFactor + 3 * incrementX, 
 				centerY - 3 * radius, 1);
 
-		balls[10] = new Ball(length * lengthFactor + boardX + 4 * incrementX, 
+		balls[10] = new Ball(lengthFactor + 4 * incrementX, 
 				centerY + 4 * radius, 1);
-		balls[11] = new Ball(length * lengthFactor + boardX + 4 * incrementX, 
+		balls[11] = new Ball(lengthFactor + 4 * incrementX, 
 				centerY + 2 * radius, 0);
-		balls[12] = new Ball(length * lengthFactor + boardX + 4 * incrementX, 
+		balls[12] = new Ball(lengthFactor + 4 * incrementX, 
 				centerY, 1);
-		balls[13] = new Ball(length * lengthFactor + boardX + 4 * incrementX, 
+		balls[13] = new Ball(lengthFactor + 4 * incrementX, 
 				centerY - 2 * radius, 1);
-		balls[14] = new Ball(length * lengthFactor+ boardX + 4 * incrementX, 
+		balls[14] = new Ball(lengthFactor + 4 * incrementX, 
 				centerY - 4 * radius, 0);
 
 		// Places cue ball in correct spot.
 		balls[15] = new Ball(length * 1/4 + boardX, width / 2 + boardY, 2);
-		
+
 		for (Ball b: balls) {
 			unpocketedBalls.add(b);
-			}
+		}
 	}
 
 	//updates positions and states of the balls at each time step of 
@@ -288,18 +291,18 @@ public class PoolBoard {
 		poolBoardView.getBigRectangle().setX(180);
 		poolBoardView.getBigRectangle().setY(177);
 	}
-	
+
 	public ArrayList<Ball> pocketedBalls() { return pocketedBalls; }
-	
+
 	public void resetCueBall() { //will change to get User Input Later
 		pocketedBalls.remove(balls[15]);
 		balls[15] = new Ball(length * 1/4 + boardX, width / 2 + boardY, 2);
 		//poolBoardView.getPane().getChildren().add(balls[15].getView());
 		unpocketedBalls.add(balls[15]);
 	}
-	
+
 	public void resetPocketedBalls() {pocketedBalls = new ArrayList<Ball>(); }
-	
-	
-	
+
+
+
 }

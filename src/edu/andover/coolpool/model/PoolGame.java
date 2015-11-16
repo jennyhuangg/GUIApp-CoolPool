@@ -26,7 +26,7 @@ public class PoolGame {
 	private PoolScreenView poolScreenView;
 	boolean streak = false;
 	
-	public PoolGame(PoolScreenView poolScreenView){
+	public PoolGame(PoolScreenView poolScreenView) {
 		gameManager = GameManager.getInstance();
 		
 		setUpCueStick(); //initialize cueStick
@@ -37,7 +37,6 @@ public class PoolGame {
 		cueBallController = new CueBallController();
 		cueBallController.addMouseHoverEventHandler(poolBoard.getView(), 
 				poolBoard.getBalls()[15]);
-		
 		
 		timer = new AnimationTimer() {
 			@Override
@@ -56,11 +55,11 @@ public class PoolGame {
 		this.poolScreenView = poolScreenView;
 	}
 	
-	public void turn(){
+	public void turn() {
 		timer.start();
 	}
 	
-	public void setSides(int ballId){
+	public void setSides(int ballId) {
 		players[currPlayerInd].setBallType(ballId);
 		players[(currPlayerInd+1)%2].setBallType((ballId + 1)%2);
 		poolScreenView.setBallColorText(currPlayerInd, ballId);
@@ -78,41 +77,41 @@ public class PoolGame {
 		return false;
 	}
 	
-	public void switchPlayer(){
+	public void switchPlayer() {
 		currPlayerInd = (currPlayerInd + 1)%2;
 		streak = false;
 		poolScreenView.setPlayerTurnText(currPlayerInd, streak,
 				players[currPlayerInd].canPocketEightBall());
 	}
 	
-	public boolean pocketedCueBall(ArrayList<Ball> pocketedBalls){
+	public boolean pocketedCueBall(ArrayList<Ball> pocketedBalls) {
 		for (Ball b: pocketedBalls){
 			if ( b.getId() == 2) return true;
 		}
 		return false;
 	}
 	
-	public boolean pocketedEightBall(ArrayList<Ball> pocketedBalls){
+	public boolean pocketedEightBall(ArrayList<Ball> pocketedBalls) {
 		for (Ball b: pocketedBalls){
 			if ( b.getId() == 3) return true;
 		}
 		return false;
 	}
 	
-	public void continuePlayer(){
+	public void continuePlayer() {
 		streak = true;
 		poolScreenView.setPlayerTurnText(currPlayerInd, streak, 
 				players[currPlayerInd].canPocketEightBall());
 	}
 
-	public void updatePoints(ArrayList<Ball> pocketedBalls){
+	public void updatePoints(ArrayList<Ball> pocketedBalls) {
 		int size = pocketedBalls.size();
 		if (size == 0){
 			poolScreenView.setStatusPlayerFailed(currPlayerInd);
 			switchPlayer();
 		}
 		else{
-			for (int i = 0; i < size; i ++){
+			for (int i = 0; i < size; i ++) {
 				int ballId = pocketedBalls.get(i).getId();
 				if (ballId == 0 || ballId == 1){
 					if (!sidesAreSet){
@@ -130,18 +129,18 @@ public class PoolGame {
 			poolScreenView.setPointsText(players[0].getPoints(), 
 					players[1].getPoints());
 			
-			if (pocketedEightBall(pocketedBalls)){
+			if (pocketedEightBall(pocketedBalls)) {
 				gameHasEnded = true;
 				gameManager.initEndScreen();
 			}
 			
-			else if (pocketedCueBall(pocketedBalls)){
+			else if (pocketedCueBall(pocketedBalls)) {
 				poolScreenView.setStatusPocketedCueBall(currPlayerInd);
 				poolBoard.resetCueBall();
 				cueStick.setCueBall(poolBoard.getBalls()[15]);
 				switchPlayer();
 			}		
-			else if (pocketedOther(pocketedBalls)){
+			else if (pocketedOther(pocketedBalls)) {
 				poolScreenView.setStatusPocketedOther(currPlayerInd);
 				switchPlayer();
 			}
@@ -152,7 +151,7 @@ public class PoolGame {
 		}
 	}
 
-	public PoolBoard getPoolBoard(){
+	public PoolBoard getPoolBoard() {
 		return poolBoard;
 	}
 	
@@ -166,5 +165,5 @@ public class PoolGame {
 		poolBoard.getView().getPane().getChildren().add(cueStick.getView());
 	}
 	
-	public Player[] getPlayers(){ return players; }
+	public Player[] getPlayers() { return players; }
 }
