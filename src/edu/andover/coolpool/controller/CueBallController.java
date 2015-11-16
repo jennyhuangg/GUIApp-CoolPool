@@ -22,7 +22,6 @@ public class CueBallController {
 					mouseY = me.getY()*GameConstants.PIXEL_TO_IN;
 					cueBall.setCenterX(mouseX);
 					cueBall.setCenterY(mouseY);
-					System.out.println("set");
 				}
 	    	}
 	    });
