@@ -2,17 +2,22 @@ package edu.andover.coolpool.model;
 
 import java.util.Observable;
 
+import edu.andover.coolpool.GameConstants;
+import java.util.Observable;
+import edu.andover.coolpool.view.BallView;
+import javafx.scene.shape.Shape;
+
 // Model class for a pool ball. Can represent a "solid" ball, "striped" ball,
 // cue ball, or 8 ball depending on the ID passed into the constructor. The
 // ID of the ball does not matter until we implement players.
 
 public class Ball extends Observable{
-	private boolean isPocketed;
+	public boolean isPocketed;
 	private double centerX;
 	private double centerY;
-	private double xVelocity; //in inches/sec
-	private double yVelocity; //in inches/sec
-	private final double radius = 1.125; //in inches/sec
+	private double xVelocity; // in inches/sec
+	private double yVelocity; // in inches/sec
+	private final double radius = GameConstants.BALL_RADIUS;
 	private int id;
 	
 	public Ball(int id) {
@@ -72,9 +77,11 @@ public class Ball extends Observable{
 		if (isPocketed) {
 			xVelocity = 0;
 			yVelocity = 0;
-			setChanged();
-			notifyObservers();
+			centerX = 0;
+			centerY = 0;
 		}
+		setChanged();
+		notifyObservers();
 	}
 	
 	public int getId(){ return id;}

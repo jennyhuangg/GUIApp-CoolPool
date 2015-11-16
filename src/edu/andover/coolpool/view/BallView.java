@@ -70,6 +70,9 @@ public class BallView implements Observer {
 		if (ball == o){
 			setCenterX();
 			setCenterY();
+			if (ball.isPocketed){
+				this.remove();
+			}
 		}
 
 	}
