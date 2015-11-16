@@ -2,9 +2,6 @@ package edu.andover.coolpool.model;
 
 import java.util.Observable;
 
-import edu.andover.coolpool.view.BallView;
-import javafx.scene.shape.Shape;
-
 // Model class for a pool ball. Can represent a "solid" ball, "striped" ball,
 // cue ball, or 8 ball depending on the ID passed into the constructor. The
 // ID of the ball does not matter until we implement players.
@@ -61,6 +58,8 @@ public class Ball extends Observable{
 	public void setCenter(double centerX, double centerY) {
 		this.centerX = centerX;
 		this.centerY = centerY;
+		setChanged();
+		notifyObservers();
 	}
 	
 	public void setXVelocity(double xVel) { xVelocity = xVel;}
