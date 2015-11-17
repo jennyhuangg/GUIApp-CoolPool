@@ -87,7 +87,7 @@ public class PoolBoard {
 				balls[k] = new Ball(3);
 			}
 			else {
-				balls[k] = new Ball (2);
+				balls[k] = new Ball(2);
 			}
 		}
 		
