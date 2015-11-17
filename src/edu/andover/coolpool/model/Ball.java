@@ -7,7 +7,7 @@ import edu.andover.coolpool.GameConstants;
 // cue ball, or 8 ball depending on the ID passed into the constructor. The
 // ID of the ball does not matter until we implement players.
 
-public class Ball extends Observable{
+public class Ball extends Observable {
 	public boolean isPocketed;
 	private double centerX;
 	private double centerY;
@@ -55,18 +55,17 @@ public class Ball extends Observable{
 	
 	public void setXVelocity(double xVel) { 
 		xVelocity = xVel;
-		
 		setChanged();
 		notifyObservers();
 	}
+	
 	public void setYVelocity(double yVel) { 
 		yVelocity = yVel;
-		
 		setChanged();
 		notifyObservers();
-		}
+	}
 	
-	// pockets a ball
+	// Pockets a ball
 	public void setPocketed() {
 		isPocketed = !isPocketed;
 		xVelocity = 0;
@@ -77,6 +76,7 @@ public class Ball extends Observable{
 		notifyObservers();
 	}
 	
+	// Unpockets a ball, used only for cueball
 	public void unpocket(){
 		isPocketed = !isPocketed;
 	}

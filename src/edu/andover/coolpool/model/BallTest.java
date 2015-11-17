@@ -1,7 +1,6 @@
 package edu.andover.coolpool.model;
 
 import static org.junit.Assert.*;
-
 import org.junit.Test;
 
 public class BallTest {

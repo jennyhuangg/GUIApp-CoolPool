@@ -2,15 +2,21 @@ package edu.andover.coolpool.model;
 
 import java.util.Observable;
 
+// Model class that stores the status of the pool game after each turn
 public class PoolGameStatus extends Observable {
 	
+	// Stores number of points for each player
 	private String player1PointsStatus = "0";
 	private String player2PointsStatus = "0";
 	
+	// Stores the ball type for each player
     private String player1BallColorStatus = "N/A";
     private String player2BallColorStatus = "N/A";
     
+    // Stores which player's turn it is
     private String turnStatus;
+    
+    //Stores message from previous turn
     private String lastTurnStatus;
     
     public PoolGameStatus(){
@@ -43,13 +49,19 @@ public class PoolGameStatus extends Observable {
     	notifyObservers();
     }
     
+    // Sets the turn status for which player gets next turn
     public void setTurnStatus(int currPlayerInd, boolean streak, 
     		boolean canPocketEightBall){
+    	
     	int playerNum = currPlayerInd + 1;
+   
+    	// Additional streak text if player is on a streak
     	String streakText = "";
     	if (streak) {
     		streakText = " again";
     	}
+    	
+    	// Additional eight ball prompt if player can pocket eight ball
     	String eightBallPrompt = "";
     	if (canPocketEightBall) eightBallPrompt = " You may now pocket the "
     			+ "eight ball to win.";
@@ -61,26 +73,29 @@ public class PoolGameStatus extends Observable {
     	notifyObservers();
     }
     
+    // Sets last turn status if player did not pocket a ball
     public void setLastTurnStatusPlayerFailed(int currPlayerInd){
     	int playerNum = currPlayerInd + 1;
     	lastTurnStatus = "Player " + playerNum + " did not "
     			+ "pocket a ball.";
-    	
     	setChanged();
     	notifyObservers();
     }
     
     
+    // Sets last turn status if player made an illegal break
     public void setLastTurnStatusPlayerIllegalBreak(int currPlayerInd){
     	int playerNum = currPlayerInd + 1;
     	lastTurnStatus = "Player " + playerNum + " did not "
-    			+ "pocket a ball or get four bumper collisions "
-    			+ "- Illegal break."; //TODO: isn't is okay to not pocket a ball?
+    			+ "get four bumper collisions "
+    			+ "- Illegal break.";
     	
     	setChanged();
     	notifyObservers();
     }
     
+    // Sets last turn status if player pocketed a ball and did not
+    // pocket other player's balls
     public void setLastTurnStatusPlayerSucceeded(int currPlayerInd){
     	int playerNum = currPlayerInd + 1;
     	lastTurnStatus = "Player " + playerNum + " has pocketed "
@@ -90,46 +105,29 @@ public class PoolGameStatus extends Observable {
     	notifyObservers();
     }
     
+    // Sets last turn status if player pocketed the cue ball
     public void setLastTurnStatusPocketedCueBall(int currPlayerInd){
     	int playerNum = currPlayerInd + 1;
     	lastTurnStatus = "Player " + playerNum + " pocketed "
     			+ "the cue ball. Scratch!";
-    	
     	setChanged();
     	notifyObservers();
     }
     
+    // Sets last turn status if player pocketed other player's balls
     public void setLastTurnStatusPocketedOther(int currPlayerInd){
     	int playerNum = currPlayerInd + 1;
     	int otherPlayerNum = (currPlayerInd+1)%2 + 1;
     	lastTurnStatus = "Player " + playerNum + " pocketed "
     			+ "Player " + otherPlayerNum + "'s ball. Lost turn!";
-    	
     	setChanged();
     	notifyObservers();
     }	
     
-    public String getPlayer1PointsStatus(){
-    	return player1PointsStatus;
-    }
-    
-    public String getPlayer2PointsStatus(){
-    	return player2PointsStatus;
-    }
-    
-    public String getPlayer1BallColorStatus(){
-    	return player1BallColorStatus;
-    }
-    
-    public String getPlayer2BallColorStatus(){
-    	return player2BallColorStatus;
-    }
-    
-    public String getTurnStatus(){
-    	return turnStatus;
-    }
-    
-    public String getLastTurnStatus(){
-    	return lastTurnStatus;
-    }
+    public String getPlayer1PointsStatus(){ return player1PointsStatus; }
+    public String getPlayer2PointsStatus(){ return player2PointsStatus; }
+    public String getPlayer1BallColorStatus(){ return player1BallColorStatus; }
+    public String getPlayer2BallColorStatus(){ return player2BallColorStatus; }
+    public String getTurnStatus(){ return turnStatus; }
+    public String getLastTurnStatus(){ return lastTurnStatus; }
 }

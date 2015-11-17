@@ -80,7 +80,6 @@ public class CueStickView implements Observer{
 	    		GameSounds.CUE_HITTING_BALL.play();
 			}
 		}
-		
 	}
 	
 	public CueStick getCueStick(){
