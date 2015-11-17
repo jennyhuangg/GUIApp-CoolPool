@@ -53,8 +53,18 @@ public class Ball extends Observable{
 		notifyObservers();
 	}
 	
-	public void setXVelocity(double xVel) { xVelocity = xVel;}
-	public void setYVelocity(double yVel) { yVelocity = yVel;}
+	public void setXVelocity(double xVel) { 
+		xVelocity = xVel;
+		
+		setChanged();
+		notifyObservers();
+	}
+	public void setYVelocity(double yVel) { 
+		yVelocity = yVel;
+		
+		setChanged();
+		notifyObservers();
+		}
 	
 	// pockets a ball
 	public void setPocketed() {

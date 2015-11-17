@@ -76,6 +76,9 @@ public class CueStickView implements Observer{
 			setEndX(cueStick.getEndX());
 			setStartY(cueStick.getStartY());
 			setEndY(cueStick.getEndY());
+			if (cueStick.hasHit()) {
+	    		GameSounds.CUE_HITTING_BALL.play();
+			}
 		}
 		
 	}

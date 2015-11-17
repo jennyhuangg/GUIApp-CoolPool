@@ -105,7 +105,12 @@ public class PoolBoardView implements Observer {
 	@Override
 	public void update(Observable o, Object arg) {
 		if (o == poolBoard){
-			view.getChildren().add(ballViews[15].getCircle());
+			if (poolBoard.bounced) {
+				GameSounds.BALL_HIT_BALL.play();
+			}
+			if (poolBoard.resetCue) {
+				view.getChildren().add(ballViews[15].getCircle());
+			}
 		}
 		
 	}

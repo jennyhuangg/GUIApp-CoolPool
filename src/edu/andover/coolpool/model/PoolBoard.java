@@ -6,9 +6,7 @@ import java.util.ArrayList;
 import java.util.Observable;
 
 import edu.andover.coolpool.GameConstants;
-import edu.andover.coolpool.view.BallView;
 import edu.andover.coolpool.view.GameSounds;
-import edu.andover.coolpool.view.PoolBoardView;
 
 // Model class for a pool board, including interactions between the
 // pool balls.
@@ -29,6 +27,9 @@ public class PoolBoard extends Observable{
 
 	public static boolean isStable;
 	private CueStick cueStick;
+	
+	public boolean bounced = false;
+	public boolean resetCue = false;
 
 	public PoolBoard() {
 
@@ -162,7 +163,6 @@ public class PoolBoard extends Observable{
 					ball.setPocketed();
 					pocketedBalls.add(ball);
 					unpocketedBalls.remove(ball);
-					GameSounds.BALL_FALLING_IN_POCKET.play();
 				}
 			}
 		}
@@ -195,8 +195,12 @@ public class PoolBoard extends Observable{
 				final double deltaX = b2.getCenterX() - ball.getCenterX() ;
 				final double deltaY = b2.getCenterY() - ball.getCenterY() ;
 				if (colliding(ball, b2, deltaX, deltaY)) {
-					GameSounds.BALL_HIT_BALL.play();
+					//GameSounds.BALL_HIT_BALL.play();
+					bounced = true;
 					bounce(ball, b2, deltaX, deltaY);
+					setChanged();
+					notifyObservers();
+					bounced = false;
 				}
 			}
 		}
@@ -300,8 +304,10 @@ public class PoolBoard extends Observable{
 		balls[15].unpocket();
 		balls[15].setCenter(length * 1/4 + boardX, width / 2 + boardY);
 		
+		resetCue = true;
 		setChanged();
 		notifyObservers();
+		resetCue = false;
 	}
 
 	public void resetPocketedBalls() {pocketedBalls = new ArrayList<Ball>(); }

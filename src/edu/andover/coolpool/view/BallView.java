@@ -72,6 +72,7 @@ public class BallView implements Observer {
 			setCenterY();
 			if (ball.isPocketed){
 				this.remove();
+				GameSounds.BALL_FALLING_IN_POCKET.play();
 			}
 		}
 

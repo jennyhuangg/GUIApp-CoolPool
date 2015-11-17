@@ -2,17 +2,9 @@ package edu.andover.coolpool;
 
 // This class contains methods to set each scene.
 import java.io.IOException;
-
-import edu.andover.coolpool.controller.CueStickController;
-import edu.andover.coolpool.model.Ball;
-import edu.andover.coolpool.model.CueStick;
-import edu.andover.coolpool.model.Pocket;
 import edu.andover.coolpool.model.PoolBoard;
 import edu.andover.coolpool.model.PoolGame;
 import edu.andover.coolpool.model.PoolGameStatus;
-import edu.andover.coolpool.view.BallView;
-import edu.andover.coolpool.view.CueStickView;
-import edu.andover.coolpool.view.PocketView;
 import edu.andover.coolpool.view.PoolBoardView;
 import edu.andover.coolpool.view.PoolGameStatusView;
 import javafx.fxml.FXMLLoader;
