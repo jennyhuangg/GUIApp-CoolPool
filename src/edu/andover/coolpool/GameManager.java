@@ -2,9 +2,12 @@ package edu.andover.coolpool;
 
 // This class contains methods to set each scene.
 import java.io.IOException;
+
+import edu.andover.coolpool.model.EndScreenStatus;
 import edu.andover.coolpool.model.PoolBoard;
 import edu.andover.coolpool.model.PoolGame;
 import edu.andover.coolpool.model.PoolGameStatus;
+import edu.andover.coolpool.view.EndScreenStatusView;
 import edu.andover.coolpool.view.PoolBoardView;
 import edu.andover.coolpool.view.PoolGameStatusView;
 import javafx.fxml.FXMLLoader;
@@ -24,6 +27,7 @@ import javafx.scene.layout.Pane;
 public class GameManager {
 	private Scene scene;
 	private BorderPane rootLayout;
+	private PoolGame poolGame;
 
 	private static GameManager instance = null;
 	
@@ -74,7 +78,7 @@ public class GameManager {
 			Parent poolScreen = (Parent) loader.load();
 			PoolGameStatusView poolGameStatusView = loader.getController();
 			
-			PoolGame poolGame = new PoolGame();
+			poolGame = new PoolGame();
 			PoolBoard poolBoard = poolGame.getPoolBoard();
 			PoolBoardView poolBoardView = new PoolBoardView(poolBoard);
 			poolBoard.addObserver(poolBoardView);
@@ -103,6 +107,12 @@ public class GameManager {
 				GameManager.class.getResource("view/EndScreen.fxml"));
 		try {
 			Parent endScreen = (Parent) loader.load();
+			EndScreenStatusView endScreenStatusView = loader.getController();
+			EndScreenStatus endScreenStatus = poolGame.getEndScreenStatus();
+			
+			endScreenStatusView.setObservable(endScreenStatus);
+			endScreenStatus.addObserver(endScreenStatusView);
+			
 			rootLayout.setCenter(endScreen);
 			scene.setRoot(rootLayout);
 		} catch (IOException e) {

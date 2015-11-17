@@ -16,6 +16,7 @@ public class PoolGame implements Observer {
 	private PoolBoard poolBoard = new PoolBoard();
 	private Player[] players = {new Player(), new Player()};
 	private PoolGameStatus poolGameStatus = new PoolGameStatus();
+	private EndScreenStatus endScreenStatus = new EndScreenStatus();
 	private AnimationTimer timer;
 	
 	private int currPlayerInd = 0; // 0 = player 1, 1 = player 2
@@ -123,8 +124,8 @@ public class PoolGame implements Observer {
 	// next player to go, and notification of last turn
 	public void updateStatus(ArrayList<Ball> pocketedBalls) {
 		int size = pocketedBalls.size();
-		// Call an illegal break if current player does not get balls
-		// to hit sides of pool board at least 3 times
+		// Call an illegal break if current player does not get balls to hit 
+		// sides of pool board at least 3 times and gets no pocketed balls.
 		if (poolBoard.getNumBumperCollisions() < 4 && size == 0) {
 			poolBoard.rackBalls(poolBoard.getBalls());
 			poolGameStatus.setLastTurnStatusPlayerIllegalBreak(currPlayerInd);
@@ -137,11 +138,20 @@ public class PoolGame implements Observer {
 		}
 		// Some balls are pocketed
 		else {
-			updatePoints(pocketedBalls);	
 			// Update next player to play and status of last turn
+			updatePoints(pocketedBalls);	
+			// End game if pocketed eight ball
 			if (pocketedEightBall(pocketedBalls)) {
-				// End game if pocketed eight ball
-				gameManager.initEndScreen();
+		    	// If was supposed to pocket eight ball.
+		    	if (players[currPlayerInd].canPocketEightBall()) {
+					endScreenStatus.setGameOverStatusSuccess(currPlayerInd);
+					gameManager.initEndScreen();
+				}
+		    	// If was not supposed to pocket eight ball.
+				else {
+					endScreenStatus.setGameOverStatusFail(currPlayerInd);
+					gameManager.initEndScreen();
+				}
 			}
 			else if (pocketedCueBall(pocketedBalls)) {
 				// Handle scratch if pocketed cue ball
@@ -174,4 +184,5 @@ public class PoolGame implements Observer {
 	public PoolBoard getPoolBoard() { return poolBoard; }
 	public Player[] getPlayers() { return players; }
 	public PoolGameStatus getPoolGameStatus(){ return poolGameStatus; }
+	public EndScreenStatus getEndScreenStatus() { return endScreenStatus; }
 }
