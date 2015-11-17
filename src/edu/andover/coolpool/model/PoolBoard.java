@@ -201,7 +201,7 @@ public class PoolBoard extends Observable {
 	
 	// Decreases the speed of all balls uniformly due to kinetic friction
 	// with the pool board unless speed of ball is already 0.
-	private void decelerateBalls(){
+	public void decelerateBalls(){
 		double elapsedSeconds = 0.1;
 		for (Ball ball: remainingBalls){
 			double xVel = ball.getXVelocity();
@@ -229,7 +229,7 @@ public class PoolBoard extends Observable {
 	}
 
 	// Returns true if b1 and b2 are colliding. 
-	private boolean colliding(final Ball b1, final Ball b2, final double deltaX, 
+	public boolean colliding(final Ball b1, final Ball b2, final double deltaX, 
 			final double deltaY) {
 		// Balls are colliding if (x2-x1)^2 + (y2-y1)^2 < (r1 + r2)^2
 		// and if distance between them is decreasing.

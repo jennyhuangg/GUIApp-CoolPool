@@ -89,6 +89,8 @@ public class CueStickController {
 	    			int k = (int) (changeFactor/distance);
 	    			int maxValue = 255;
 	    			if ( k > maxValue) { k = maxValue; }
+	    			
+	    			// TODO: Make this change the model to change the  view.
 	    			// Changes from yellow to dark red as distance increases.
 	    			l.setStroke(Color.rgb((int)(140+.45*k),k, 
 	    					0));
@@ -114,6 +116,7 @@ public class CueStickController {
 		    				endMouseY);
 	    			cueStick.setCueStickLocationOnDrag(endMouseX, endMouseY);
 	    			
+	    			// TODO: Make this change the model to change the  view.
 	    			// Set color of cue stick.
 	    			int changeFactor = 2000; // How little color changes.
 	    			int k = (int) (changeFactor/distance);
