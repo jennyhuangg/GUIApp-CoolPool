@@ -1,8 +1,11 @@
-package edu.andover.coolpool.model;
+package tests;
 
 import static org.junit.Assert.*;
 
 import org.junit.Test;
+
+import edu.andover.coolpool.model.Ball;
+import edu.andover.coolpool.model.PoolBoard;
 
 // TODO: Create tests for interfaces, not implementations. We shouldn't be
 // testing private methods.

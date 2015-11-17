@@ -142,12 +142,12 @@ public class PoolGame implements Observer {
 			updatePoints(pocketedBalls);	
 			// End game if pocketed eight ball
 			if (pocketedEightBall(pocketedBalls)) {
-		    	// If was supposed to pocket eight ball.
+		    	// If eight ball is pocketed correctly.
 		    	if (players[currPlayerInd].canPocketEightBall()) {
 					endScreenStatus.setGameOverStatusSuccess(currPlayerInd);
 					gameManager.initEndScreen();
 				}
-		    	// If was not supposed to pocket eight ball.
+		    	// If eight ball is pocketed prematurely. 
 				else {
 					endScreenStatus.setGameOverStatusFail(currPlayerInd);
 					gameManager.initEndScreen();
