@@ -1,11 +1,7 @@
 package edu.andover.coolpool.model;
 
 import java.util.Observable;
-
 import edu.andover.coolpool.GameConstants;
-import java.util.Observable;
-import edu.andover.coolpool.view.BallView;
-import javafx.scene.shape.Shape;
 
 // Model class for a pool ball. Can represent a "solid" ball, "striped" ball,
 // cue ball, or 8 ball depending on the ID passed into the constructor. The
@@ -23,9 +19,7 @@ public class Ball extends Observable{
 	public Ball(int id) {
 		centerX = 0;
 		centerY = 0;
-		
 		isPocketed = false;
-	
 		xVelocity = 0;
 		yVelocity = 0;
 		this.id = id;
@@ -35,18 +29,10 @@ public class Ball extends Observable{
 		this.centerX = centerX;
 		this.centerY = centerY;
 		isPocketed = false;
-	
 		xVelocity = 0;
 		yVelocity = 0;
 		this.id = id;
 	}
-
-	public boolean getIsPocketed(){ return isPocketed; }
-	public double getXVelocity(){ return xVelocity; }
-	public double getYVelocity(){ return yVelocity; }
-	public double getRadius(){ return radius; }
-	public double getCenterX(){ return centerX; }
-	public double getCenterY() { return centerY; }
 
 	public void setCenterX(double centerX) {
 		this.centerX = centerX;
@@ -70,19 +56,22 @@ public class Ball extends Observable{
 	public void setXVelocity(double xVel) { xVelocity = xVel;}
 	public void setYVelocity(double yVel) { yVelocity = yVel;}
 	
-	// pockets or unpockets a ball
-	// TODO: allow only cue ball to be unpocketed
+	// pockets a ball
 	public void setPocketed() {
 		isPocketed = !isPocketed;
-		if (isPocketed) {
-			xVelocity = 0;
-			yVelocity = 0;
-			centerX = 0;
-			centerY = 0;
-		}
+		xVelocity = 0;
+		yVelocity = 0;
+		centerX = 0;
+		centerY = 0;
 		setChanged();
 		notifyObservers();
 	}
 	
 	public int getId(){ return id;}
+	public boolean getIsPocketed(){ return isPocketed; }
+	public double getXVelocity(){ return xVelocity; }
+	public double getYVelocity(){ return yVelocity; }
+	public double getRadius(){ return radius; }
+	public double getCenterX(){ return centerX; }
+	public double getCenterY() { return centerY; }
 }

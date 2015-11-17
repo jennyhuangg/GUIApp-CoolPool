@@ -1,18 +1,18 @@
 package edu.andover.coolpool.model;
 
 import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
 
 import edu.andover.coolpool.GameManager;
-import edu.andover.coolpool.view.PoolGameStatusView;
 import javafx.animation.AnimationTimer;
 
-public class PoolGame {
+public class PoolGame implements Observer {
 	//TODO: Add Comments
 
 	// Create a reference to game manager here
 	private GameManager gameManager;
 	private PoolBoard poolBoard;
-	private CueStick cueStick;
 	private Player[] players;
 	
 	int currPlayerInd = 0;
@@ -26,13 +26,14 @@ public class PoolGame {
 
 	public PoolGame() {
 		gameManager = GameManager.getInstance();
-		poolBoard = new PoolBoard();
-		cueStick = new CueStick(poolBoard.getBalls()[15], this);
 		
 		players = new Player[2];
 		players[0] = new Player();
 		players[1] = new Player();
 
+		poolBoard = new PoolBoard();
+		poolBoard.getCueStick().addObserver(this);
+		
 		timer = new AnimationTimer() {
 			@Override
 			public void handle(long timestamp) {
@@ -41,11 +42,12 @@ public class PoolGame {
 					this.stop();
 					updatePoints(poolBoard.pocketedBalls());
 					poolBoard.resetPocketedBalls();
-					cueStick.setCanMove(true);
-					cueStick.setCanReset(true);
+					poolBoard.getCueStick().setCanMove(true);
+					poolBoard.getCueStick().setCanReset(true);
 				}
 			}
 		};
+		
 	}
 
 	public void turn() {
@@ -134,10 +136,7 @@ public class PoolGame {
 			}
 			
 			else if (pocketedCueBall(pocketedBalls)) {
-				poolGameStatus.setLastTurnStatusPocketedCueBall(currPlayerInd);
-				poolBoard.resetCueBall();
-				cueStick.setCueBall(poolBoard.getBalls()[15]);
-				switchPlayer();
+				scratch();
 			}		
 			else if (pocketedOther(pocketedBalls)) {
 				poolGameStatus.setLastTurnStatusPocketedOther(currPlayerInd);
@@ -149,6 +148,12 @@ public class PoolGame {
 			}
 		}
 	}
+	
+	public void scratch(){
+		poolGameStatus.setLastTurnStatusPocketedCueBall(currPlayerInd);
+		switchPlayer();
+	}
+	
 
 	public PoolBoard getPoolBoard() {
 		return poolBoard;
@@ -158,11 +163,18 @@ public class PoolGame {
 		return players; 
 	}
 	
-	public CueStick getCueStick(){
-		return cueStick;
-	}
-	
 	public PoolGameStatus getPoolGameStatus(){
 		return poolGameStatus;
+	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+		// TODO Auto-generated method stub
+		if (o == poolBoard.getCueStick()){
+			if (poolBoard.getCueStick().hasHit()){
+				this.turn();
+			}
+		}
+		
 	}
 }

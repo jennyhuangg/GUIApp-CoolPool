@@ -3,6 +3,7 @@ package edu.andover.coolpool.model;
 import static java.lang.Math.sqrt;
 
 import java.util.ArrayList;
+import java.util.Observable;
 
 import edu.andover.coolpool.GameConstants;
 import edu.andover.coolpool.view.BallView;
@@ -12,7 +13,7 @@ import edu.andover.coolpool.view.PoolBoardView;
 // Model class for a pool board, including interactions between the
 // pool balls.
 
-public class PoolBoard {
+public class PoolBoard extends Observable{
 
 	private Ball[] balls; //Array of balls
 	private ArrayList<Ball> pocketedBalls = new ArrayList<Ball>();
@@ -22,13 +23,12 @@ public class PoolBoard {
 	private double length; 
 	private double width;
 	private int numBumperCollisions;
-	
-	private PoolBoardView poolBoardView;
 
 	private double boardX; //X coordinate of top left corner of playable board
 	private double boardY; //Y coordinate of top left corner of playable board
 
 	public static boolean isStable;
+	private CueStick cueStick;
 
 	public PoolBoard() {
 
@@ -49,7 +49,7 @@ public class PoolBoard {
 		}
 
 		setUpBalls();
-
+		cueStick = new CueStick(balls[15]);
 	}
 	
 	public void setBoardCorner(double boardX, double boardY){
@@ -294,11 +294,13 @@ public class PoolBoard {
 
 	public ArrayList<Ball> pocketedBalls() { return pocketedBalls; }
 
-	public void resetCueBall() { //will change to get User Input Later
+	public void resetCueBall() { //TODO: will change to get User Input Later
 		pocketedBalls.remove(balls[15]);
-		balls[15] = new Ball(length * 1/4 + boardX, width / 2 + boardY, 2);
-		//poolBoardView.getPane().getChildren().add(balls[15].getView());
 		unpocketedBalls.add(balls[15]);
+		balls[15].setCenter(length * 1/4 + boardX, width / 2 + boardY);
+		
+		setChanged();
+		notifyObservers();
 	}
 
 	public void resetPocketedBalls() {pocketedBalls = new ArrayList<Ball>(); }
@@ -306,6 +308,9 @@ public class PoolBoard {
 	public Pocket[] getPockets(){
 		return pockets;
 	}
-
+	
+	public CueStick getCueStick(){
+		return cueStick;
+	}
 
 }

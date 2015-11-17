@@ -4,11 +4,16 @@ import java.util.Observable;
 import java.util.Observer;
 
 import edu.andover.coolpool.GameConstants;
+import edu.andover.coolpool.controller.CueStickController;
+import edu.andover.coolpool.model.Ball;
+import edu.andover.coolpool.model.CueStick;
+import edu.andover.coolpool.model.Pocket;
+import edu.andover.coolpool.model.PoolBoard;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
-public class PoolBoardView {
+public class PoolBoardView implements Observer {
 	private Pane view;
 	double length;
 	double width;
@@ -25,8 +30,13 @@ public class PoolBoardView {
 	// Invisible Rectangle that is used for the mouse hover handler for scratch
 	// event.
 	private Rectangle scratchRectangle;
+	private PoolBoard poolBoard;
+	BallView[] ballViews;
+	PocketView[] pocketViews;
+	CueStickView cueStickView;
 	
-	public PoolBoardView(){
+	public PoolBoardView(PoolBoard poolBoard){
+		this.poolBoard = poolBoard;
 		view = new Pane();
 		
 		double xMargin = 50;
@@ -68,6 +78,8 @@ public class PoolBoardView {
 		scratchRectangle = new Rectangle(xMargin + ballRadius, 
 				yMargin + ballRadius, this.length / 4.0, this.width);
 		
+		initElements();
+		
 	}
 	
 	public Pane getPane() {
@@ -88,5 +100,46 @@ public class PoolBoardView {
 	
 	public Rectangle getScratchRectangle() {
 		return scratchRectangle;
+	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+		if (o == poolBoard){
+			view.getChildren().add(ballViews[15].getCircle());
+		}
+		
+	}
+	
+	public void initElements(){
+		// initialize balls
+		Ball[] balls = poolBoard.getBalls();
+		ballViews = new BallView[16];
+
+		for (int i = 0; i < 16; i ++){
+			ballViews[i] = new BallView(balls[i]);
+			balls[i].addObserver(ballViews[i]);
+			this.getPane().getChildren().add(ballViews[i].getCircle());
+		}
+		
+		// initialize pockets
+		Pocket[] pockets = poolBoard.getPockets();
+		PocketView[] pocketViews = new PocketView[6];
+		for (int i = 0; i < 6; i ++){
+			pocketViews[i] = new PocketView(pockets[i]);
+			this.getPane().getChildren().add(pocketViews[i].getCircle());
+		}
+
+
+		// initialize cueStick
+		CueStick cueStick = poolBoard.getCueStick();
+		cueStickView = new CueStickView(cueStick);
+		CueStickController cueStickController = 
+				new CueStickController(cueStickView);
+		cueStickController.addMouseHoverEH(this);
+		cueStickController.addMouseDraggedEH(this);
+		cueStickController.addMousePressedEH(this);
+		cueStickController.addMouseReleasedEH(this);
+		cueStick.addObserver(cueStickView);
+		this.getPane().getChildren().add(cueStickView.getLine());
 	}
 }

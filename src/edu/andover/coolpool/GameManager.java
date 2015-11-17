@@ -83,7 +83,9 @@ public class GameManager {
 			PoolGameStatusView poolGameStatusView = loader.getController();
 			
 			PoolGame poolGame = new PoolGame();
-			PoolBoardView poolBoardView = initPoolGameView(poolGame);
+			PoolBoard poolBoard = poolGame.getPoolBoard();
+			PoolBoardView poolBoardView = new PoolBoardView(poolBoard);
+			poolBoard.addObserver(poolBoardView);
 			
 			PoolGameStatus poolGameStatus = poolGame.getPoolGameStatus();
 			poolGameStatusView.setObservable(poolGameStatus);
@@ -114,60 +116,6 @@ public class GameManager {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	}
-	
-	public PoolBoardView initPoolGameView(PoolGame poolGame){
-		
-		PoolBoard poolBoard = poolGame.getPoolBoard();
-		PoolBoardView poolBoardView = new PoolBoardView();
-		
-		// initialize ballViews
-		Ball[] balls = poolBoard.getBalls();
-		BallView[] ballViews = new BallView[16];
-		
-		for (int i = 0; i < 16; i ++){
-			ballViews[i] = new BallView(balls[i]);
-			balls[i].addObserver(ballViews[i]);
-			poolBoardView.getPane().getChildren().add(ballViews[i].getCircle());
-		}
-		
-		// initialize pocketViews
-		Pocket[] pockets = poolBoard.getPockets();
-		PocketView[] pocketViews = new PocketView[6];
-
-		for (int i = 0; i < 6; i ++){
-			pocketViews[i] = new PocketView(pockets[i]);
-			poolBoardView.getPane().getChildren().add(pocketViews[i].getCircle());
-		}
-		
-		
-		// initialize cueStickViews
-		CueStick cueStick = poolGame.getCueStick();
-		CueStickView cueStickView = new CueStickView(cueStick);
-		CueStickController cueStickController = 
-				new CueStickController(cueStickView);
-		cueStickController.addMouseHoverEH(poolBoardView);
-		cueStickController.addMouseDraggedEH(poolBoardView);
-		cueStickController.addMousePressedEH(poolBoardView);
-		cueStickController.addMouseReleasedEH(poolBoardView);
-		cueStick.addObserver(cueStickView);
-		poolBoardView.getPane().getChildren().add(cueStickView.getLine());
-		
-		
-		//CueBallController cueBallController = new CueBallController();
-		//cueBallController.addMouseHoverEventHandler(poolBoardView, 
-		//		poolBoard.getBalls()[15]);
-		
-		return poolBoardView;
-		
-	}
-	
-	public void initBallView(int id){
-		
-	}
-	
-	public void initCueStickView(){
-		
 	}
 	
 	//TODO: Clean this

@@ -45,14 +45,15 @@ public class CueStick extends Observable {
 
 	private Ball cueBall;
 	private PoolGame poolGame;
+	
+	private boolean hasHit = false;
 
-	public CueStick(Ball cueBall, PoolGame poolGame) {
+	public CueStick(Ball cueBall) {
 		this.cueBall = cueBall;
 		startX = cueBall.getCenterX() - distanceTipFromCueBall;
 		startY = cueBall.getCenterY();
 		endX = startX - cueStickLength;
 		endY = startY;
-		this.poolGame = poolGame;
 	}
 
 	public double getStartX() { return startX; }
@@ -251,6 +252,18 @@ public class CueStick extends Observable {
 		double yVel = amplifier*projectedDragDistance*dirY;
 		cueBall.setXVelocity(xVel);
 		cueBall.setYVelocity(yVel);
-		poolGame.turn(); 
+		
+		hasHit = true;
+		setChanged();
+		notifyObservers();
+		hasHit = false;
+		
+		//poolGame.turn();
+		
+		
+	}
+	
+	public boolean hasHit(){
+		return hasHit;
 	}
 }
