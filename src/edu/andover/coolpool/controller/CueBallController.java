@@ -5,6 +5,8 @@ import edu.andover.coolpool.model.Ball;
 import edu.andover.coolpool.view.PoolBoardView;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 
 public class CueBallController {
@@ -15,11 +17,21 @@ public class CueBallController {
 	// EH abbreviation means Event Handler.
 	public void addMousePressedEventHandler(PoolBoardView pbv, Ball cueBall) {
 		Rectangle r = pbv.getScratchRectangle();
-		r.setOnMouseClicked(new EventHandler<MouseEvent>() {
+		Circle c = (Circle) pbv.getBallViews()[15].getCircle();
+		c.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent me) {
 				cueBall.setCenterX(mouseX);
 				cueBall.setCenterY(mouseY);
+				for (Ball b: pbv.getPoolBoard().getBalls()){
+					if (!pbv.getPoolBoard().colliding(cueBall, b, 0, 0)){
+						r.setOnMouseMoved(null);
+						c.setOnMousePressed(null);
+						r.toBack();
+						pbv.getCueStickView().getLine().setVisible(true);
+						pbv.setCueStickHandlers();
+					}
+				}
 			}
 		});
 	}
@@ -27,12 +39,15 @@ public class CueBallController {
 	public void addMouseHoverEventHandler(PoolBoardView pbv, Ball cueBall) {
 		pbv.getScratchRectangle().toFront();
 		Rectangle r = pbv.getScratchRectangle();
-
+		r.setFill(Color.ORANGE);
+		pbv.bringBallsToFront();
+		pbv.removeCueStickHandlers();
+		pbv.getCueStickView().getLine().setVisible(false);
+		
 		r.setOnMouseMoved(new EventHandler<MouseEvent>() {		
 			@Override
 			public void handle(MouseEvent me) {
 				if (!isMousePressed) {
-					System.out.println("Hi");
 					mouseX = me.getX()*GameConstants.PIXEL_TO_IN;
 					mouseY = me.getY()*GameConstants.PIXEL_TO_IN;
 					cueBall.setCenterX(mouseX);

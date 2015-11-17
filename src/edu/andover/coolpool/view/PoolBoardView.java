@@ -41,8 +41,8 @@ public class PoolBoardView implements Observer {
 		this.poolBoard = poolBoard;
 		view = new Pane();
 		
-		double xMargin = 50;
-		double yMargin = 50;
+		double xMargin = 50; // In Pixels.
+		double yMargin = 50; // In Pixels.
 		this.length = GameConstants.POOL_TABLE_LENGTH*GameConstants.IN_TO_PIXEL;
 		this.width = GameConstants.POOL_TABLE_WIDTH*GameConstants.IN_TO_PIXEL;
 		
@@ -76,11 +76,19 @@ public class PoolBoardView implements Observer {
 		view.getChildren().add(cueStickRectangle);
 		
 		// Set up ScratchRectangle.
-		double ballRadius = GameConstants.BALL_RADIUS;
-		scratchRectangle = new Rectangle(xMargin + ballRadius, 
-				yMargin + ballRadius, this.length / 4.0, this.width);
+		double ballRadius = GameConstants.BALL_RADIUS 
+				* GameConstants.IN_TO_PIXEL;
+		scratchRectangle = new Rectangle(xMargin, 
+				yMargin, this.length / 4.0, this.width - 2 * ballRadius);
+		scratchRectangle.setX(180 + ballRadius);
+		scratchRectangle.setY(177 + ballRadius);
+		scratchRectangle.setFill(Color.TRANSPARENT);
+		view.getChildren().add(scratchRectangle);
+		scratchRectangle.toBack();
+		
 		
 		initElements();
+		bringBallsToFront();
 		
 	}
 	
@@ -112,6 +120,7 @@ public class PoolBoardView implements Observer {
 			}
 			if (poolBoard.resetCue) {
 				view.getChildren().add(ballViews[15].getCircle());
+				initCueBallController();
 			}
 		}
 		
@@ -140,12 +149,7 @@ public class PoolBoardView implements Observer {
 		// initialize cueStick
 		CueStick cueStick = poolBoard.getCueStick();
 		cueStickView = new CueStickView(cueStick);
-		CueStickController cueStickController = 
-				new CueStickController(cueStickView);
-		cueStickController.addMouseHoverEH(this);
-		cueStickController.addMouseDraggedEH(this);
-		cueStickController.addMousePressedEH(this);
-		cueStickController.addMouseReleasedEH(this);
+		setCueStickHandlers();
 		cueStick.addObserver(cueStickView);
 		this.getPane().getChildren().add(cueStickView.getLine());
 	}
@@ -157,5 +161,40 @@ public class PoolBoardView implements Observer {
 				poolBoard.getBalls()[15]);
 		cueBallController.addMousePressedEventHandler(this, 
 				poolBoard.getBalls()[15]);
+	}
+	
+	public BallView[] getBallViews(){
+		return ballViews;
+	}
+	
+	public CueStickView getCueStickView(){
+		return cueStickView;
+	}
+	
+	public void bringBallsToFront(){
+		for (BallView bv: ballViews){
+			bv.getCircle().toFront();
+		}
+		cueStickView.getLine().toFront();
+	}
+	
+	public void setCueStickHandlers(){
+		CueStickController cueStickController = 
+				new CueStickController(cueStickView);
+		cueStickController.addMouseHoverEH(this);
+		cueStickController.addMouseDraggedEH(this);
+		cueStickController.addMousePressedEH(this);
+		cueStickController.addMouseReleasedEH(this);
+	}
+	
+	public void removeCueStickHandlers(){
+		getCueStickRectangle().setOnMouseMoved(null);
+		getCueStickRectangle().setOnMouseDragged(null);
+		cueStickView.getLine().setOnMouseDragged(null);
+		cueStickView.getLine().setOnMouseClicked(null);
+	}
+	
+	public PoolBoard getPoolBoard(){
+		return poolBoard;
 	}
 }
