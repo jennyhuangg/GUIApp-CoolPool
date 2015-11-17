@@ -67,6 +67,10 @@ public class Ball extends Observable{
 		notifyObservers();
 	}
 	
+	public void unpocket(){
+		isPocketed = !isPocketed;
+	}
+	
 	public int getId(){ return id;}
 	public boolean getIsPocketed(){ return isPocketed; }
 	public double getXVelocity(){ return xVelocity; }

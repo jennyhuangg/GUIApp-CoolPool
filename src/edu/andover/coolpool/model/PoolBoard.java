@@ -297,6 +297,7 @@ public class PoolBoard extends Observable{
 	public void resetCueBall() { //TODO: will change to get User Input Later
 		pocketedBalls.remove(balls[15]);
 		unpocketedBalls.add(balls[15]);
+		balls[15].unpocket();
 		balls[15].setCenter(length * 1/4 + boardX, width / 2 + boardY);
 		
 		setChanged();

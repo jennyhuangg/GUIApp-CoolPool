@@ -151,6 +151,7 @@ public class PoolGame implements Observer {
 	
 	public void scratch(){
 		poolGameStatus.setLastTurnStatusPocketedCueBall(currPlayerInd);
+		poolBoard.resetCueBall();
 		switchPlayer();
 	}
 	

@@ -2,9 +2,6 @@ package edu.andover.coolpool.model;
 
 import java.util.Observable;
 
-import edu.andover.coolpool.view.CueStickView;
-import javafx.scene.shape.Shape;
-
 public class CueStick extends Observable {
 	
 	// Start is position of tip of cue stick (end close to cue ball).
@@ -44,7 +41,6 @@ public class CueStick extends Observable {
 	private final double stretchLimit = 17.0;
 
 	private Ball cueBall;
-	private PoolGame poolGame;
 	
 	private boolean hasHit = false;
 
@@ -257,8 +253,6 @@ public class CueStick extends Observable {
 		setChanged();
 		notifyObservers();
 		hasHit = false;
-		
-		//poolGame.turn();
 		
 		
 	}
