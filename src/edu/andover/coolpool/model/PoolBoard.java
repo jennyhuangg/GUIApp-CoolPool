@@ -137,8 +137,6 @@ public class PoolBoard extends Observable {
 		remainingBalls.add(balls[15]);
 		balls[15].unpocket();
 		
-		double xPosition, yPosition;
-		
 		balls[15].setCenter(length * 1/4 + boardX, width / 2 + boardY);
 
 		resetCue = true;
