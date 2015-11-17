@@ -18,7 +18,7 @@ public class CueBallController {
 		r.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent me) {
-				cueBall.setCenterX(mouseY);
+				cueBall.setCenterX(mouseX);
 				cueBall.setCenterY(mouseY);
 			}
 		});

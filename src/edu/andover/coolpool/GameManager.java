@@ -3,10 +3,18 @@ package edu.andover.coolpool;
 // This class contains methods to set each scene.
 import java.io.IOException;
 
+import edu.andover.coolpool.controller.CueStickController;
+import edu.andover.coolpool.model.Ball;
+import edu.andover.coolpool.model.CueStick;
+import edu.andover.coolpool.model.Pocket;
 import edu.andover.coolpool.model.PoolBoard;
 import edu.andover.coolpool.model.PoolGame;
+import edu.andover.coolpool.model.PoolGameStatus;
+import edu.andover.coolpool.view.BallView;
+import edu.andover.coolpool.view.CueStickView;
+import edu.andover.coolpool.view.PocketView;
 import edu.andover.coolpool.view.PoolBoardView;
-import edu.andover.coolpool.view.PoolScreenView;
+import edu.andover.coolpool.view.PoolGameStatusView;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -72,15 +80,18 @@ public class GameManager {
 		try {
 			
 			Parent poolScreen = (Parent) loader.load();
-			PoolScreenView poolScreenView = loader.getController();
+			PoolGameStatusView poolGameStatusView = loader.getController();
 			
-			PoolGame poolGame = new PoolGame(poolScreenView);
-			PoolBoard poolBoard = poolGame.getPoolBoard();
+			PoolGame poolGame = new PoolGame();
+			PoolBoardView poolBoardView = initPoolGameView(poolGame);
+			
+			PoolGameStatus poolGameStatus = poolGame.getPoolGameStatus();
+			poolGameStatusView.setObservable(poolGameStatus);
+			poolGameStatus.addObserver(poolGameStatusView);
 			
 			rootLayout.setCenter(poolScreen);
 			Pane pane = (Pane) poolScreen.getChildrenUnmodifiable().get(1);
 			
-			PoolBoardView poolBoardView = poolBoard.getView();
 			
 			pane.getChildren().add(poolBoardView.getPane());		
 
@@ -103,6 +114,60 @@ public class GameManager {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public PoolBoardView initPoolGameView(PoolGame poolGame){
+		
+		PoolBoard poolBoard = poolGame.getPoolBoard();
+		PoolBoardView poolBoardView = new PoolBoardView();
+		
+		// initialize ballViews
+		Ball[] balls = poolBoard.getBalls();
+		BallView[] ballViews = new BallView[16];
+		
+		for (int i = 0; i < 16; i ++){
+			ballViews[i] = new BallView(balls[i]);
+			balls[i].addObserver(ballViews[i]);
+			poolBoardView.getPane().getChildren().add(ballViews[i].getCircle());
+		}
+		
+		// initialize pocketViews
+		Pocket[] pockets = poolBoard.getPockets();
+		PocketView[] pocketViews = new PocketView[6];
+
+		for (int i = 0; i < 6; i ++){
+			pocketViews[i] = new PocketView(pockets[i]);
+			poolBoardView.getPane().getChildren().add(pocketViews[i].getCircle());
+		}
+		
+		
+		// initialize cueStickViews
+		CueStick cueStick = poolGame.getCueStick();
+		CueStickView cueStickView = new CueStickView(cueStick);
+		CueStickController cueStickController = 
+				new CueStickController(cueStickView);
+		cueStickController.addMouseHoverEH(poolBoardView);
+		cueStickController.addMouseDraggedEH(poolBoardView);
+		cueStickController.addMousePressedEH(poolBoardView);
+		cueStickController.addMouseReleasedEH(poolBoardView);
+		cueStick.addObserver(cueStickView);
+		poolBoardView.getPane().getChildren().add(cueStickView.getLine());
+		
+		
+		//CueBallController cueBallController = new CueBallController();
+		//cueBallController.addMouseHoverEventHandler(poolBoardView, 
+		//		poolBoard.getBalls()[15]);
+		
+		return poolBoardView;
+		
+	}
+	
+	public void initBallView(int id){
+		
+	}
+	
+	public void initCueStickView(){
+		
 	}
 	
 	//TODO: Clean this

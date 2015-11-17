@@ -1,5 +1,8 @@
 package edu.andover.coolpool.view;
 
+import java.util.Observable;
+import java.util.Observer;
+
 import edu.andover.coolpool.GameConstants;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -23,13 +26,13 @@ public class PoolBoardView {
 	// event.
 	private Rectangle scratchRectangle;
 	
-	public PoolBoardView(double length, double width){
+	public PoolBoardView(){
 		view = new Pane();
 		
 		double xMargin = 50;
 		double yMargin = 50;
-		this.length = length*GameConstants.IN_TO_PIXEL;
-		this.width = width*GameConstants.IN_TO_PIXEL;
+		this.length = GameConstants.POOL_TABLE_LENGTH*GameConstants.IN_TO_PIXEL;
+		this.width = GameConstants.POOL_TABLE_WIDTH*GameConstants.IN_TO_PIXEL;
 		
 		// Set up table
 		Color brown = Color.web("0x3D362D");
@@ -44,6 +47,13 @@ public class PoolBoardView {
 		rectangle = new Rectangle(xMargin, yMargin, this.length, this.width);
 		rectangle.setFill(green);
 		view.getChildren().add(rectangle);
+
+
+		rectangle.setX(180);
+		rectangle.setY(177);
+
+		bigRectangle.setX(180);
+		bigRectangle.setY(177);
 		
 		// Set up CuestickRectangle.
 		double addLength = 2000;

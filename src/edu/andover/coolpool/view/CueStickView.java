@@ -1,28 +1,33 @@
 package edu.andover.coolpool.view;
 
+import java.util.Observable;
+import java.util.Observer;
+
 import edu.andover.coolpool.GameConstants;
+import edu.andover.coolpool.model.CueStick;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Shape;
 
-public class CueStickView {
+public class CueStickView implements Observer{
 	private Line line;
-
 	private double startX;
 	private double startY;
 
 	private double endX;
 	private double endY;
+	private CueStick cueStick;
 
-	public CueStickView(double startXCM, double startYCM, 
-			double endXCM, double endYCM){
+	public CueStickView(CueStick cueStick){
+		
+		this.cueStick = cueStick;
 
-		this.startX = startXCM * GameConstants.IN_TO_PIXEL;
-		this.startY = startYCM*GameConstants.IN_TO_PIXEL;
+		this.startX = cueStick.getStartX() * GameConstants.IN_TO_PIXEL;
+		this.startY = cueStick.getStartY() *GameConstants.IN_TO_PIXEL;
 
-		this.endX = endXCM*GameConstants.IN_TO_PIXEL;
-		this.endY = endYCM*GameConstants.IN_TO_PIXEL;
+		this.endX = cueStick.getEndX() *GameConstants.IN_TO_PIXEL;
+		this.endY = cueStick.getEndY() *GameConstants.IN_TO_PIXEL;
 
 		line = new Line(startX, startY, endX, endY);
 		line.setStrokeWidth(6.0);
@@ -64,4 +69,18 @@ public class CueStickView {
 		parentNode.getChildren().add(line);
 	}
 	public Shape getLine() {return line; }
+
+	public void update(Observable o, Object arg) {
+		if (o == cueStick){
+			setStartX(cueStick.getStartX());
+			setEndX(cueStick.getEndX());
+			setStartY(cueStick.getStartY());
+			setEndY(cueStick.getEndY());
+		}
+		
+	}
+	
+	public CueStick getCueStick(){
+		return cueStick;
+	}
 }

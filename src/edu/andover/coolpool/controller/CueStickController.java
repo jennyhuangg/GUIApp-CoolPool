@@ -2,6 +2,7 @@ package edu.andover.coolpool.controller;
 
 import edu.andover.coolpool.GameConstants;
 import edu.andover.coolpool.model.CueStick;
+import edu.andover.coolpool.view.CueStickView;
 import edu.andover.coolpool.view.GameSounds;
 import edu.andover.coolpool.view.PoolBoardView;
 import javafx.event.EventHandler;
@@ -19,8 +20,16 @@ public class CueStickController {
 	private boolean isMousePressed = false;
 	private boolean hasJustDragged = false;
 	
+	private CueStickView cueStickView;
+	private CueStick cueStick;
+	
+	public CueStickController(CueStickView cueStickView){
+		this.cueStickView = cueStickView;
+		this.cueStick = cueStickView.getCueStick();
+	}
+	
 	// EH = Event Handler
-	public void addMouseHoverEH(PoolBoardView pbv, CueStick cueStick) {
+	public void addMouseHoverEH(PoolBoardView pbv) {
 	    // Adds event handler to the view's rectangle
 		Rectangle r = pbv.getCueStickRectangle();
 		r.setOnMouseMoved(new EventHandler<MouseEvent>() {
@@ -35,9 +44,9 @@ public class CueStickController {
 	    });
 	}
 
-	public void addMousePressedEH(PoolBoardView pbv, CueStick cueStick) {
+	public void addMousePressedEH(PoolBoardView pbv) {
 	   // Also need to add event handler to the cue stick view.
-		Line l = (Line) cueStick.getView();
+		Line l = (Line) cueStickView.getLine();
 		l.setOnMousePressed(new EventHandler<MouseEvent>() {
 	    	@Override
 	    	public void handle(MouseEvent me) {
@@ -57,8 +66,8 @@ public class CueStickController {
 	    });
 	}
 	
-	public void addMouseDraggedEH(PoolBoardView pbv, CueStick cueStick) {
-	    Line l = (Line) cueStick.getView();
+	public void addMouseDraggedEH(PoolBoardView pbv) {
+	    Line l = (Line) cueStickView.getLine();
 		l.setOnMouseDragged(new EventHandler<MouseEvent>() {
 	    	@Override
 	    	public void handle(MouseEvent me) {
@@ -81,7 +90,7 @@ public class CueStickController {
 	    			int maxValue = 255;
 	    			if ( k > maxValue) { k = maxValue; }
 	    			// Changes from yellow to dark red as distance increases.
-	    			cueStick.getView().setStroke(Color.rgb((int)(140+.45*k),k, 
+	    			l.setStroke(Color.rgb((int)(140+.45*k),k, 
 	    					0));
 		    		
 	    			hasJustDragged = true;
@@ -111,7 +120,7 @@ public class CueStickController {
 	    			int maxValue = 255;
 	    			if ( k > maxValue) { k = maxValue; }
 	    			// Changes from yellow to dark red as distance increases.
-	    			cueStick.getView().setStroke(Color.rgb((int)(140+.45*k), k,
+	    			l.setStroke(Color.rgb((int)(140+.45*k), k,
 	    					0));
 		    		
 	    			hasJustDragged = true;
@@ -120,8 +129,8 @@ public class CueStickController {
 	    });
 	}
 	
-	public void addMouseReleasedEH(PoolBoardView pbv, CueStick cueStick) {
-	  Line l = (Line) cueStick.getView();
+	public void addMouseReleasedEH(PoolBoardView pbv) {
+	  Line l = (Line) cueStickView.getLine();
 		l.setOnMouseReleased(new EventHandler<MouseEvent>() {
 	    	@Override
 	    	public void handle(MouseEvent me) {
@@ -134,7 +143,7 @@ public class CueStickController {
 		    		cueStick.setCueStickLocationAfterHit();
 		    		cueStick.updateCueBallVelocity(finalMouseX, finalMouseY);
 		    		GameSounds.CUE_HITTING_BALL.play();
-		    		cueStick.getView().setStroke(Color.BROWN);
+		    		l.setStroke(Color.BROWN);
 		    		
 		    		cueStick.setCanMove(false);
 		    		hasJustDragged = false;
@@ -155,7 +164,7 @@ public class CueStickController {
 		    		cueStick.setCueStickLocationAfterHit();
 		    		cueStick.updateCueBallVelocity(finalMouseX, finalMouseY);
 		    		GameSounds.CUE_HITTING_BALL.play();
-		    		cueStick.getView().setStroke(Color.BROWN);
+		    		l.setStroke(Color.BROWN);
 		    		
 		    		cueStick.setCanMove(false);
 		    		hasJustDragged = false;

@@ -18,7 +18,6 @@ public class PoolBoard {
 	private ArrayList<Ball> pocketedBalls = new ArrayList<Ball>();
 	private ArrayList<Ball> unpocketedBalls = new ArrayList<Ball>();
 	private Pocket[] pockets; //Array of pockets
-	private BallView[] ballViews;
 	
 	private double length; 
 	private double width;
@@ -35,38 +34,27 @@ public class PoolBoard {
 
 		length = GameConstants.POOL_TABLE_LENGTH;
 		width = GameConstants.POOL_TABLE_WIDTH;
-		setView();
 
 		numBumperCollisions = 0;
-
-		poolBoardView.getBigRectangle().getX();
-		boardX = poolBoardView.getRectangle().getX() *
+		
+		boardX = 180 *
 				GameConstants.PIXEL_TO_IN;
-		boardY = poolBoardView.getRectangle().getY() *
+		boardY = 177 *
 				GameConstants.PIXEL_TO_IN;
-
-		setUpBalls();
-		setUpPockets();
-
-		for (Pocket pocket: pockets){
-			poolBoardView.getPane().getChildren().add(pocket.getView());
-		}
-
-		ballViews = new BallView[16];
-		for (int i = 0; i < 16; i ++){
-			ballViews[i] = new BallView(balls[i]);
-			balls[i].addObserver(ballViews[i]);
-			poolBoardView.getPane().getChildren().add(ballViews[i].getCircle());
-		}
-
-	}
-
-	private void setUpPockets() {
+		
 		pockets = new Pocket[6];
 
 		for (int i = 0; i < pockets.length; i++) {
 			pockets[i] = new Pocket(i, boardX, boardY);
 		}
+
+		setUpBalls();
+
+	}
+	
+	public void setBoardCorner(double boardX, double boardY){
+		this.boardX = boardX;
+		this.boardY = boardY;
 	}
 
 	// Initializes the array of balls and places the balls in the correct
@@ -302,23 +290,7 @@ public class PoolBoard {
 
 	}
 
-	public double getLength(){ return length; }
-
-	public double getWidth(){ return width; }
-
-	public PoolBoardView getView(){ return poolBoardView; }
-
 	public Ball[] getBalls() { return balls; }
-
-	public void setView(){
-		poolBoardView = new PoolBoardView(length, width);
-
-		poolBoardView.getRectangle().setX(180);
-		poolBoardView.getRectangle().setY(177);
-
-		poolBoardView.getBigRectangle().setX(180);
-		poolBoardView.getBigRectangle().setY(177);
-	}
 
 	public ArrayList<Ball> pocketedBalls() { return pocketedBalls; }
 
@@ -331,6 +303,9 @@ public class PoolBoard {
 
 	public void resetPocketedBalls() {pocketedBalls = new ArrayList<Ball>(); }
 
+	public Pocket[] getPockets(){
+		return pockets;
+	}
 
 
 }

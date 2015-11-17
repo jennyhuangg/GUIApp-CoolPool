@@ -15,17 +15,13 @@ public class Pocket {
 	private double minY;
 
 	private final double radius = 2.25; //inches
-	
-	private PocketView view;
 
 	public Pocket(int id, double boardX, double boardY){
 		minX = boardX;
 		minY = boardY;
 		maxX = minX + GameConstants.POOL_TABLE_LENGTH;
 		maxY = minY +  GameConstants.POOL_TABLE_WIDTH;
-		setPocketLocation(id);
-
-		view = new PocketView(xPosition, yPosition, radius);
+		setPocketLocation(id); //set xPosition and yPosition
 	}
 
 	public void setPocketLocation(int id){
@@ -66,6 +62,4 @@ public class Pocket {
 	public double getXPosition(){ return xPosition; }
 
 	public double getYPosition(){ return yPosition; }
-
-	public Shape getView() { return view.getCircle(); }
 }

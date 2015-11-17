@@ -3,9 +3,7 @@ package edu.andover.coolpool.model;
 import java.util.ArrayList;
 
 import edu.andover.coolpool.GameManager;
-import edu.andover.coolpool.controller.CueBallController;
-import edu.andover.coolpool.controller.CueStickController;
-import edu.andover.coolpool.view.PoolScreenView;
+import edu.andover.coolpool.view.PoolGameStatusView;
 import javafx.animation.AnimationTimer;
 
 public class PoolGame {
@@ -13,26 +11,25 @@ public class PoolGame {
 
 	// Create a reference to game manager here
 	private GameManager gameManager;
-	private PoolBoard poolBoard = new PoolBoard();
+	private PoolBoard poolBoard;
 	private CueStick cueStick;
-	private Player[] players = new Player[2];
+	private Player[] players;
+	
 	int currPlayerInd = 0;
 	boolean gameHasEnded = false;
 	boolean sidesAreSet = false;
-
-	AnimationTimer timer;
-	private CueStickController cueStickController;
-	private CueBallController cueBallController;
-	private PoolScreenView poolScreenView;
 	boolean streak = false;
+	
+	AnimationTimer timer;
+	
+	PoolGameStatus poolGameStatus = new PoolGameStatus();
 
-	public PoolGame(PoolScreenView poolScreenView) {
+	public PoolGame() {
 		gameManager = GameManager.getInstance();
-
-		setUpCueStick(); //initialize cueStick
-		setUpControllers();
-		setCueStickMouseHandler();
-
+		poolBoard = new PoolBoard();
+		cueStick = new CueStick(poolBoard.getBalls()[15], this);
+		
+		players = new Player[2];
 		players[0] = new Player();
 		players[1] = new Player();
 
@@ -49,8 +46,6 @@ public class PoolGame {
 				}
 			}
 		};
-
-		this.poolScreenView = poolScreenView;
 	}
 
 	public void turn() {
@@ -60,7 +55,7 @@ public class PoolGame {
 	public void setSides(int ballId) {
 		players[currPlayerInd].setBallType(ballId);
 		players[(currPlayerInd+1)%2].setBallType((ballId + 1)%2);
-		poolScreenView.setBallColorText(currPlayerInd, ballId);
+		poolGameStatus.setBallColors(currPlayerInd, ballId);
 		sidesAreSet = true;
 	}
 
@@ -78,7 +73,7 @@ public class PoolGame {
 	public void switchPlayer() {
 		currPlayerInd = (currPlayerInd + 1)%2;
 		streak = false;
-		poolScreenView.setPlayerTurnText(currPlayerInd, streak,
+		poolGameStatus.setTurnStatus(currPlayerInd, streak,
 				players[currPlayerInd].canPocketEightBall());
 	}
 
@@ -98,7 +93,7 @@ public class PoolGame {
 
 	public void continuePlayer() {
 		streak = true;
-		poolScreenView.setPlayerTurnText(currPlayerInd, streak, 
+		poolGameStatus.setTurnStatus(currPlayerInd, streak, 
 				players[currPlayerInd].canPocketEightBall());
 	}
 
@@ -106,9 +101,14 @@ public class PoolGame {
 		int size = pocketedBalls.size();
 		if (poolBoard.getNumBumperCollisions() < 4 && size == 0) {
 			poolBoard.rackBalls(poolBoard.getBalls());
-			poolScreenView.setStatusPlayerIllegalBreak(currPlayerInd);
+			poolGameStatus.setLastTurnStatusPlayerIllegalBreak(currPlayerInd);
 			switchPlayer();
 		}
+		else if (size == 0){
+			poolGameStatus.setLastTurnStatusPlayerFailed(currPlayerInd);
+			switchPlayer();
+		}
+		
 		else {
 			for (int i = 0; i < size; i ++) {
 				int ballId = pocketedBalls.get(i).getId();
@@ -125,7 +125,7 @@ public class PoolGame {
 				}
 			}
 
-			poolScreenView.setPointsText(players[0].getPoints(), 
+			poolGameStatus.setPoints(players[0].getPoints(), 
 					players[1].getPoints());
 
 			if (pocketedEightBall(pocketedBalls)) {
@@ -134,18 +134,17 @@ public class PoolGame {
 			}
 			
 			else if (pocketedCueBall(pocketedBalls)) {
-				poolScreenView.setStatusPocketedCueBall(currPlayerInd);
+				poolGameStatus.setLastTurnStatusPocketedCueBall(currPlayerInd);
 				poolBoard.resetCueBall();
-				setCueBallMouseHandler();
 				cueStick.setCueBall(poolBoard.getBalls()[15]);
 				switchPlayer();
 			}		
 			else if (pocketedOther(pocketedBalls)) {
-				poolScreenView.setStatusPocketedOther(currPlayerInd);
+				poolGameStatus.setLastTurnStatusPocketedOther(currPlayerInd);
 				switchPlayer();
 			}
 			else{
-				poolScreenView.setStatusPlayerSucceeded(currPlayerInd);
+				poolGameStatus.setLastTurnStatusPlayerSucceeded(currPlayerInd);
 				continuePlayer();
 			}
 		}
@@ -155,27 +154,15 @@ public class PoolGame {
 		return poolBoard;
 	}
 
-	private void setCueStickMouseHandler() {
-		cueStickController.addMouseHoverEH(poolBoard.getView(), cueStick);
-		cueStickController.addMousePressedEH(poolBoard.getView(), cueStick);
-		cueStickController.addMouseReleasedEH(poolBoard.getView(), cueStick);
-		cueStickController.addMouseDraggedEH(poolBoard.getView(), cueStick);
+	public Player[] getPlayers() { 
+		return players; 
 	}
 	
-	private void setCueBallMouseHandler() {
-		cueBallController.addMouseHoverEventHandler(poolBoard.getView(), 
-				poolBoard.getBalls()[15]);
+	public CueStick getCueStick(){
+		return cueStick;
 	}
 	
-	private void setUpCueStick() {
-		cueStick = new CueStick(poolBoard.getBalls()[15], this);
-		poolBoard.getView().getPane().getChildren().add(cueStick.getView());
+	public PoolGameStatus getPoolGameStatus(){
+		return poolGameStatus;
 	}
-	
-	private void setUpControllers() {
-		cueStickController = new CueStickController();
-		cueBallController = new CueBallController();
-	}
-
-	public Player[] getPlayers() { return players; }
 }
