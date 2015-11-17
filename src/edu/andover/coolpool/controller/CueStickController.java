@@ -7,7 +7,6 @@ import edu.andover.coolpool.view.GameSounds;
 import edu.andover.coolpool.view.PoolBoardView;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 
@@ -137,6 +136,7 @@ public class CueStickController {
 		    		double finalMouseY = me.getY()*GameConstants.PIXEL_TO_IN;
 		    		
 		    		// Implement collision.
+		    		GameSounds.CUE_HITTING_BALL.play();
 		    		cueStick.setCueStickLocationAfterHit();
 		    		cueStick.updateCueBallVelocity(finalMouseX, finalMouseY);
 		    		

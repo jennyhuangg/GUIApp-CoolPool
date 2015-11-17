@@ -1,4 +1,4 @@
-package tests;
+package edu.andover.coolpool.model.tests;
 
 import static org.junit.Assert.*;
 import org.junit.Test;

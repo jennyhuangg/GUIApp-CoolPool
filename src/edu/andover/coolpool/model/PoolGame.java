@@ -158,6 +158,7 @@ public class PoolGame implements Observer {
 				poolGameStatus.setLastTurnStatusPocketedCueBall(currPlayerInd);
 				poolBoard.resetCueBall();
 				switchPlayer();
+				poolGameStatus.setTurnStatusForScratch(currPlayerInd);
 			}		
 			else if (pocketedOther(pocketedBalls)) {
 				// Lose turn if pocketed other player's ball
