@@ -80,20 +80,7 @@ public class CueStickController {
 		    		// Sets new cue stick location based on mouse location.
 		    		double endMouseX = me.getX()*GameConstants.PIXEL_TO_IN;
 		    		double endMouseY = me.getY()*GameConstants.PIXEL_TO_IN;
-		    		double distance = cueStick.getDistanceInitToMouse(endMouseX,
-		    				endMouseY);
 	    			cueStick.setCueStickLocationOnDrag(endMouseX, endMouseY);
-	    			
-	    			// Set color of cue stick.
-	    			int changeFactor = 2000; // How little color changes.
-	    			int k = (int) (changeFactor/distance);
-	    			int maxValue = 255;
-	    			if ( k > maxValue) { k = maxValue; }
-	    			
-	    			// TODO: Make this change the model to change the  view.
-	    			// Changes from yellow to dark red as distance increases.
-	    			l.setStroke(Color.rgb((int)(140+.45*k),k, 
-	    					0));
 		    		
 	    			hasJustDragged = true;
 		    	}
@@ -112,19 +99,7 @@ public class CueStickController {
 		    		// Sets new cue stick location based on mouse location.
 		    		double endMouseX = me.getX()*GameConstants.PIXEL_TO_IN;
 		    		double endMouseY = me.getY()*GameConstants.PIXEL_TO_IN;
-		    		double distance = cueStick.getDistanceInitToMouse(endMouseX,
-		    				endMouseY);
 	    			cueStick.setCueStickLocationOnDrag(endMouseX, endMouseY);
-	    			
-	    			// TODO: Make this change the model to change the  view.
-	    			// Set color of cue stick.
-	    			int changeFactor = 2000; // How little color changes.
-	    			int k = (int) (changeFactor/distance);
-	    			int maxValue = 255;
-	    			if ( k > maxValue) { k = maxValue; }
-	    			// Changes from yellow to dark red as distance increases.
-	    			l.setStroke(Color.rgb((int)(140+.45*k), k,
-	    					0));
 		    		
 	    			hasJustDragged = true;
 		    	}
@@ -145,7 +120,6 @@ public class CueStickController {
 		    		// Implement collision.
 		    		cueStick.setCueStickLocationAfterHit();
 		    		cueStick.updateCueBallVelocity(finalMouseX, finalMouseY);
-		    		l.setStroke(Color.BROWN);
 		    		
 		    		cueStick.setCanMove(false);
 		    		hasJustDragged = false;
@@ -165,8 +139,6 @@ public class CueStickController {
 		    		// Implement collision.
 		    		cueStick.setCueStickLocationAfterHit();
 		    		cueStick.updateCueBallVelocity(finalMouseX, finalMouseY);
-		    		GameSounds.CUE_HITTING_BALL.play();
-		    		l.setStroke(Color.BROWN);
 		    		
 		    		cueStick.setCanMove(false);
 		    		hasJustDragged = false;

@@ -24,8 +24,11 @@ public class CueStick extends Observable {
 	private double initMouseX;
 	private double initMouseY;
 	
-	// Distance between initial mouse position and start of cue stick.
+	// Projected distance between initial mouse position and start of cue stick.
 	private double distanceInit;
+	
+	// Projected distance between initial mouse position and dragging mouse.
+	private static double distanceInitToMouse;
 	
 	// True if values of initial mouse click position can be reset, i. e.
 	// True only on first mouse click before drag.
@@ -33,6 +36,10 @@ public class CueStick extends Observable {
 	
 	// True if cue stick can move on pool board.
 	private boolean canMove = true;
+	
+	private boolean isDragging = false;
+	
+	private boolean hasHit = false;
 	
 	private final double distanceTipFromCueBall = 3.0;
 	private final double cueStickLength = 37.0;
@@ -42,7 +49,6 @@ public class CueStick extends Observable {
 
 	private Ball cueBall;
 	
-	private boolean hasHit = false;
 
 	public CueStick(Ball cueBall) {
 		this.cueBall = cueBall;
@@ -56,6 +62,7 @@ public class CueStick extends Observable {
 	public double getStartY() { return startY; }
 	public double getEndX() { return endX; }
 	public double getEndY() { return endY; }
+	public double getDistanceInitToMouse() { return distanceInitToMouse; }
 	
 	public Ball getCueBall() { return cueBall; }
 	
@@ -119,9 +126,9 @@ public class CueStick extends Observable {
 		canReset = false;
 	}
 	
-	// Returns projected distance between initial mouse click and mouse on drag.
+	// Sets projected distance between initial mouse click and mouse on drag.
 	// Must go in correct direction. Has max stretch limit.
-	public double getDistanceInitToMouse (double mouseX, double mouseY) {
+	public void setDistanceInitToMouse (double mouseX, double mouseY) {
 		
 		// Projected distance between mouse and initial tip of cue stick.
 		double distanceInitTipToMouse = Math.abs((1 / cueStickLength)*((mouseX - 
@@ -141,7 +148,10 @@ public class CueStick extends Observable {
  			distanceInitToMouse = stretchLimit;
  		}
  		
-		return Math.abs(distanceInitToMouse);
+		CueStick.distanceInitToMouse = Math.abs(distanceInitToMouse);
+		
+		setChanged();
+		notifyObservers();
 	}
 	
 	// Returns true if mouse is dragging in the correct direction (away from
@@ -215,10 +225,9 @@ public class CueStick extends Observable {
 	
 	// Set location when mouse is dragging.
 	public void setCueStickLocationOnDrag(double mouseX, double mouseY) {
-		// Distance of projected dragging mouse position to initial mouse 
-		// click position.
-		double distanceInitToMouse = getDistanceInitToMouse(mouseX, mouseY);
+		isDragging = true;
 		
+		setDistanceInitToMouse(mouseX, mouseY);
 		// Distance between the tip of cue stick to the cue ball
  		double newDistanceTipFromCueBall = distanceTipFromCueBall + 
  				distanceInitToMouse;
@@ -229,6 +238,7 @@ public class CueStick extends Observable {
 			
 	// Set location when mouse is released.
 	public void setCueStickLocationAfterHit() {
+		isDragging = false;
 		setNewCueStickLocation(distanceTipFromCueBall, initStartX, initStartY);
 	}
 
@@ -236,27 +246,30 @@ public class CueStick extends Observable {
 	public void updateCueBallVelocity(double finalMouseX, double finalMouseY) {
 		// To adjust amplification of cue ball speed.
 		double amplifier = 3; 
-		double projectedDragDistance = getDistanceInitToMouse(finalMouseX,
-				finalMouseY);
+		setDistanceInitToMouse(finalMouseX, finalMouseY);
 		
 		// Determines proportionally accurate direction of cue ball.
 		double dirX = -initStartX + cueBall.getCenterX();
 		double dirY = -initStartY + cueBall.getCenterY();
 		
 		// Determines velocity of cue ball.
-		double xVel = amplifier*projectedDragDistance*dirX;
-		double yVel = amplifier*projectedDragDistance*dirY;
+		double xVel = amplifier*distanceInitToMouse*dirX;
+		double yVel = amplifier*distanceInitToMouse*dirY;
 		cueBall.setXVelocity(xVel);
 		cueBall.setYVelocity(yVel);
+		
+		// Resets drag distance to 0.
+		distanceInitToMouse = 0;
 		
 		hasHit = true;
 		setChanged();
 		notifyObservers();
 		hasHit = false;
-		
-		
 	}
 	
+	public boolean isDragging(){
+		return isDragging;
+	}
 	public boolean hasHit(){
 		return hasHit;
 	}

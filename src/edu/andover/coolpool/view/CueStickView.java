@@ -79,6 +79,22 @@ public class CueStickView implements Observer{
 			if (cueStick.hasHit()) {
 	    		GameSounds.CUE_HITTING_BALL.play();
 			}
+			
+			// Set color of cue stick.
+			// When cue stick is not dragging, keep cue stick brown.
+			if (!cueStick.isDragging()) {
+				this.getLine().setStroke(Color.BROWN);
+			}
+			// When cue stick is dragging, adjust color to reflect intensity.
+			else {
+				int changeFactor = 2000; // How little color changes.
+				int k = (int) (changeFactor/cueStick.getDistanceInitToMouse());
+				int maxValue = 255;
+				if ( k > maxValue) { k = maxValue; }
+				
+				// Changes from yellow to dark red as distance increases.
+				this.getLine().setStroke(Color.rgb((int)(140+.45*k), k, 0));
+			}
 		}
 	}
 	
