@@ -9,4 +9,8 @@ public class GameConstants {
 	public static final double SCREEN_WIDTH = 1280; // In inches.
 	public static final double SCREEN_LENGTH = 730; // In inches.
 	public static final double BALL_RADIUS = 1.125; // In inches.
+	public static final double POCKET_RADIUS = 2.25; // In inches.
+	
+	//coefficient of kinetic frction
+	public static final double MU_K = 4.0; 
 }

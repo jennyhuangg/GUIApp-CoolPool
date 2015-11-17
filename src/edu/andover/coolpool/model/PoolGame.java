@@ -1,69 +1,59 @@
 package edu.andover.coolpool.model;
 
 import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
 
 import edu.andover.coolpool.GameManager;
-import edu.andover.coolpool.controller.CueBallController;
-import edu.andover.coolpool.controller.CueStickController;
-import edu.andover.coolpool.view.PoolScreenView;
 import javafx.animation.AnimationTimer;
 
-public class PoolGame {
-	//TODO: Add Comments
-
+// Model class that runs the game play. Brings together a PoolBoard and Players
+// Updates status of the game at each step of play
+public class PoolGame implements Observer {
 	// Create a reference to game manager here
-	private GameManager gameManager;
+	private GameManager gameManager = GameManager.getInstance();
+	
 	private PoolBoard poolBoard = new PoolBoard();
-	private CueStick cueStick;
-	private Player[] players = new Player[2];
-	int currPlayerInd = 0;
-	boolean gameHasEnded = false;
-	boolean sidesAreSet = false;
+	private Player[] players = {new Player(), new Player()};
+	private PoolGameStatus poolGameStatus = new PoolGameStatus();
+	private AnimationTimer timer;
+	
+	private int currPlayerInd = 0; // 0 = player 1, 1 = player 2
+	private boolean sidesAreSet = false;
+	private boolean streak = false;
 
-	AnimationTimer timer;
-	private CueStickController cueStickController;
-	private CueBallController cueBallController;
-	private PoolScreenView poolScreenView;
-	boolean streak = false;
-
-	public PoolGame(PoolScreenView poolScreenView) {
-		gameManager = GameManager.getInstance();
-
-		setUpCueStick(); //initialize cueStick
-		setUpControllers();
-		setCueStickMouseHandler();
-
-		players[0] = new Player();
-		players[1] = new Player();
-
+	public PoolGame() {
+		poolBoard.getCueStick().addObserver(this);
+		setAnimationTimer();
+	}
+	
+	// Defines the timer, makes timer stop and update the game status when
+	// all balls are at rest
+	private void setAnimationTimer(){
 		timer = new AnimationTimer() {
 			@Override
 			public void handle(long timestamp) {
 				poolBoard.update();
 				if (poolBoard.stable()) { 
 					this.stop();
-					updatePoints(poolBoard.pocketedBalls());
+					updateStatus(poolBoard.pocketedBalls());
 					poolBoard.resetPocketedBalls();
-					cueStick.setCanMove(true);
-					cueStick.setCanReset(true);
+					poolBoard.getCueStick().setCanMove(true);
+					poolBoard.getCueStick().setCanReset(true);
 				}
 			}
 		};
-
-		this.poolScreenView = poolScreenView;
 	}
 
-	public void turn() {
-		timer.start();
-	}
-
-	public void setSides(int ballId) {
+	// Sets the ball type for each player once a player pockets a ball
+	private void setSides(int ballId) {
 		players[currPlayerInd].setBallType(ballId);
 		players[(currPlayerInd+1)%2].setBallType((ballId + 1)%2);
-		poolScreenView.setBallColorText(currPlayerInd, ballId);
+		poolGameStatus.setBallColors(currPlayerInd, ballId);
 		sidesAreSet = true;
 	}
 
+	// Returns true if current player pocketed other player's balls
 	private boolean pocketedOther(ArrayList<Ball> pocketedBalls){
 		int playerBallType = players[currPlayerInd].getBallType();
 		for (Ball b: pocketedBalls){
@@ -74,108 +64,114 @@ public class PoolGame {
 		}
 		return false;
 	}
-
-	public void switchPlayer() {
-		currPlayerInd = (currPlayerInd + 1)%2;
-		streak = false;
-		poolScreenView.setPlayerTurnText(currPlayerInd, streak,
-				players[currPlayerInd].canPocketEightBall());
-	}
-
-	public boolean pocketedCueBall(ArrayList<Ball> pocketedBalls) {
+	
+	// Returns true if current player pocketed the cue ball
+	private boolean pocketedCueBall(ArrayList<Ball> pocketedBalls) {
 		for (Ball b: pocketedBalls){
 			if ( b.getId() == 2) return true;
 		}
 		return false;
 	}
 
-	public boolean pocketedEightBall(ArrayList<Ball> pocketedBalls) {
+	// Returns true if current player pocketed the eight ball
+	private boolean pocketedEightBall(ArrayList<Ball> pocketedBalls) {
 		for (Ball b: pocketedBalls){
 			if ( b.getId() == 3) return true;
 		}
 		return false;
 	}
 
-	public void continuePlayer() {
-		streak = true;
-		poolScreenView.setPlayerTurnText(currPlayerInd, streak, 
+	// Switches to other player at end of turn. Does this if they do not
+	// pocket a ball, if they pocket other player's balls, or if they pocket
+	// cue ball.
+	private void switchPlayer() {
+		currPlayerInd = (currPlayerInd + 1)%2;
+		streak = false;
+		poolGameStatus.setTurnStatus(currPlayerInd, streak,
 				players[currPlayerInd].canPocketEightBall());
 	}
-
-	public void updatePoints(ArrayList<Ball> pocketedBalls) {
-		int size = pocketedBalls.size();
-		if (poolBoard.getNumBumperCollisions() < 4 && size == 0) {
-			poolBoard.rackBalls(poolBoard.getBalls());
-			poolScreenView.setStatusPlayerIllegalBreak(currPlayerInd);
-			switchPlayer();
-		}
-		else {
-			for (int i = 0; i < size; i ++) {
-				int ballId = pocketedBalls.get(i).getId();
-				if (ballId == 0 || ballId == 1){
-					if (!sidesAreSet){
-						setSides(ballId);
-					}
-					if (players[currPlayerInd].getBallType() == ballId){
-						players[currPlayerInd].addPoint();
-					}
-					else{
-						players[(currPlayerInd+1)%2].addPoint();
-					}
+	
+	// Allows current player to continue playing if they successfully
+	// pocketed a ball
+	private void continuePlayer() {
+		streak = true;
+		poolGameStatus.setTurnStatus(currPlayerInd, streak, 
+				players[currPlayerInd].canPocketEightBall());
+	}
+	
+	// Updates points for players based on which balls were hit in
+	private void updatePoints(ArrayList<Ball> pocketedBalls){
+		for (int i = 0; i < pocketedBalls.size(); i ++) {
+			int ballId = pocketedBalls.get(i).getId();
+			if (ballId == 0 || ballId == 1){
+				if (!sidesAreSet){
+					setSides(ballId);
+				}
+				if (players[currPlayerInd].getBallType() == ballId){
+					players[currPlayerInd].addPoint();
+				}
+				else{
+					players[(currPlayerInd+1)%2].addPoint();
 				}
 			}
+		}
+		poolGameStatus.setPoints(players[0].getPoints(), 
+				players[1].getPoints());
+	}
 
-			poolScreenView.setPointsText(players[0].getPoints(), 
-					players[1].getPoints());
-
+	// Updates status of game at the end of a turn. Updates points, 
+	// next player to go, and notification of last turn
+	public void updateStatus(ArrayList<Ball> pocketedBalls) {
+		int size = pocketedBalls.size();
+		// Call an illegal break if current player does not get balls
+		// to hit sides of pool board at least 3 times
+		if (poolBoard.getNumBumperCollisions() < 4 && size == 0) {
+			poolBoard.rackBalls(poolBoard.getBalls());
+			poolGameStatus.setLastTurnStatusPlayerIllegalBreak(currPlayerInd);
+			switchPlayer();
+		}
+		// If no balls are hit in, current player turn to other player
+		else if (size == 0){
+			poolGameStatus.setLastTurnStatusPlayerFailed(currPlayerInd);
+			switchPlayer();
+		}
+		// Some balls are pocketed
+		else {
+			updatePoints(pocketedBalls);	
+			// Update next player to play and status of last turn
 			if (pocketedEightBall(pocketedBalls)) {
-				gameHasEnded = true;
+				// End game if pocketed eight ball
 				gameManager.initEndScreen();
 			}
-			
 			else if (pocketedCueBall(pocketedBalls)) {
-				poolScreenView.setStatusPocketedCueBall(currPlayerInd);
+				// Handle scratch if pocketed cue ball
+				poolGameStatus.setLastTurnStatusPocketedCueBall(currPlayerInd);
 				poolBoard.resetCueBall();
-				setCueBallMouseHandler();
-				cueStick.setCueBall(poolBoard.getBalls()[15]);
 				switchPlayer();
 			}		
 			else if (pocketedOther(pocketedBalls)) {
-				poolScreenView.setStatusPocketedOther(currPlayerInd);
+				// Lose turn if pocketed other player's ball
+				poolGameStatus.setLastTurnStatusPocketedOther(currPlayerInd);
 				switchPlayer();
 			}
 			else{
-				poolScreenView.setStatusPlayerSucceeded(currPlayerInd);
+				// Continue turn if pocketed own ball
+				poolGameStatus.setLastTurnStatusPlayerSucceeded(currPlayerInd);
 				continuePlayer();
 			}
 		}
 	}
 
-	public PoolBoard getPoolBoard() {
-		return poolBoard;
-	}
-
-	private void setCueStickMouseHandler() {
-		cueStickController.addMouseHoverEH(poolBoard.getView(), cueStick);
-		cueStickController.addMousePressedEH(poolBoard.getView(), cueStick);
-		cueStickController.addMouseReleasedEH(poolBoard.getView(), cueStick);
-		cueStickController.addMouseDraggedEH(poolBoard.getView(), cueStick);
+	// Starts the animation when cue stick sets the cue ball velocity
+	public void update(Observable o, Object arg) {
+		if (o == poolBoard.getCueStick()){
+			if (poolBoard.getCueStick().hasHit()){
+				timer.start();
+			}
+		}
 	}
 	
-	private void setCueBallMouseHandler() {
-		cueBallController.addMouseHoverEventHandler(poolBoard.getView(), 
-				poolBoard.getBalls()[15]);
-	}
-	
-	private void setUpCueStick() {
-		cueStick = new CueStick(poolBoard.getBalls()[15], this);
-		poolBoard.getView().getPane().getChildren().add(cueStick.getView());
-	}
-	
-	private void setUpControllers() {
-		cueStickController = new CueStickController();
-		cueBallController = new CueBallController();
-	}
-
+	public PoolBoard getPoolBoard() { return poolBoard; }
 	public Player[] getPlayers() { return players; }
+	public PoolGameStatus getPoolGameStatus(){ return poolGameStatus; }
 }

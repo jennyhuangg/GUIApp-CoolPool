@@ -4,6 +4,8 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+// TODO: Create tests for interfaces, not implementations. We shouldn't be
+// testing private methods.
 public class PoolBoardTest {
 
 	@Test

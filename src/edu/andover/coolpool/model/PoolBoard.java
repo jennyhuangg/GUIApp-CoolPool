@@ -1,104 +1,64 @@
 package edu.andover.coolpool.model;
 
 import static java.lang.Math.sqrt;
-
 import java.util.ArrayList;
-
+import java.util.Observable;
 import edu.andover.coolpool.GameConstants;
-import edu.andover.coolpool.view.BallView;
-import edu.andover.coolpool.view.GameSounds;
-import edu.andover.coolpool.view.PoolBoardView;
+import edu.andover.coolpool.controller.CueBallController;
 
 // Model class for a pool board, including interactions between the
-// pool balls.
+// pool balls, cuestick, and pockets
 
-public class PoolBoard {
+public class PoolBoard extends Observable {
 
-	private Ball[] balls; //Array of balls
+	private Ball[] balls = new Ball[16]; // All 16 balls in 8-ball pool
 	private ArrayList<Ball> pocketedBalls = new ArrayList<Ball>();
-	private ArrayList<Ball> unpocketedBalls = new ArrayList<Ball>();
-	private Pocket[] pockets; //Array of pockets
-	private BallView[] ballViews;
-	
-	private double length; 
-	private double width;
-	private int numBumperCollisions;
-	
-	private PoolBoardView poolBoardView;
+	private ArrayList<Ball> remainingBalls = new ArrayList<Ball>();
+	private Pocket[] pockets = new Pocket[6]; // 6 pockets along rim of board
+	private CueStick cueStick;
 
-	private double boardX; //X coordinate of top left corner of playable board
-	private double boardY; //Y coordinate of top left corner of playable board
+	// X and Y coordinates of top left corner of playable board
+	// TODO: Eric: Fix magic constants
+	private double boardX = 180 * GameConstants.PIXEL_TO_IN;
+	private double boardY = 177* GameConstants.PIXEL_TO_IN;
 
-	public static boolean isStable;
+	// Length and width of playable board
+	private double length = GameConstants.POOL_TABLE_LENGTH; 
+	private double width = GameConstants.POOL_TABLE_WIDTH;
+
+	// Counts number of collisions of balls with boundaries in each term
+	private int numBumperCollisions = 0;
+
+	public boolean isStable; // True if all balls are at rest
+	public boolean bounced = false;
+	public boolean resetCue = false;
 
 	public PoolBoard() {
-
-		length = GameConstants.POOL_TABLE_LENGTH;
-		width = GameConstants.POOL_TABLE_WIDTH;
-		setView();
-
-		numBumperCollisions = 0;
-
-		poolBoardView.getBigRectangle().getX();
-		boardX = poolBoardView.getRectangle().getX() *
-				GameConstants.PIXEL_TO_IN;
-		boardY = poolBoardView.getRectangle().getY() *
-				GameConstants.PIXEL_TO_IN;
-
-		setUpBalls();
-		setUpPockets();
-
-		for (Pocket pocket: pockets){
-			poolBoardView.getPane().getChildren().add(pocket.getView());
-		}
-
-		ballViews = new BallView[16];
-		for (int i = 0; i < 16; i ++){
-			ballViews[i] = new BallView(balls[i]);
-			balls[i].addObserver(ballViews[i]);
-			poolBoardView.getPane().getChildren().add(ballViews[i].getCircle());
-		}
-
-	}
-
-	private void setUpPockets() {
-		pockets = new Pocket[6];
-
 		for (int i = 0; i < pockets.length; i++) {
 			pockets[i] = new Pocket(i, boardX, boardY);
 		}
+		setUpBalls();
+		cueStick = new CueStick(balls[15]);
 	}
 
 	// Initializes the array of balls and places the balls in the correct
 	// locations on the pool board
 	private void setUpBalls() {
-		// Creates balls on table.
-		balls = new Ball[16];
-		
 		// Set IDs for each ball.
 		for (int k = 0; k < balls.length; k ++) { 
-			if (k < 7) {
-				balls[k] = new Ball(0);
-			}
-			else if (k >= 7 && k < 14) {
-				balls[k] = new Ball(1);
-			}
-			else if (k == 14) {
-				balls[k] = new Ball(3);
-			}
-			else {
-				balls[k] = new Ball(2);
-			}
+			if (k < 7) { balls[k] = new Ball(0); }
+			else if (k >= 7 && k < 14) { balls[k] = new Ball(1); }
+			else if (k == 14) { balls[k] = new Ball(3); } //Eight ball
+			else { balls[k] = new Ball(2); } // Cueball
 		}
-		
 		// Set balls in triangle formation.
 		rackBalls(balls);
-	
+
 		for (Ball b: balls) {
-			unpocketedBalls.add(b);
+			remainingBalls.add(b);
 		}
 	}
-	
+
 	// Sets balls back up in triangle formation. Useful for re-racking after
 	// illegal breaks.
 	public void rackBalls(Ball[] balls) {
@@ -106,12 +66,12 @@ public class PoolBoard {
 		double incrementX = 2.25 * Math.cos(30) * GameConstants.IN_TO_PIXEL;
 		double radius = 1.125;
 		double threeQuartersLength = 0.75*length+boardX;
-		
+
 		balls[0].setCenter(threeQuartersLength, centerY);
 
 		balls[1].setCenter(threeQuartersLength + 1 * incrementX,
 				centerY + radius);
-		
+
 		balls[7].setCenter(threeQuartersLength + 1 * incrementX, 
 				centerY - radius);
 
@@ -144,13 +104,15 @@ public class PoolBoard {
 
 		// Places cue ball in correct spot.
 		balls[15].setCenter(length * 1/4 + boardX, width / 2 + boardY);
+
+		numBumperCollisions = 0;
 	}
-	
-	//updates positions and states of the balls at each time step of 
-	//0.01 seconds
+
+	// Updates positions and states of the balls at each time step of 
+	// 0.01 seconds
 	public void update() {
 		double elapsedSeconds = 0.01;
-		for (Ball b : unpocketedBalls) {
+		for (Ball b : remainingBalls) {
 			b.setCenterX(b.getCenterX() + elapsedSeconds * b.getXVelocity());
 			b.setCenterY(b.getCenterY() + elapsedSeconds * b.getYVelocity());
 		}
@@ -159,29 +121,54 @@ public class PoolBoard {
 		decelerateBalls();
 	}
 
+	// Returns true if no balls are moving.
+	public boolean stable(){
+		isStable = true;
+		for (Ball ball: remainingBalls){
+			if (ball.getXVelocity() != 0 || ball.getYVelocity() != 0) {
+				isStable = false;
+			}
+		}
+		return isStable;
+	}
+
+	public void resetCueBall() { //TODO: will change to get User Input Later
+		pocketedBalls.remove(balls[15]);
+		remainingBalls.add(balls[15]);
+		balls[15].unpocket();
+		
+		double xPosition, yPosition;
+		
+		balls[15].setCenter(length * 1/4 + boardX, width / 2 + boardY);
+
+		resetCue = true;
+		setChanged();
+		notifyObservers();
+		resetCue = false;
+	}
+
 	// Checks to see if any balls have fallen inside the pockets
 	// Falls inside pockets if (distance between ball and pocket) <=
 	// (radius_of_pocket - radius_of_ball)
-	public void checkPockets(){
+	private void checkPockets(){
 		for (Pocket pocket: pockets){
 			for (Ball ball: balls){
 				double distance = Math.sqrt(Math.pow(pocket.getXPosition() -
 						ball.getCenterX(), 2) + 
 						Math.pow(pocket.getYPosition() - ball.getCenterY(), 2));
-
 				if(distance <= pocket.getRadius()
 						&& !ball.getIsPocketed()){
 					ball.setPocketed();
 					pocketedBalls.add(ball);
-					unpocketedBalls.remove(ball);
-					GameSounds.BALL_FALLING_IN_POCKET.play();
+					remainingBalls.remove(ball);
 				}
 			}
 		}
 	}
 
-	public void checkCollisions() {
-		for (Ball ball: unpocketedBalls)
+	// Checks whether balls have collided with each other or with the walls
+	private void checkCollisions() {
+		for (Ball ball: remainingBalls)
 		{
 			// Changes velocity when ball collides with the vertical walls of
 			// the pool board (i.e the vertical bumpers).
@@ -201,63 +188,48 @@ public class PoolBoard {
 				ball.setYVelocity(ball.getYVelocity()*(-1));
 				numBumperCollisions++;
 			}
-
 			// Changes velocity when ball collides with other balls.
-			for (Ball b2: unpocketedBalls){
+			for (Ball b2: remainingBalls){
 				final double deltaX = b2.getCenterX() - ball.getCenterX() ;
 				final double deltaY = b2.getCenterY() - ball.getCenterY() ;
 				if (colliding(ball, b2, deltaX, deltaY)) {
-					GameSounds.BALL_HIT_BALL.play();
+					bounced = true;
 					bounce(ball, b2, deltaX, deltaY);
+					setChanged();
+					notifyObservers();
+					bounced = false;
 				}
 			}
 		}
 	}
 
-	public int getNumBumperCollisions() {
-		return numBumperCollisions;
-	}
 	// Decreases the speed of all balls uniformly due to kinetic friction
 	// with the pool board unless speed of ball is already 0.
 	public void decelerateBalls(){
 		double elapsedSeconds = 0.1;
-
-		for (Ball ball: unpocketedBalls){
+		for (Ball ball: remainingBalls){
 			double xVel = ball.getXVelocity();
 			double yVel = ball.getYVelocity();
 			double speed = Math.sqrt(Math.pow(xVel, 2) + Math.pow(yVel, 2));
 			if (xVel != 0 || yVel != 0){
-				{
-					if (xVel < 0){
-						ball.setXVelocity(Math.min(xVel - 
-								4*elapsedSeconds*xVel/speed, 0));
-					}
-					if (yVel < 0){
-						ball.setYVelocity(Math.min(yVel - 
-								4*elapsedSeconds*yVel/speed, 0));
-					}
-					if (xVel > 0){
-						ball.setXVelocity(Math.max(xVel - 
-								4*elapsedSeconds*xVel/speed, 0));
-					}
-					if (yVel > 0){
-						ball.setYVelocity(Math.max(yVel - 
-								4*elapsedSeconds*yVel/speed, 0));
-					}
+				if (xVel < 0){
+					ball.setXVelocity(Math.min(xVel - GameConstants.MU_K*
+							elapsedSeconds*xVel/speed, 0));
+				}
+				if (yVel < 0){
+					ball.setYVelocity(Math.min(yVel - GameConstants.MU_K*
+							elapsedSeconds*yVel/speed, 0));
+				}
+				if (xVel > 0){
+					ball.setXVelocity(Math.max(xVel - GameConstants.MU_K*
+							elapsedSeconds*xVel/speed, 0));
+				}
+				if (yVel > 0){
+					ball.setYVelocity(Math.max(yVel - GameConstants.MU_K*
+							elapsedSeconds*yVel/speed, 0));
 				}
 			}
 		}
-	}
-
-	// Returns true if no balls are moving.
-	public boolean stable(){
-		isStable = true;
-		for (Ball ball: unpocketedBalls){
-			if (ball.getXVelocity() != 0 || ball.getYVelocity() != 0) {
-				isStable = false;
-			}
-		}
-		return isStable;
 	}
 
 	// Returns true if b1 and b2 are colliding. 
@@ -302,35 +274,14 @@ public class PoolBoard {
 
 	}
 
-	public double getLength(){ return length; }
-
-	public double getWidth(){ return width; }
-
-	public PoolBoardView getView(){ return poolBoardView; }
+	// Clears pockets after each turn
+	public void resetPocketedBalls() { 
+		pocketedBalls = new ArrayList<Ball>(); 
+	}
 
 	public Ball[] getBalls() { return balls; }
-
-	public void setView(){
-		poolBoardView = new PoolBoardView(length, width);
-
-		poolBoardView.getRectangle().setX(180);
-		poolBoardView.getRectangle().setY(177);
-
-		poolBoardView.getBigRectangle().setX(180);
-		poolBoardView.getBigRectangle().setY(177);
-	}
-
 	public ArrayList<Ball> pocketedBalls() { return pocketedBalls; }
-
-	public void resetCueBall() { //will change to get User Input Later
-		pocketedBalls.remove(balls[15]);
-		balls[15] = new Ball(length * 1/4 + boardX, width / 2 + boardY, 2);
-		//poolBoardView.getPane().getChildren().add(balls[15].getView());
-		unpocketedBalls.add(balls[15]);
-	}
-
-	public void resetPocketedBalls() {pocketedBalls = new ArrayList<Ball>(); }
-
-
-
+	public Pocket[] getPockets(){ return pockets; }
+	public CueStick getCueStick(){ return cueStick; }
+	public int getNumBumperCollisions() { return numBumperCollisions; }
 }

@@ -1,9 +1,8 @@
 package edu.andover.coolpool.model;
 
-import edu.andover.coolpool.view.CueStickView;
-import javafx.scene.shape.Shape;
+import java.util.Observable;
 
-public class CueStick {
+public class CueStick extends Observable {
 	
 	// Start is position of tip of cue stick (end close to cue ball).
 	private double startX;
@@ -42,17 +41,15 @@ public class CueStick {
 	private final double stretchLimit = 17.0;
 
 	private Ball cueBall;
-	private CueStickView cueStickView;
-	private PoolGame poolGame;
+	
+	private boolean hasHit = false;
 
-	public CueStick(Ball cueBall, PoolGame poolGame) {
+	public CueStick(Ball cueBall) {
 		this.cueBall = cueBall;
 		startX = cueBall.getCenterX() - distanceTipFromCueBall;
 		startY = cueBall.getCenterY();
 		endX = startX - cueStickLength;
 		endY = startY;
-		cueStickView = new CueStickView(startX, startY, endX, endY);
-		this.poolGame = poolGame;
 	}
 
 	public double getStartX() { return startX; }
@@ -62,30 +59,20 @@ public class CueStick {
 	
 	public Ball getCueBall() { return cueBall; }
 	
-	// TODO: This should not live in this class. Move to CueStickView.java
-	public CueStickView getCueStickView() { return cueStickView; }
-	
-	// TODO: This should not live in this class. Move to CueStickView.java
-	public Shape getView(){ return cueStickView.getLine(); }
-	
 	public void setStartX(double startX) {
 		this.startX = startX;
-		cueStickView.setStartX(startX);
 	}
 	
 	public void setStartY(double startY) {
 		this.startY = startY;
-		cueStickView.setStartY(startY);
 	}
 	
 	public void setEndX(double endX) {
 		this.endX = endX;
-		cueStickView.setEndX(endX);
 	}
 	
 	public void setEndY(double endY) {
 		this.endY = endY;
-		cueStickView.setEndY(endY);
 	}
 	
 	public boolean canMove() {
@@ -216,6 +203,9 @@ public class CueStick {
 		this.setStartY(startY);
 		this.setEndX(endX);
 		this.setEndY(endY);
+		
+		setChanged();
+		notifyObservers();
 	}
 	
 	// Set location when mouse is hovering.
@@ -258,6 +248,16 @@ public class CueStick {
 		double yVel = amplifier*projectedDragDistance*dirY;
 		cueBall.setXVelocity(xVel);
 		cueBall.setYVelocity(yVel);
-		poolGame.turn(); 
+		
+		hasHit = true;
+		setChanged();
+		notifyObservers();
+		hasHit = false;
+		
+		
+	}
+	
+	public boolean hasHit(){
+		return hasHit;
 	}
 }
