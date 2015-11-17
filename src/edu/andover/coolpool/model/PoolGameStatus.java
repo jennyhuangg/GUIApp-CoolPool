@@ -2,21 +2,21 @@ package edu.andover.coolpool.model;
 
 import java.util.Observable;
 
-// Model class that stores the status of the pool game after each turn
+// Model class that stores the status of the pool game after each turn.
 public class PoolGameStatus extends Observable {
 	
-	// Stores number of points for each player
+	// Stores number of points for each player.
 	private String player1PointsStatus = "0";
 	private String player2PointsStatus = "0";
 	
-	// Stores the ball type for each player
+	// Stores the ball type for each player.
     private String player1BallColorStatus = "N/A";
     private String player2BallColorStatus = "N/A";
     
-    // Stores which player's turn it is
+    // Stores which player's turn it is.
     private String turnStatus;
     
-    //Stores message from previous turn
+    //Stores message from previous turn.
     private String lastTurnStatus;
     
     public PoolGameStatus(){
@@ -34,8 +34,8 @@ public class PoolGameStatus extends Observable {
     }
     
     public void setBallColors(int currPlayerInd, int player1ID){
-    	//0 = red
-    	//1 = blue
+    	// 0 = red
+    	// 1 = blue
     	if ((player1ID + currPlayerInd)%2 == 0 ){
     		player1BallColorStatus = "Ball color: RED";
     		player2BallColorStatus = "Ball color: BLUE";
@@ -49,19 +49,19 @@ public class PoolGameStatus extends Observable {
     	notifyObservers();
     }
     
-    // Sets the turn status for which player gets next turn
+    // Sets the turn status for which player gets next turn.
     public void setTurnStatus(int currPlayerInd, boolean streak, 
     		boolean canPocketEightBall){
     	
     	int playerNum = currPlayerInd + 1;
    
-    	// Additional streak text if player is on a streak
+    	// Additional streak text if player is on a streak.
     	String streakText = "";
     	if (streak) {
     		streakText = " again";
     	}
     	
-    	// Additional eight ball prompt if player can pocket eight ball
+    	// Additional eight ball prompt if player can pocket eight ball.
     	String eightBallPrompt = "";
     	if (canPocketEightBall) eightBallPrompt = " You may now pocket the "
     			+ "eight ball to win.";
@@ -73,7 +73,7 @@ public class PoolGameStatus extends Observable {
     	notifyObservers();
     }
     
-    // Sets last turn status if player did not pocket a ball
+    // Sets last turn status if player did not pocket a ball.
     public void setLastTurnStatusPlayerFailed(int currPlayerInd){
     	int playerNum = currPlayerInd + 1;
     	lastTurnStatus = "Player " + playerNum + " did not "
@@ -83,7 +83,7 @@ public class PoolGameStatus extends Observable {
     }
     
     
-    // Sets last turn status if player made an illegal break
+    // Sets last turn status if player made an illegal break.
     public void setLastTurnStatusPlayerIllegalBreak(int currPlayerInd){
     	int playerNum = currPlayerInd + 1;
     	lastTurnStatus = "Player " + playerNum + " did not "
@@ -95,7 +95,7 @@ public class PoolGameStatus extends Observable {
     }
     
     // Sets last turn status if player pocketed a ball and did not
-    // pocket other player's balls
+    // pocket other player's balls.
     public void setLastTurnStatusPlayerSucceeded(int currPlayerInd){
     	int playerNum = currPlayerInd + 1;
     	lastTurnStatus = "Player " + playerNum + " has pocketed "
@@ -105,7 +105,7 @@ public class PoolGameStatus extends Observable {
     	notifyObservers();
     }
     
-    // Sets last turn status if player pocketed the cue ball
+    // Sets last turn status if player pocketed the cue ball.
     public void setLastTurnStatusPocketedCueBall(int currPlayerInd){
     	int playerNum = currPlayerInd + 1;
     	lastTurnStatus = "Player " + playerNum + " pocketed "
@@ -114,7 +114,7 @@ public class PoolGameStatus extends Observable {
     	notifyObservers();
     }
     
-    // Sets last turn status if player pocketed other player's balls
+    // Sets last turn status if player pocketed other player's balls.
     public void setLastTurnStatusPocketedOther(int currPlayerInd){
     	int playerNum = currPlayerInd + 1;
     	int otherPlayerNum = (currPlayerInd+1)%2 + 1;
@@ -122,7 +122,16 @@ public class PoolGameStatus extends Observable {
     			+ "Player " + otherPlayerNum + "'s ball. Lost turn!";
     	setChanged();
     	notifyObservers();
-    }	
+    }
+    
+    // Sets turn status to instruct player to place ball on scratch.
+    public void setTurnStatusForScratch(int currPlayerInd){
+    	int playerNum = currPlayerInd + 1;
+    	turnStatus = "Player " + playerNum + ", place the ball!";
+    	
+    	setChanged();
+    	notifyObservers();
+    }
     
     public String getPlayer1PointsStatus(){ return player1PointsStatus; }
     public String getPlayer2PointsStatus(){ return player2PointsStatus; }

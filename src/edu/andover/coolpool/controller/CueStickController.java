@@ -163,9 +163,9 @@ public class CueStickController {
 		    		double finalMouseY = me.getY()*GameConstants.PIXEL_TO_IN;
 		    		
 		    		// Implement collision.
+		    		GameSounds.CUE_HITTING_BALL.play();
 		    		cueStick.setCueStickLocationAfterHit();
 		    		cueStick.updateCueBallVelocity(finalMouseX, finalMouseY);
-		    		GameSounds.CUE_HITTING_BALL.play();
 		    		l.setStroke(Color.BROWN);
 		    		
 		    		cueStick.setCanMove(false);
