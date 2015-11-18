@@ -38,6 +38,11 @@ public class Ball extends Observable {
 		this.id = id;
 	}
 
+	// Unpockets a ball, used only for cueball
+	public void unpocket(){
+		isPocketed = !isPocketed;
+	}
+
 	public void setCenterX(double centerX) {
 		this.centerX = centerX;
 		setChanged();
@@ -78,11 +83,6 @@ public class Ball extends Observable {
 		centerY = 0;
 		setChanged();
 		notifyObservers();
-	}
-	
-	// Unpockets a ball, used only for cueball
-	public void unpocket(){
-		isPocketed = !isPocketed;
 	}
 	
 	public int getId(){ return id;}
