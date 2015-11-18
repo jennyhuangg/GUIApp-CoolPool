@@ -62,7 +62,6 @@ public class CueStick extends Observable {
 	public double getEndX() { return endX; }
 	public double getEndY() { return endY; }
 	public double getDistanceInitToMouse() { return distanceInitToMouse; }
-	
 	public Ball getCueBall() { return cueBall; }
 	
 	public void setStartX(double startX) {
@@ -110,7 +109,7 @@ public class CueStick extends Observable {
 	}
 	
 	// Uses distance formula to calculate distance between two points.
-	public double getDistance(double x1, double y1, double x2, double y2) {
+	private double getDistance(double x1, double y1, double x2, double y2) {
 		return Math.sqrt((x1-x2)*(x1-x2) + (y1-y2)*(y1-y2));
 	}
 	
@@ -135,7 +134,7 @@ public class CueStick extends Observable {
 	
 	// Sets projected distance between initial mouse click and mouse on drag.
 	// Must go in correct direction. Has max stretch limit.
-	public void setDistanceInitToMouse (double mouseX, double mouseY) {
+	private void setDistanceInitToMouse (double mouseX, double mouseY) {
 		
 		// Projected distance between mouse and initial tip of cue stick.
 		double distanceInitTipToMouse = Math.abs((1 / cueStickLength)*((mouseX - 
@@ -163,7 +162,7 @@ public class CueStick extends Observable {
 	
 	// Returns true if mouse is dragging in the correct direction (away from
 	// cue ball in direction of initial mouse click).
-	public boolean isDraggingInCorrectDirection(double mouseX, double mouseY) {
+	private boolean isDraggingInCorrectDirection(double mouseX, double mouseY) {
 		double cueBallX = cueBall.getCenterX();
 		double cueBallY = cueBall.getCenterY();
 		
@@ -198,7 +197,7 @@ public class CueStick extends Observable {
 	// General method that calculates new position of cue stick based on 
 	// distance of its tip from the cue ball and a point that indicates
 	// direction away from cue ball.
-	public void setNewCueStickLocation(double distanceTipFromCueBall, double x, 
+	private void setNewCueStickLocation(double distanceTipFromCueBall, double x, 
 			double y) {
 		double cueBallX = cueBall.getCenterX();
 		double cueBallY = cueBall.getCenterY();
@@ -251,7 +250,8 @@ public class CueStick extends Observable {
 
 	// Updates cue ball velocity proportional to the projected distance dragged.
 	public void updateCueBallVelocity(double finalMouseX, double finalMouseY) {
-		// To adjust amplification of cue ball speed.
+		
+		// Adjusts amplification of cue ball speed.
 		double amplifier = 3; 
 		setDistanceInitToMouse(finalMouseX, finalMouseY);
 		
@@ -262,6 +262,8 @@ public class CueStick extends Observable {
 		// Determines velocity of cue ball.
 		double xVel = amplifier*distanceInitToMouse*dirX;
 		double yVel = amplifier*distanceInitToMouse*dirY;
+		
+		// Sets velocity of cue ball.
 		cueBall.setXVelocity(xVel);
 		cueBall.setYVelocity(yVel);
 		
