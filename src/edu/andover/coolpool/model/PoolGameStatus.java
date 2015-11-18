@@ -142,10 +142,17 @@ public class PoolGameStatus extends Observable {
     }
     
     public String getPlayer1PointsStatus(){ return player1PointsStatus; }
+    
     public String getPlayer2PointsStatus(){ return player2PointsStatus; }
+    
     public String getPlayer1BallColorStatus(){ return player1BallColorStatus; }
+    
     public String getPlayer2BallColorStatus(){ return player2BallColorStatus; }
+    
     public String getTurnStatus(){ return turnStatus; }
+    
     public String getLastTurnStatus(){ return lastTurnStatus; }
+    
     public String getCueBallStatus() { return cueBallStatus; }
+    
 }

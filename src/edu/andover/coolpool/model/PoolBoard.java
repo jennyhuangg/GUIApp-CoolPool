@@ -277,8 +277,13 @@ public class PoolBoard extends Observable {
 	}
 
 	public Ball[] getBalls() { return balls; }
+	
 	public ArrayList<Ball> pocketedBalls() { return pocketedBalls; }
+	
 	public Pocket[] getPockets(){ return pockets; }
+	
 	public CueStick getCueStick(){ return cueStick; }
+	
 	public int getNumBumperCollisions() { return numBumperCollisions; }
+	
 }
