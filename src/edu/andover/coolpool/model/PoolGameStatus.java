@@ -129,7 +129,8 @@ public class PoolGameStatus extends Observable {
     
     // Sets cue ball status to instruct player to place ball on scratch.
     public void setCueBallStatusForScratch(){
-    	cueBallStatus = "Place the cue ball inside the orange region.";
+    	cueBallStatus = "Place the cue ball anywhere inside the orange region"
+    			+ " before hitting.";
     	setChanged();
     	notifyObservers();
     }
