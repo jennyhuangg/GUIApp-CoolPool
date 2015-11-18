@@ -4,8 +4,7 @@ import java.util.Observable;
 import edu.andover.coolpool.GameConstants;
 
 // Model class for a pool ball. Can represent a red ball, blue ball,
-// cue ball, or 8 ball depending on the ID passed into the constructor. The
-// ID of the ball does not matter until we implement players.
+// cue ball, or 8 ball depending on the ID passed into the constructor. 
 
 public class Ball extends Observable {
 	private boolean isPocketed;
