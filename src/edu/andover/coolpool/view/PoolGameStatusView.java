@@ -26,6 +26,9 @@ public class PoolGameStatusView implements Observer {
     @FXML
     private Text lastTurnText;
     
+    @FXML
+    private Text cueBallText;
+    
     private PoolGameStatus poolGameStatus;
     
     public void setObservable(PoolGameStatus poolGameStatus){
@@ -46,6 +49,7 @@ public class PoolGameStatusView implements Observer {
 			
 			turnText.setText(poolGameStatus.getTurnStatus());
 			lastTurnText.setText(poolGameStatus.getLastTurnStatus());
+			cueBallText.setText(poolGameStatus.getCueBallStatus());
 		}
 		
 	}	

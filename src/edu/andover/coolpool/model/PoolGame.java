@@ -158,7 +158,7 @@ public class PoolGame implements Observer {
 				poolGameStatus.setLastTurnStatusPocketedCueBall(currPlayerInd);
 				poolBoard.resetCueBall();
 				switchPlayer();
-				poolGameStatus.setTurnStatusForScratch(currPlayerInd);
+				poolGameStatus.setCueBallStatusForScratch();
 			}		
 			else if (pocketedOther(pocketedBalls)) {
 				// Lose turn if pocketed other player's ball
@@ -177,6 +177,7 @@ public class PoolGame implements Observer {
 	public void update(Observable o, Object arg) {
 		if (o == poolBoard.getCueStick()){
 			if (poolBoard.getCueStick().hasHit()){
+				poolGameStatus.unsetCueBallStatus();
 				timer.start();
 			}
 		}

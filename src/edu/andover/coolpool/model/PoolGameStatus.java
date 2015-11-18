@@ -19,6 +19,9 @@ public class PoolGameStatus extends Observable {
     //Stores message from previous turn.
     private String lastTurnStatus;
     
+    // Stores message about cueball scratching.
+    private String cueBallStatus;
+    
     public PoolGameStatus(){
     	turnStatus = "Player 1, your turn!";
     	lastTurnStatus = "Click and drag the cue stick to take a shot"
@@ -124,11 +127,16 @@ public class PoolGameStatus extends Observable {
     	notifyObservers();
     }
     
-    // Sets turn status to instruct player to place ball on scratch.
-    public void setTurnStatusForScratch(int currPlayerInd){
-    	int playerNum = currPlayerInd + 1;
-    	turnStatus = "Player " + playerNum + ", place the ball!";
-    	
+    // Sets cue ball status to instruct player to place ball on scratch.
+    public void setCueBallStatusForScratch(){
+    	cueBallStatus = "Place the cue ball inside the orange region.";
+    	setChanged();
+    	notifyObservers();
+    }
+    
+    // Unsets cue ball status to empty string
+    public void unsetCueBallStatus(){
+    	cueBallStatus = "";
     	setChanged();
     	notifyObservers();
     }
@@ -139,4 +147,5 @@ public class PoolGameStatus extends Observable {
     public String getPlayer2BallColorStatus(){ return player2BallColorStatus; }
     public String getTurnStatus(){ return turnStatus; }
     public String getLastTurnStatus(){ return lastTurnStatus; }
+    public String getCueBallStatus() { return cueBallStatus; }
 }
