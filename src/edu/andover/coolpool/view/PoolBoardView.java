@@ -19,34 +19,34 @@ public class PoolBoardView implements Observer {
 	private Pane view;
 	double length;
 	double width;
-	
+
 	// The green rectangle (pool table).
 	private Rectangle rectangle;
-	
+
 	// The Rectangle that has the pockets.
 	private Rectangle bigRectangle;
-	
+
 	// Invisible Rectangle that is used for the mouse hover handler.
 	private Rectangle cueStickRectangle;
-	
+
 	// Invisible Rectangle that is used for the mouse hover handler for scratch
 	// event.
 	private Rectangle scratchRectangle;
-	
+
 	private PoolBoard poolBoard;
 	private BallView[] ballViews;
 	private PocketView[] pocketViews;
 	private CueStickView cueStickView;
-	
-	public PoolBoardView(PoolBoard poolBoard){
+
+	public PoolBoardView(PoolBoard poolBoard) {
 		this.poolBoard = poolBoard;
 		view = new Pane();
-		
+
 		double xMargin = 50; // In pixels.
 		double yMargin = 50; // In pixels.
 		this.length = GameConstants.POOL_TABLE_LENGTH*GameConstants.IN_TO_PIXEL;
 		this.width = GameConstants.POOL_TABLE_WIDTH*GameConstants.IN_TO_PIXEL;
-		
+
 		// Set up table.
 		Color brown = Color.web("0x3D362D");
 		bigRectangle = new Rectangle(xMargin, yMargin, this.length, this.width);
@@ -56,7 +56,7 @@ public class PoolBoardView implements Observer {
 		bigRectangle.setScaleY(y_scale_multiplier);
 		bigRectangle.setFill(brown);
 		view.getChildren().add(bigRectangle);
-		
+
 		// Set up table color.
 		Color green = Color.web("0x27AE60");
 		rectangle = new Rectangle(xMargin, yMargin, this.length, this.width);
@@ -69,7 +69,7 @@ public class PoolBoardView implements Observer {
 
 		bigRectangle.setX(GameConstants.POOLBOARD_X);
 		bigRectangle.setY(GameConstants.POOLBOARD_Y);
-		
+
 		// Set up CuestickRectangle.
 		double addLength = 2000;
 		double addWidth = 2000;
@@ -77,7 +77,7 @@ public class PoolBoardView implements Observer {
 				this.width + addWidth);
 		cueStickRectangle.setFill(Color.TRANSPARENT);
 		view.getChildren().add(cueStickRectangle);
-		
+
 		// Set up ScratchRectangle.
 		double ballRadius = GameConstants.BALL_RADIUS 
 				* GameConstants.IN_TO_PIXEL;
@@ -88,36 +88,36 @@ public class PoolBoardView implements Observer {
 		scratchRectangle.setFill(Color.TRANSPARENT);
 		view.getChildren().add(scratchRectangle);
 		scratchRectangle.toBack();
-		
-		
+
+
 		initElements();
 		bringBallsToFront();
-		
+
 	}
-	
+
 	public Pane getPane() {
 		return view;
 	}
-	
+
 	public Rectangle getRectangle() {
 		return rectangle;
 	}
-	
+
 	public Rectangle getBigRectangle() {
 		return bigRectangle;
 	}
-	
+
 	public Rectangle getCueStickRectangle() {
 		return cueStickRectangle;
 	}
-	
+
 	public Rectangle getScratchRectangle() {
 		return scratchRectangle;
 	}
 
 	@Override
 	public void update(Observable o, Object arg) {
-		if (o == poolBoard){
+		if (o == poolBoard) {
 			if (poolBoard.bounced) {
 				GameSounds.BALL_HIT_BALL.play();
 			}
@@ -126,24 +126,24 @@ public class PoolBoardView implements Observer {
 				initCueBallController();
 			}
 		}
-		
+
 	}
-	
-	public void initElements(){
-		// initialize balls.
+
+	public void initElements() {
+		// initialize balls
 		Ball[] balls = poolBoard.getBalls();
 		ballViews = new BallView[16];
 
-		for (int i = 0; i < 16; i ++){
+		for (int i = 0; i < 16; i ++) {
 			ballViews[i] = new BallView(balls[i]);
 			balls[i].addObserver(ballViews[i]);
 			this.getPane().getChildren().add(ballViews[i].getCircle());
 		}
-		
+
 		// initialize pockets.
 		Pocket[] pockets = poolBoard.getPockets();
 		pocketViews = new PocketView[6];
-		for (int i = 0; i < 6; i ++){
+		for (int i = 0; i < 6; i ++) {
 			pocketViews[i] = new PocketView(pockets[i]);
 			this.getPane().getChildren().add(pocketViews[i].getCircle());
 		}
@@ -155,32 +155,32 @@ public class PoolBoardView implements Observer {
 		cueStick.addObserver(cueStickView);
 		this.getPane().getChildren().add(cueStickView.getLine());
 	}
-	
-	public void initCueBallController(){
-		// initialize scratchController.
+
+	public void initCueBallController() {
+		// initialize scratchController
 		CueBallController cueBallController = new CueBallController();
 		cueBallController.addMouseHoverEventHandler(this, 
 				poolBoard.getBalls()[15]);
 		cueBallController.addMousePressedEventHandler(this, 
 				poolBoard.getBalls()[15]);
 	}
-	
-	public BallView[] getBallViews(){
+
+	public BallView[] getBallViews() {
 		return ballViews;
 	}
-	
-	public CueStickView getCueStickView(){
+
+	public CueStickView getCueStickView() {
 		return cueStickView;
 	}
-	
-	public void bringBallsToFront(){
-		for (BallView bv: ballViews){
+
+	public void bringBallsToFront() {
+		for (BallView bv: ballViews) {
 			bv.getCircle().toFront();
 		}
 		cueStickView.getLine().toFront();
 	}
-	
-	public void setCueStickHandlers(){
+
+	public void setCueStickHandlers() {
 		CueStickController cueStickController = 
 				new CueStickController(cueStickView);
 		cueStickController.addMouseHoverEH(this);
@@ -188,15 +188,15 @@ public class PoolBoardView implements Observer {
 		cueStickController.addMousePressedEH(this);
 		cueStickController.addMouseReleasedEH(this);
 	}
-	
-	public void removeCueStickHandlers(){
+
+	public void removeCueStickHandlers() {
 		getCueStickRectangle().setOnMouseMoved(null);
 		getCueStickRectangle().setOnMouseDragged(null);
 		cueStickView.getLine().setOnMouseDragged(null);
 		cueStickView.getLine().setOnMouseClicked(null);
 	}
-	
-	public PoolBoard getPoolBoard(){
+
+	public PoolBoard getPoolBoard() {
 		return poolBoard;
 	}
 }

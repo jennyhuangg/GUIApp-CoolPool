@@ -5,11 +5,11 @@ import java.util.Observable;
 // Model class that stores the status of the pool game after each turn.
 
 public class PoolGameStatus extends Observable {
-	
+
 	// Stores number of points for each player.
 	private String player1PointsStatus = "0";
 	private String player2PointsStatus = "0";
-	
+
 	// Stores the ball type for each player.
     private String player1BallColorStatus = "N/A";
     private String player2BallColorStatus = "N/A";
@@ -23,13 +23,13 @@ public class PoolGameStatus extends Observable {
     // Stores message about cueball scratching.
     private String cueBallStatus;
     
-    public PoolGameStatus(){
+    public PoolGameStatus() {
     	turnStatus = "Player 1, your turn!";
     	lastTurnStatus = "Click and drag the cue stick to take a shot"
     			+ " at the cue ball.";
     }
     
-    public void setPoints(int player1Points, int player2Points){
+    public void setPoints(int player1Points, int player2Points) {
     	this.player1PointsStatus = player1Points + "";
     	this.player2PointsStatus = player2Points + "";
     	
@@ -37,10 +37,10 @@ public class PoolGameStatus extends Observable {
     	notifyObservers();
     }
     
-    public void setBallColors(int currPlayerInd, int player1ID){
+    public void setBallColors(int currPlayerInd, int player1ID) {
     	// 0 = red.
     	// 1 = blue.
-    	if ((player1ID + currPlayerInd)%2 == 0 ){
+    	if ((player1ID + currPlayerInd)%2 == 0 ) {
     		player1BallColorStatus = "Ball color: RED";
     		player2BallColorStatus = "Ball color: BLUE";
     	}
@@ -55,7 +55,7 @@ public class PoolGameStatus extends Observable {
     
     // Sets the turn status for which player gets next turn.
     public void setTurnStatus(int currPlayerInd, boolean streak, 
-    		boolean canPocketEightBall){
+    		boolean canPocketEightBall) {
     	
     	int playerNum = currPlayerInd + 1;
    
@@ -78,7 +78,7 @@ public class PoolGameStatus extends Observable {
     }
     
     // Sets last turn status if player did not pocket a ball.
-    public void setLastTurnStatusPlayerFailed(int currPlayerInd){
+    public void setLastTurnStatusPlayerFailed(int currPlayerInd) {
     	int playerNum = currPlayerInd + 1;
     	lastTurnStatus = "Player " + playerNum + " did not "
     			+ "pocket a ball.";
@@ -88,7 +88,7 @@ public class PoolGameStatus extends Observable {
     
     
     // Sets last turn status if player made an illegal break.
-    public void setLastTurnStatusPlayerIllegalBreak(int currPlayerInd){
+    public void setLastTurnStatusPlayerIllegalBreak(int currPlayerInd) {
     	int playerNum = currPlayerInd + 1;
     	lastTurnStatus = "Player " + playerNum + " did not "
     			+ "get four bumper collisions "
@@ -100,7 +100,7 @@ public class PoolGameStatus extends Observable {
     
     // Sets last turn status if player pocketed a ball and did not
     // pocket other player's balls.
-    public void setLastTurnStatusPlayerSucceeded(int currPlayerInd){
+    public void setLastTurnStatusPlayerSucceeded(int currPlayerInd) {
     	int playerNum = currPlayerInd + 1;
     	lastTurnStatus = "Player " + playerNum + " has pocketed "
     			+ "a ball.";
@@ -110,7 +110,7 @@ public class PoolGameStatus extends Observable {
     }
     
     // Sets last turn status if player pocketed the cue ball.
-    public void setLastTurnStatusPocketedCueBall(int currPlayerInd){
+    public void setLastTurnStatusPocketedCueBall(int currPlayerInd) {
     	int playerNum = currPlayerInd + 1;
     	lastTurnStatus = "Player " + playerNum + " pocketed "
     			+ "the cue ball. Scratch!";
@@ -119,7 +119,7 @@ public class PoolGameStatus extends Observable {
     }
     
     // Sets last turn status if player pocketed other player's balls.
-    public void setLastTurnStatusPocketedOther(int currPlayerInd){
+    public void setLastTurnStatusPocketedOther(int currPlayerInd) {
     	int playerNum = currPlayerInd + 1;
     	int otherPlayerNum = (currPlayerInd+1)%2 + 1;
     	lastTurnStatus = "Player " + playerNum + " pocketed "
@@ -137,24 +137,23 @@ public class PoolGameStatus extends Observable {
     }
     
     // Resets cue ball status to empty string.
-    public void unsetCueBallStatus(){
+    public void unsetCueBallStatus() {
     	cueBallStatus = "";
     	setChanged();
     	notifyObservers();
     }
     
-    public String getPlayer1PointsStatus(){ return player1PointsStatus; }
+    public String getPlayer1PointsStatus() { return player1PointsStatus; }
     
-    public String getPlayer2PointsStatus(){ return player2PointsStatus; }
+    public String getPlayer2PointsStatus() { return player2PointsStatus; }
     
-    public String getPlayer1BallColorStatus(){ return player1BallColorStatus; }
+    public String getPlayer1BallColorStatus() { return player1BallColorStatus; }
     
-    public String getPlayer2BallColorStatus(){ return player2BallColorStatus; }
+    public String getPlayer2BallColorStatus() { return player2BallColorStatus; }
     
-    public String getTurnStatus(){ return turnStatus; }
+    public String getTurnStatus() { return turnStatus; }
     
-    public String getLastTurnStatus(){ return lastTurnStatus; }
+    public String getLastTurnStatus() { return lastTurnStatus; }
     
     public String getCueBallStatus() { return cueBallStatus; }
-    
 }

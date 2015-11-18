@@ -8,14 +8,14 @@ import javafx.scene.text.Text;
 
 //View class for EndScreen.
 
-public class EndScreenStatusView implements Observer{
+public class EndScreenStatusView implements Observer {
 
 	@FXML
 	private Text gameOverText;
 
 	private EndScreenStatus endScreenStatus;
 	    
-    public void setObservable(EndScreenStatus endScreenStatus){
+    public void setObservable(EndScreenStatus endScreenStatus) {
     	this.endScreenStatus = endScreenStatus;
     	update(endScreenStatus, "initial update");
     }

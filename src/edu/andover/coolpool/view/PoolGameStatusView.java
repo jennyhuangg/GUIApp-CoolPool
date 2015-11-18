@@ -33,14 +33,14 @@ public class PoolGameStatusView implements Observer {
     
     private PoolGameStatus poolGameStatus;
     
-    public void setObservable(PoolGameStatus poolGameStatus){
+    public void setObservable(PoolGameStatus poolGameStatus) {
     	this.poolGameStatus = poolGameStatus;
     	update(poolGameStatus, "initial update");
     }
 
 	@FXML
 	public void update(Observable o, Object arg) {
-		if (poolGameStatus == o){
+		if (poolGameStatus == o) {
 			player1PointsText.setText(poolGameStatus.getPlayer1PointsStatus());
 			player2PointsText.setText(poolGameStatus.getPlayer2PointsStatus());
 			

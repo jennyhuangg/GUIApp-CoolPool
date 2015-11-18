@@ -12,5 +12,9 @@ public class GameSounds {
 			new AudioClip("file:res/PoolCueHittingBall.wav");
 	public static final AudioClip BALL_FALLING_IN_POCKET = 
 			new AudioClip("file:res/BallFallingInPocket.wav");
+	public static final AudioClip YAY =
+			new AudioClip("file:res/YaySoundEffect.wav");
+	public static final AudioClip MUSIC =
+			new AudioClip("file:res/ElevatorMusic.wav");
 	
 }
