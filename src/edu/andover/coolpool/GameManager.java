@@ -7,6 +7,7 @@ import edu.andover.coolpool.model.PoolBoard;
 import edu.andover.coolpool.model.PoolGame;
 import edu.andover.coolpool.model.PoolGameStatus;
 import edu.andover.coolpool.view.EndScreenStatusView;
+import edu.andover.coolpool.view.GameSounds;
 import edu.andover.coolpool.view.PoolBoardView;
 import edu.andover.coolpool.view.PoolGameStatusView;
 import javafx.fxml.FXMLLoader;
@@ -14,8 +15,10 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.media.AudioClip;
 
-// The "manager" that is in charge of changing scenes within the program..
+// The "manager" that is in charge of changing scenes within the program.
+
 public class GameManager {
 	private Scene scene;
 	private BorderPane rootLayout;
@@ -65,7 +68,6 @@ public class GameManager {
 		loader.setLocation(
 				GameManager.class.getResource("view/PoolScreen.fxml"));
 		try {
-			
 			Parent poolScreen = (Parent) loader.load();
 			PoolGameStatusView poolGameStatusView = loader.getController();
 			
@@ -85,6 +87,9 @@ public class GameManager {
 			pane.getChildren().add(poolBoardView.getPane());		
 
 			scene.setRoot(rootLayout);
+			
+			GameSounds.MUSIC.cycleCountProperty().set(AudioClip.INDEFINITE);
+			GameSounds.MUSIC.play();
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -97,6 +102,8 @@ public class GameManager {
 		loader.setLocation(
 				GameManager.class.getResource("view/EndScreen.fxml"));
 		try {
+			GameSounds.MUSIC.stop();
+			
 			Parent endScreen = (Parent) loader.load();
 			EndScreenStatusView endScreenStatusView = loader.getController();
 			EndScreenStatus endScreenStatus = poolGame.getEndScreenStatus();
@@ -106,6 +113,8 @@ public class GameManager {
 			
 			rootLayout.setCenter(endScreen);
 			scene.setRoot(rootLayout);
+		
+			GameSounds.YAY.play();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

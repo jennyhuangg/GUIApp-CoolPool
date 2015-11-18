@@ -9,6 +9,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 
+// This class is the controller for the CueBall.
+
 public class CueBallController {
 	private boolean isMousePressed = false;
 	private double mouseX;
@@ -24,17 +26,28 @@ public class CueBallController {
 			public void handle(MouseEvent me) {	
 				
 				// If the ball isn't overlapping with other balls, then
-				// place the cue ball wherever the mouse is.
+				// place the cueball wherever the mouse is.
+				// place the cue ball wherever the mouse is
+
+				boolean isNotOverlapping = true;
 				for (Ball b: pbv.getPoolBoard().getBalls()){
-					if (!pbv.getPoolBoard().colliding(cueBall, b, 0, 0)){
-						cueBall.setCenterX(mouseX);
-						cueBall.setCenterY(mouseY);
-						r.setOnMouseMoved(null);
-						c.setOnMousePressed(null);
-						r.toBack();
-						pbv.getCueStickView().getLine().setVisible(true);
-						pbv.setCueStickHandlers();
+					double radiusSum = b.getRadius() + cueBall.getRadius();
+					double deltaX = cueBall.getCenterX() - b.getCenterX();
+					double deltaY = cueBall.getCenterY() - b.getCenterY();
+					if (b != cueBall && (deltaX * deltaX + 
+							deltaY * deltaY < radiusSum * radiusSum)){
+						isNotOverlapping = false;
 					}
+				}
+				
+				if (isNotOverlapping){
+					cueBall.setCenterX(mouseX);
+					cueBall.setCenterY(mouseY);
+					r.setOnMouseMoved(null);
+					c.setOnMousePressed(null);
+					r.toBack();
+					pbv.getCueStickView().getLine().setVisible(true);
+					pbv.setCueStickHandlers();
 				}
 			}
 		});
@@ -46,7 +59,7 @@ public class CueBallController {
 		pbv.getScratchRectangle().toFront();
 		Rectangle r = pbv.getScratchRectangle();
 		r.setFill(Color.ORANGE);
-		pbv.bringBallsToFront();
+		pbv.bringElementsToFront();
 		pbv.removeCueStickHandlers();
 		pbv.getCueStickView().getLine().setVisible(false);
 		

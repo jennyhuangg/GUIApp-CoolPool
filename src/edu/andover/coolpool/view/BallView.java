@@ -9,6 +9,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Shape;
 
+//View class for the ball.
+
 public class BallView implements Observer {
 	private Circle circle;
 	private double radius;
@@ -17,7 +19,7 @@ public class BallView implements Observer {
 
 	private Ball ball; //observable value.
 
-	public BallView(Ball ball){
+	public BallView(Ball ball) {
 		
 		this.ball = ball;
 
@@ -67,10 +69,10 @@ public class BallView implements Observer {
 	public Shape getCircle() {return circle; }
 
 	public void update(Observable o, Object arg) {
-		if (ball == o){
+		if (ball == o) {
 			setCenterX();
 			setCenterY();
-			if (ball.isPocketed()){
+			if (ball.isPocketed()) {
 				this.remove();
 				GameSounds.BALL_FALLING_IN_POCKET.play();
 			}

@@ -12,13 +12,13 @@ import javafx.animation.AnimationTimer;
 public class PoolGame implements Observer {
 	// Create a reference to game manager here.
 	private GameManager gameManager = GameManager.getInstance();
-	
+
 	private PoolBoard poolBoard = new PoolBoard();
 	private Player[] players = {new Player(), new Player()};
 	private PoolGameStatus poolGameStatus = new PoolGameStatus();
 	private EndScreenStatus endScreenStatus = new EndScreenStatus();
 	private AnimationTimer timer;
-	
+
 	private int currPlayerInd = 0; // 0 = player 1, 1 = player 2.
 	private boolean sidesAreSet = false;
 	private boolean streak = false;
@@ -27,10 +27,10 @@ public class PoolGame implements Observer {
 		poolBoard.getCueStick().addObserver(this);
 		setAnimationTimer();
 	}
-	
+
 	// Defines the timer, makes timer stop and update the game status when
-	// all balls are at rest.
-	private void setAnimationTimer(){
+	// all balls are at rest
+	private void setAnimationTimer() {
 		timer = new AnimationTimer() {
 			@Override
 			public void handle(long timestamp) {
@@ -54,21 +54,22 @@ public class PoolGame implements Observer {
 		sidesAreSet = true;
 	}
 
-	// Returns true if current player pocketed other player's balls.
-	private boolean pocketedOther(ArrayList<Ball> pocketedBalls){
+
+	// Returns true if current player pocketed other player's balls
+	private boolean pocketedOther(ArrayList<Ball> pocketedBalls) {
 		int playerBallType = players[currPlayerInd].getBallType();
-		for (Ball b: pocketedBalls){
+		for (Ball b: pocketedBalls) {
 			if (playerBallType != -1 && playerBallType != b.getId()
-					&& (b.getId() == 0 || b.getId() == 1)){
+					&& (b.getId() == 0 || b.getId() == 1)) {
 				return true;
 			}
 		}
 		return false;
 	}
-	
+
 	// Returns true if current player pocketed the cue ball.
 	private boolean pocketedCueBall(ArrayList<Ball> pocketedBalls) {
-		for (Ball b: pocketedBalls){
+		for (Ball b: pocketedBalls) {
 			if ( b.getId() == 2) return true;
 		}
 		return false;
@@ -76,7 +77,7 @@ public class PoolGame implements Observer {
 
 	// Returns true if current player pocketed the eight ball.
 	private boolean pocketedEightBall(ArrayList<Ball> pocketedBalls) {
-		for (Ball b: pocketedBalls){
+		for (Ball b: pocketedBalls) {
 			if ( b.getId() == 3) return true;
 		}
 		return false;
@@ -91,7 +92,7 @@ public class PoolGame implements Observer {
 		poolGameStatus.setTurnStatus(currPlayerInd, streak,
 				players[currPlayerInd].canPocketEightBall());
 	}
-	
+
 	// Allows current player to continue playing if they successfully
 	// pocketed a ball.
 	private void continuePlayer() {
@@ -99,16 +100,16 @@ public class PoolGame implements Observer {
 		poolGameStatus.setTurnStatus(currPlayerInd, streak, 
 				players[currPlayerInd].canPocketEightBall());
 	}
-	
-	// Updates points for players based on which balls were pocketed.
-	private void updatePoints(ArrayList<Ball> pocketedBalls){
+
+	// Updates points for players based on which balls were hit in
+	private void updatePoints(ArrayList<Ball> pocketedBalls) {
 		for (int i = 0; i < pocketedBalls.size(); i ++) {
 			int ballId = pocketedBalls.get(i).getId();
-			if (ballId == 0 || ballId == 1){
-				if (!sidesAreSet){
+			if (ballId == 0 || ballId == 1) {
+				if (!sidesAreSet) {
 					setSides(ballId);
 				}
-				if (players[currPlayerInd].getBallType() == ballId){
+				if (players[currPlayerInd].getBallType() == ballId) {
 					players[currPlayerInd].addPoint();
 				}
 				else{
@@ -131,8 +132,9 @@ public class PoolGame implements Observer {
 			poolGameStatus.setLastTurnStatusPlayerIllegalBreak(currPlayerInd);
 			switchPlayer();
 		}
-		// If no balls are hit in, current player turn to other player.
-		else if (size == 0){
+
+		// If no balls are hit in, current player turn to other player
+		else if (size == 0) {
 			poolGameStatus.setLastTurnStatusPlayerFailed(currPlayerInd);
 			switchPlayer();
 		}
@@ -142,12 +144,12 @@ public class PoolGame implements Observer {
 			updatePoints(pocketedBalls);	
 			// End game if pocketed eight ball.
 			if (pocketedEightBall(pocketedBalls)) {
-		    	// If eight ball is pocketed correctly.
-		    	if (players[currPlayerInd].canPocketEightBall()) {
+				// If eight ball is pocketed correctly.
+				if (players[currPlayerInd].canPocketEightBall()) {
 					endScreenStatus.setGameOverStatusSuccess(currPlayerInd);
 					gameManager.initEndScreen();
 				}
-		    	// If eight ball is pocketed prematurely. 
+				// If eight ball is pocketed prematurely. 
 				else {
 					endScreenStatus.setGameOverStatusFail(currPlayerInd);
 					gameManager.initEndScreen();
@@ -175,19 +177,19 @@ public class PoolGame implements Observer {
 
 	// Starts the animation when cue stick sets the cue ball velocity.
 	public void update(Observable o, Object arg) {
-		if (o == poolBoard.getCueStick()){
-			if (poolBoard.getCueStick().hasHit()){
+		if (o == poolBoard.getCueStick()) {
+			if (poolBoard.getCueStick().hasHit()) {
 				poolGameStatus.unsetCueBallStatus();
 				timer.start();
 			}
 		}
 	}
-	
+
 	public PoolBoard getPoolBoard() { return poolBoard; }
 	
 	public Player[] getPlayers() { return players; }
 	
-	public PoolGameStatus getPoolGameStatus(){ return poolGameStatus; }
+	public PoolGameStatus getPoolGameStatus() { return poolGameStatus; }
 	
 	public EndScreenStatus getEndScreenStatus() { return endScreenStatus; }
 	

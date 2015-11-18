@@ -2,6 +2,8 @@ package edu.andover.coolpool.model;
 
 import java.util.Observable;
 
+//Model class for a cue stick.
+
 public class CueStick extends Observable {
 	
 	// Start is position of tip of cue stick (end close to cue ball).
