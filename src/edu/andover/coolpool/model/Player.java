@@ -18,7 +18,7 @@ public class Player {
 	}
 	
 	public void setBallType(int ballType) { this.ballType = ballType; }
-	public int getBallType(){ return ballType; }
+	public int getBallType() { return ballType; }
 	public int getPoints() { return points; }
 	
 }

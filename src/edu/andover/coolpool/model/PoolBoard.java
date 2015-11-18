@@ -122,9 +122,9 @@ public class PoolBoard extends Observable {
 	}
 
 	// Returns true if no balls are moving.
-	public boolean stable(){
+	public boolean stable() {
 		isStable = true;
-		for (Ball ball: remainingBalls){
+		for (Ball ball: remainingBalls) {
 			if (ball.getXVelocity() != 0 || ball.getYVelocity() != 0) {
 				isStable = false;
 			}
@@ -148,14 +148,14 @@ public class PoolBoard extends Observable {
 	// Checks to see if any balls have fallen inside the pockets
 	// Falls inside pockets if (distance between ball and pocket) <=
 	// (radius_of_pocket - radius_of_ball)
-	private void checkPockets(){
-		for (Pocket pocket: pockets){
-			for (Ball ball: balls){
+	private void checkPockets() {
+		for (Pocket pocket: pockets) {
+			for (Ball ball: balls) {
 				double distance = Math.sqrt(Math.pow(pocket.getXPosition() -
 						ball.getCenterX(), 2) + 
 						Math.pow(pocket.getYPosition() - ball.getCenterY(), 2));
 				if(distance <= pocket.getRadius()
-						&& !ball.isPocketed()){
+						&& !ball.isPocketed()) {
 					ball.setPocketed();
 					pocketedBalls.add(ball);
 					remainingBalls.remove(ball);
@@ -187,7 +187,7 @@ public class PoolBoard extends Observable {
 				numBumperCollisions++;
 			}
 			// Changes velocity when ball collides with other balls.
-			for (Ball b2: remainingBalls){
+			for (Ball b2: remainingBalls) {
 				final double deltaX = b2.getCenterX() - ball.getCenterX() ;
 				final double deltaY = b2.getCenterY() - ball.getCenterY() ;
 				if (colliding(ball, b2, deltaX, deltaY)) {
@@ -203,26 +203,26 @@ public class PoolBoard extends Observable {
 
 	// Decreases the speed of all balls uniformly due to kinetic friction
 	// with the pool board unless speed of ball is already 0.
-	private void decelerateBalls(){
+	private void decelerateBalls() {
 		double elapsedSeconds = 0.1;
-		for (Ball ball: remainingBalls){
+		for (Ball ball: remainingBalls) {
 			double xVel = ball.getXVelocity();
 			double yVel = ball.getYVelocity();
 			double speed = Math.sqrt(Math.pow(xVel, 2) + Math.pow(yVel, 2));
-			if (xVel != 0 || yVel != 0){
-				if (xVel < 0){
+			if (xVel != 0 || yVel != 0) {
+				if (xVel < 0) {
 					ball.setXVelocity(Math.min(xVel - GameConstants.MU_K*
 							elapsedSeconds*xVel/speed, 0));
 				}
-				if (yVel < 0){
+				if (yVel < 0) {
 					ball.setYVelocity(Math.min(yVel - GameConstants.MU_K*
 							elapsedSeconds*yVel/speed, 0));
 				}
-				if (xVel > 0){
+				if (xVel > 0) {
 					ball.setXVelocity(Math.max(xVel - GameConstants.MU_K*
 							elapsedSeconds*xVel/speed, 0));
 				}
-				if (yVel > 0){
+				if (yVel > 0) {
 					ball.setYVelocity(Math.max(yVel - GameConstants.MU_K*
 							elapsedSeconds*yVel/speed, 0));
 				}
@@ -278,7 +278,7 @@ public class PoolBoard extends Observable {
 
 	public Ball[] getBalls() { return balls; }
 	public ArrayList<Ball> pocketedBalls() { return pocketedBalls; }
-	public Pocket[] getPockets(){ return pockets; }
-	public CueStick getCueStick(){ return cueStick; }
+	public Pocket[] getPockets() { return pockets; }
+	public CueStick getCueStick() { return cueStick; }
 	public int getNumBumperCollisions() { return numBumperCollisions; }
 }

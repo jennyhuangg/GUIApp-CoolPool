@@ -19,7 +19,7 @@ public class CueStickView implements Observer{
 	private double endY;
 	private CueStick cueStick;
 
-	public CueStickView(CueStick cueStick){
+	public CueStickView(CueStick cueStick) {
 		
 		this.cueStick = cueStick;
 
@@ -71,7 +71,7 @@ public class CueStickView implements Observer{
 	public Shape getLine() {return line; }
 
 	public void update(Observable o, Object arg) {
-		if (o == cueStick){
+		if (o == cueStick) {
 			setStartX(cueStick.getStartX());
 			setEndX(cueStick.getEndX());
 			setStartY(cueStick.getStartY());
@@ -98,7 +98,7 @@ public class CueStickView implements Observer{
 		}
 	}
 	
-	public CueStick getCueStick(){
+	public CueStick getCueStick() {
 		return cueStick;
 	}
 }
