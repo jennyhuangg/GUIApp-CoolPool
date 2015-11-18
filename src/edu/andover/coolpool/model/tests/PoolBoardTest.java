@@ -7,7 +7,6 @@ import org.junit.Test;
 import edu.andover.coolpool.GameConstants;
 import edu.andover.coolpool.model.Ball;
 import edu.andover.coolpool.model.PoolBoard;
-import javafx.animation.AnimationTimer;
 
 public class PoolBoardTest {
 
