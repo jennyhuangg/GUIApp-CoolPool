@@ -65,7 +65,7 @@ public class PoolBoard extends Observable {
 		double centerY = width / 2 + boardY;
 		double incrementX = 2.25 * Math.cos(30) * GameConstants.IN_TO_PIXEL;
 		double radius = 1.125;
-		double threeQuartersLength = 0.75*length+boardX;
+		double threeQuartersLength = 0.75 * length + boardX;
 
 		balls[0].setCenter(threeQuartersLength, centerY);
 
