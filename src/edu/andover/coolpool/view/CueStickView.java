@@ -10,6 +10,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Shape;
 
+//View class for the CueStick.
+
 public class CueStickView implements Observer{
 	private Line line;
 	private double startX;

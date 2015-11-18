@@ -13,7 +13,9 @@ import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
-// The runner of the program.
+// This class is the runner of the program.
+
+
 public class MainApp extends Application {
 	private Scene scene;
 

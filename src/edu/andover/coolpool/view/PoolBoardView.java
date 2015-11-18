@@ -2,7 +2,6 @@ package edu.andover.coolpool.view;
 
 import java.util.Observable;
 import java.util.Observer;
-
 import edu.andover.coolpool.GameConstants;
 import edu.andover.coolpool.controller.CueBallController;
 import edu.andover.coolpool.controller.CueStickController;

@@ -2,6 +2,9 @@ package edu.andover.coolpool.model;
 
 import java.util.Observable;
 
+//Model class the sets the status for the EndScreen to pass on to the observing
+//view.
+
 public class EndScreenStatus extends Observable{
 
 	private String gameOverMessage;
