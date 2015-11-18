@@ -58,6 +58,8 @@ public class Pocket {
 	}
 
 	public double getRadius() { return radius; }
+	
 	public double getXPosition() { return xPosition; }
+	
 	public double getYPosition() { return yPosition; }
 }

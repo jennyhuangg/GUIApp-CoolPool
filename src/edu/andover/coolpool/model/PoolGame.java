@@ -186,7 +186,11 @@ public class PoolGame implements Observer {
 	}
 
 	public PoolBoard getPoolBoard() { return poolBoard; }
+	
 	public Player[] getPlayers() { return players; }
+	
 	public PoolGameStatus getPoolGameStatus() { return poolGameStatus; }
+	
 	public EndScreenStatus getEndScreenStatus() { return endScreenStatus; }
+	
 }
