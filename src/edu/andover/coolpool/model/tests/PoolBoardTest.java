@@ -90,39 +90,4 @@ public class PoolBoardTest {
 		
 		assertFalse(balls[15].isPocketed());
 	}
-
-	@Test
-	public void collidingBallsShouldBeSeenAsColliding() {
-		PoolBoard poolBoard = new PoolBoard();
-		Ball[] balls = poolBoard.getBalls();
-		
-		balls[15].setXVelocity(100);
-		
-		AnimationTimer timer = new AnimationTimer() {
-			@Override
-			public void handle(long timestamp) {
-				poolBoard.update();
-				for(Ball ball: balls) {
-
-					for (Ball b2: balls) {
-						final double deltaX = b2.getCenterX() 
-								- ball.getCenterX() ;
-						final double deltaY = b2.getCenterY() 
-								- ball.getCenterY() ;
-						boolean isColliding = poolBoard.colliding(ball, 
-								b2, deltaX, deltaY);
-						
-						assertTrue(isColliding);
-					}
-				}
-			}
-		};
-		//TODO: FAULTY FAULTY FAULTY
-		timer.start();
-	}
-
-	//	@Test
-	//	public void pocketBallsShouldResetOnIllegalBreak() {
-	//		
-	//	}
 }
