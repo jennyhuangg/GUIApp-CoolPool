@@ -45,6 +45,7 @@ public class CueStickController {
 	}
 	
 	public void addMousePressedEH(PoolBoardView pbv) {
+		// Adds event handler to the cue stick view.
 		Line l = (Line) cueStickView.getLine();
 		l.setOnMousePressed(new EventHandler<MouseEvent>() {
 	    	@Override
@@ -72,7 +73,8 @@ public class CueStickController {
 	    	@Override
 	    	public void handle(MouseEvent me) {
 	    		if (cueStick.canMove()) {
-		    		// Sets values for initial mouse click.
+		    		
+	    			// Sets values for initial mouse click.
 	    			double initMouseX = mouseX;
 		    		double initMouseY = mouseY;
 		    		cueStick.setInitialValues(initMouseX, initMouseY);
@@ -113,6 +115,7 @@ public class CueStickController {
 		l.setOnMouseReleased(new EventHandler<MouseEvent>() {
 	    	@Override
 	    	public void handle(MouseEvent me) {
+	    		
 	    		// Only occurs when mouse is dragged, not randomly clicked.
 	    		if (hasJustDragged) {
 		    		double finalMouseX = me.getX()*GameConstants.PIXEL_TO_IN;
@@ -132,6 +135,7 @@ public class CueStickController {
 		r.setOnMouseReleased(new EventHandler<MouseEvent>() {
 	    	@Override
 	    	public void handle(MouseEvent me) {
+	    		
 	    		// Only occurs when mouse was dragged, not randomly clicked.
 	    		if (hasJustDragged) {
 		    		double finalMouseX = me.getX()*GameConstants.PIXEL_TO_IN;
