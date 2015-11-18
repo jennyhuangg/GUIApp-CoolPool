@@ -39,6 +39,7 @@ public class CueBallController {
 		});
 	}
 
+	// Cue ball follows hovering mouse position.
 	public void addMouseHoverEventHandler(PoolBoardView pbv, Ball cueBall) {
 		pbv.getScratchRectangle().toFront();
 		Rectangle r = pbv.getScratchRectangle();

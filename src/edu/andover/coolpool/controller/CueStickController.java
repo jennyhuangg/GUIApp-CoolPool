@@ -12,7 +12,7 @@ import javafx.scene.shape.Rectangle;
 
 public class CueStickController {
 
-	// Position of mouse, does not change when mouse is pressed.
+	// Position of mouse does not change when mouse is pressed.
 	private double mouseX;
 	private double mouseY;
 	
@@ -44,7 +44,6 @@ public class CueStickController {
 	}
 
 	public void addMousePressedEH(PoolBoardView pbv) {
-	   // Also need to add event handler to the cue stick view.
 		Line l = (Line) cueStickView.getLine();
 		l.setOnMousePressed(new EventHandler<MouseEvent>() {
 	    	@Override
@@ -111,7 +110,7 @@ public class CueStickController {
 		l.setOnMouseReleased(new EventHandler<MouseEvent>() {
 	    	@Override
 	    	public void handle(MouseEvent me) {
-	    		// Only occurs when mouse was dragged, not randomly clicked.
+	    		// Only occurs when mouse is dragged, not randomly clicked.
 	    		if (hasJustDragged) {
 		    		double finalMouseX = me.getX()*GameConstants.PIXEL_TO_IN;
 		    		double finalMouseY = me.getY()*GameConstants.PIXEL_TO_IN;

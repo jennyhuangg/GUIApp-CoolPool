@@ -15,7 +15,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 
-// The "manager" that is in charge of changing scenes within the program.
+// The "manager" that is in charge of changing scenes within the program..
 public class GameManager {
 	private Scene scene;
 	private BorderPane rootLayout;
@@ -57,8 +57,8 @@ public class GameManager {
 		}
 	}
 
-	// The controller for start screen calls this when button is pressed
-	// Initializes the side bar of the pool game and the view of the
+	// The controller for start screen calls this when button is pressed.
+	// Initializes the sidebar of the pool game and the view of the
 	// pool board.
 	public void initPoolScreen(){
 		FXMLLoader loader = new FXMLLoader();
@@ -91,7 +91,7 @@ public class GameManager {
 		}
 	}
 	
-	// Implementation not yet finished; not used in version 0
+	//Initializes end screen.
 	public void initEndScreen() {
 		FXMLLoader loader = new FXMLLoader();
 		loader.setLocation(

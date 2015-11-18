@@ -19,7 +19,7 @@ public class Ball extends Observable {
 	// ID = 0: Red 
 	// ID = 1: Blue
 	// ID = 2: Cue Ball
-	// Id = 3: Eight Ball
+	// ID = 3: Eight Ball
 	public Ball(int id) {
 		centerX = 0;
 		centerY = 0;
