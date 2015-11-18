@@ -17,7 +17,6 @@ public class BallView implements Observer {
 
 	private Ball ball; //observable value
 
-
 	public BallView(Ball ball){
 		
 		this.ball = ball;
@@ -70,7 +69,7 @@ public class BallView implements Observer {
 		if (ball == o){
 			setCenterX();
 			setCenterY();
-			if (ball.isPocketed){
+			if (ball.isPocketed()){
 				this.remove();
 				GameSounds.BALL_FALLING_IN_POCKET.play();
 			}

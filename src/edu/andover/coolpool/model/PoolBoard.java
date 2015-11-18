@@ -155,7 +155,7 @@ public class PoolBoard extends Observable {
 						ball.getCenterX(), 2) + 
 						Math.pow(pocket.getYPosition() - ball.getCenterY(), 2));
 				if(distance <= pocket.getRadius()
-						&& !ball.getIsPocketed()){
+						&& !ball.isPocketed()){
 					ball.setPocketed();
 					pocketedBalls.add(ball);
 					remainingBalls.remove(ball);
@@ -203,7 +203,7 @@ public class PoolBoard extends Observable {
 
 	// Decreases the speed of all balls uniformly due to kinetic friction
 	// with the pool board unless speed of ball is already 0.
-	public void decelerateBalls(){
+	private void decelerateBalls(){
 		double elapsedSeconds = 0.1;
 		for (Ball ball: remainingBalls){
 			double xVel = ball.getXVelocity();
@@ -269,7 +269,6 @@ public class PoolBoard extends Observable {
 		b1.setYVelocity(b1.getYVelocity() +  unitContactY*(b1_f - b1_i));
 		b2.setXVelocity(b2.getXVelocity() +  unitContactX*(b2_f - b2_i));
 		b2.setYVelocity(b2.getYVelocity() +  unitContactY*(b2_f - b2_i));
-
 	}
 
 	// Clears pockets after each turn

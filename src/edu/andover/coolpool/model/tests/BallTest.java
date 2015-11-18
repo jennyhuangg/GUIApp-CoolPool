@@ -10,7 +10,7 @@ public class BallTest {
 	public void setPocketedShouldNegateIsPocketed() {
 		Ball b = new Ball(2);
 		b.setPocketed();
-		assertEquals("Failed to pocket unpocketed ball.", true, b.getIsPocketed());
+		assertEquals("Failed to pocket unpocketed ball.", true, b.isPocketed());
 	}
 
 	@Test
@@ -32,4 +32,5 @@ public class BallTest {
 	
 	// TODO: setPocketed centerX should be 0
 	// TODO: setPocketed centerX should be 0
+	// TODO: unpocketed should negate isPocketed.
 }

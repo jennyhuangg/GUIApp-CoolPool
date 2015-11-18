@@ -50,22 +50,11 @@ public class PoolBoardTest {
 		assertEquals(16, balls.length);
 	}
 
-	@Test
-	public void decelerateBallsWhenVelocityIsZeroShouldDoNothing(){
-		PoolBoard poolBoard = new PoolBoard();
-		Ball[] balls = poolBoard.getBalls();
-		for (int i = 0; i < 16; i ++){
-			double speed = Math.sqrt(Math.pow(balls[i].getXVelocity(), 2) + 
-					Math.pow(balls[1].getYVelocity(), 2));
-			assertEquals(0, speed);
-		}
-
-		poolBoard.decelerateBalls();
-		for (int i = 0; i < 16; i ++){
-			double speed = Math.sqrt(Math.pow(balls[i].getXVelocity(), 2) + 
-					Math.pow(balls[1].getYVelocity(), 2));
-			assertEquals(0, speed);
-		}
-	}
+	
+	// TODO: RackBalls sets correct location for one ball
+	// TODO: RackBalls should set numBumperCollisions to 0.
+	// TODO: stable returns true if stable
+	// TODO: resetCue
+	// TODO: 
 
 }
