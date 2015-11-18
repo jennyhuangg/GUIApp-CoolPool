@@ -4,7 +4,6 @@ import static java.lang.Math.sqrt;
 import java.util.ArrayList;
 import java.util.Observable;
 import edu.andover.coolpool.GameConstants;
-import edu.andover.coolpool.controller.CueBallController;
 
 // Model class for a pool board, including interactions between the
 // pool balls, cuestick, and pockets
@@ -19,8 +18,10 @@ public class PoolBoard extends Observable {
 
 	// X and Y coordinates of top left corner of playable board
 	// TODO: Eric: Fix magic constants
-	private double boardX = 180 * GameConstants.PIXEL_TO_IN;
-	private double boardY = 177* GameConstants.PIXEL_TO_IN;
+	private double boardX = GameConstants.POOLBOARD_X 
+			* GameConstants.PIXEL_TO_IN;
+	private double boardY = GameConstants.POOLBOARD_Y 
+			* GameConstants.PIXEL_TO_IN;
 
 	// Length and width of playable board
 	private double length = GameConstants.POOL_TABLE_LENGTH; 

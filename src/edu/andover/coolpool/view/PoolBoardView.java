@@ -49,8 +49,10 @@ public class PoolBoardView implements Observer {
 		// Set up table
 		Color brown = Color.web("0x3D362D");
 		bigRectangle = new Rectangle(xMargin, yMargin, this.length, this.width);
-		bigRectangle.setScaleX(1.09);//TODO: ERIC WHAT IS THIS
-		bigRectangle.setScaleY(1.157); //TODO: WHAT ARE THOSEEEE
+		double x_scale_multiplier = 1.09;
+		double y_scale_multiplier = 1.157;
+		bigRectangle.setScaleX(x_scale_multiplier);
+		bigRectangle.setScaleY(y_scale_multiplier);
 		bigRectangle.setFill(brown);
 		view.getChildren().add(bigRectangle);
 		
@@ -61,11 +63,11 @@ public class PoolBoardView implements Observer {
 		view.getChildren().add(rectangle);
 
 
-		rectangle.setX(180);
-		rectangle.setY(177);
+		rectangle.setX(GameConstants.POOLBOARD_X);
+		rectangle.setY(GameConstants.POOLBOARD_Y);
 
-		bigRectangle.setX(180);
-		bigRectangle.setY(177);
+		bigRectangle.setX(GameConstants.POOLBOARD_X);
+		bigRectangle.setY(GameConstants.POOLBOARD_Y);
 		
 		// Set up CuestickRectangle.
 		double addLength = 2000;
@@ -80,8 +82,8 @@ public class PoolBoardView implements Observer {
 				* GameConstants.IN_TO_PIXEL;
 		scratchRectangle = new Rectangle(xMargin, 
 				yMargin, this.length / 4.0, this.width - 2 * ballRadius);
-		scratchRectangle.setX(180 + ballRadius);
-		scratchRectangle.setY(177 + ballRadius);
+		scratchRectangle.setX(GameConstants.POOLBOARD_X + ballRadius);
+		scratchRectangle.setY(GameConstants.POOLBOARD_Y + ballRadius);
 		scratchRectangle.setFill(Color.TRANSPARENT);
 		view.getChildren().add(scratchRectangle);
 		scratchRectangle.toBack();

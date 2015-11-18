@@ -39,7 +39,6 @@ public class GameManager {
 		return instance;
 	}
 	
-	//TODO: Can I do this? Overload a singleton's getInstance?
 	public static GameManager getInstance() {
 		return instance;
 	}
@@ -119,9 +118,4 @@ public class GameManager {
 			e.printStackTrace();
 		}
 	}
-	
-	//TODO: Clean this
-	/*public BorderPane getRootLayout() {
-		return rootLayout;
-	}*/
 }
