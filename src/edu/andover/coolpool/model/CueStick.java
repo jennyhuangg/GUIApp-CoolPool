@@ -30,8 +30,8 @@ public class CueStick extends Observable {
 	// Projected distance between initial mouse position and dragging mouse.
 	private static double distanceInitToMouse;
 	
-	// True if values of initial mouse click position can be reset, i. e.
-	// True only on first mouse click before drag.
+	// True if values of initial mouse click position can be reset, 
+	// i.e. true only on first mouse click before drag.
 	private boolean canReset = true;
 	
 	// True if cue stick can move on pool board.
@@ -240,7 +240,7 @@ public class CueStick extends Observable {
 		isDragging = true;
 		
 		setDistanceInitToMouse(mouseX, mouseY);
-		// Distance between the tip of cue stick to the cue ball
+		// Distance between the tip of cue stick to the cue ball.
  		double newDistanceTipFromCueBall = distanceTipFromCueBall + 
  				distanceInitToMouse;
 		

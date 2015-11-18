@@ -15,7 +15,7 @@ public class BallView implements Observer {
 	private double centerX;
 	private double centerY;
 
-	private Ball ball; //observable value
+	private Ball ball; //observable value.
 
 	public BallView(Ball ball) {
 		
@@ -39,10 +39,10 @@ public class BallView implements Observer {
 				circle.setFill(Color.BLUE);
 				break;
 			case 2:
-				circle.setFill(Color.WHITE); // cueBall
+				circle.setFill(Color.WHITE); // cueBall.
 				break;		
 			case 3:
-				circle.setFill(Color.BLACK); // 8 ball
+				circle.setFill(Color.BLACK); // 8 ball.
 				break;
 			default: 
 				break;
@@ -58,6 +58,7 @@ public class BallView implements Observer {
 		this.centerY = ball.getCenterY() * GameConstants.IN_TO_PIXEL;
 		circle.setCenterY(centerY);
 	}
+	
 	public void remove() {
 		Pane parentNode = (Pane) circle.getParent();
 		parentNode.getChildren().remove(circle);

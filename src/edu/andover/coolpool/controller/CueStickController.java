@@ -12,7 +12,7 @@ import javafx.scene.shape.Rectangle;
 
 public class CueStickController {
 
-	// Position of mouse, does not change when mouse is pressed.
+	// Position of mouse does not change when mouse is pressed.
 	private double mouseX;
 	private double mouseY;
 	
@@ -27,7 +27,8 @@ public class CueStickController {
 		this.cueStick = cueStickView.getCueStick();
 	}
 	
-	// EH = Event Handler
+	// EH = Event Handler.
+	// When mouse is hovering, cue stick follows accordingly.
 	public void addMouseHoverEH(PoolBoardView pbv) {
 	    // Adds event handler to the view's rectangle
 		Rectangle r = pbv.getCueStickRectangle();
@@ -42,9 +43,8 @@ public class CueStickController {
 	    	}
 	    });
 	}
-
+	
 	public void addMousePressedEH(PoolBoardView pbv) {
-	   // Also need to add event handler to the cue stick view.
 		Line l = (Line) cueStickView.getLine();
 		l.setOnMousePressed(new EventHandler<MouseEvent>() {
 	    	@Override
@@ -65,6 +65,7 @@ public class CueStickController {
 	    });
 	}
 	
+	// When mouse drags, cue stick drags accordingly. 
 	public void addMouseDraggedEH(PoolBoardView pbv) {
 	    Line l = (Line) cueStickView.getLine();
 		l.setOnMouseDragged(new EventHandler<MouseEvent>() {
@@ -106,12 +107,13 @@ public class CueStickController {
 	    });
 	}
 	
+	// When mouse is released, cue stick and cue ball act accordingly.
 	public void addMouseReleasedEH(PoolBoardView pbv) {
 	  Line l = (Line) cueStickView.getLine();
 		l.setOnMouseReleased(new EventHandler<MouseEvent>() {
 	    	@Override
 	    	public void handle(MouseEvent me) {
-	    		// Only occurs when mouse was dragged, not randomly clicked.
+	    		// Only occurs when mouse is dragged, not randomly clicked.
 	    		if (hasJustDragged) {
 		    		double finalMouseX = me.getX()*GameConstants.PIXEL_TO_IN;
 		    		double finalMouseY = me.getY()*GameConstants.PIXEL_TO_IN;

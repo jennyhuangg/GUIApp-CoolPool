@@ -15,6 +15,7 @@ public class CueBallController {
 	private double mouseY;
 
 	// EH abbreviation means Event Handler.
+	// After scratch, when mouse is pressed, place ball in that area.
 	public void addMousePressedEventHandler(PoolBoardView pbv, Ball cueBall) {
 		Rectangle r = pbv.getScratchRectangle();
 		Circle c = (Circle) pbv.getBallViews()[15].getCircle();
@@ -39,6 +40,8 @@ public class CueBallController {
 		});
 	}
 
+	// After scratch, cue ball follows hovering mouse position until mouse is
+	// pressed and placed on the board.
 	public void addMouseHoverEventHandler(PoolBoardView pbv, Ball cueBall) {
 		pbv.getScratchRectangle().toFront();
 		Rectangle r = pbv.getScratchRectangle();
