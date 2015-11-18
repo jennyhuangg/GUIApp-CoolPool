@@ -7,7 +7,8 @@ import edu.andover.coolpool.model.PoolGameStatus;
 import javafx.fxml.FXML;
 import javafx.scene.text.Text;
 
-//View class for PoolGameStatus.
+// View class for PoolGameStatus. Updates the text on side panel 
+// of poolScreen.fxml
 
 public class PoolGameStatusView implements Observer {
     @FXML
