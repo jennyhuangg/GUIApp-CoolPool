@@ -2,7 +2,6 @@ package edu.andover.coolpool.view;
 
 import java.util.Observable;
 import java.util.Observer;
-
 import edu.andover.coolpool.GameConstants;
 import edu.andover.coolpool.controller.CueBallController;
 import edu.andover.coolpool.controller.CueStickController;
@@ -13,6 +12,8 @@ import edu.andover.coolpool.model.PoolBoard;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+
+//View class for PoolBoard.
 
 public class PoolBoardView implements Observer {
 	private Pane view;

@@ -9,6 +9,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 
+// This class is the controller for the CueBall.
+
 public class CueBallController {
 	private boolean isMousePressed = false;
 	private double mouseX;

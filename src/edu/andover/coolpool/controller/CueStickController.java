@@ -10,6 +10,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 
+//This class is the controller for the CueStick.
+
 public class CueStickController {
 
 	// Position of mouse does not change when mouse is pressed.

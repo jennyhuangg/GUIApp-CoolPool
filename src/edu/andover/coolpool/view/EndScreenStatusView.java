@@ -2,10 +2,11 @@ package edu.andover.coolpool.view;
 
 import java.util.Observable;
 import java.util.Observer;
-
 import edu.andover.coolpool.model.EndScreenStatus;
 import javafx.fxml.FXML;
 import javafx.scene.text.Text;
+
+//View class for EndScreen.
 
 public class EndScreenStatusView implements Observer{
 

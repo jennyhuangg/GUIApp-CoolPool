@@ -3,6 +3,7 @@ package edu.andover.coolpool.model;
 import java.util.Observable;
 
 // Model class that stores the status of the pool game after each turn.
+
 public class PoolGameStatus extends Observable {
 	
 	// Stores number of points for each player.

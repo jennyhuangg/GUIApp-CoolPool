@@ -2,6 +2,8 @@ package edu.andover.coolpool.view;
 
 import javafx.scene.media.AudioClip;
 
+//Class used to store sounds constants.
+
 public class GameSounds {
 	
 	public static final AudioClip BALL_HIT_BALL = 

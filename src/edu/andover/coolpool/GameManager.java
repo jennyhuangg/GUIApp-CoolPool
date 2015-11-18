@@ -15,7 +15,8 @@ import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 
-// The "manager" that is in charge of changing scenes within the program..
+// The "manager" that is in charge of changing scenes within the program.
+
 public class GameManager {
 	private Scene scene;
 	private BorderPane rootLayout;

@@ -2,6 +2,8 @@ package edu.andover.coolpool.model;
 
 import edu.andover.coolpool.GameConstants;
 
+//Model class for a pocket.
+
 public class Pocket {
 	
 	// Location of the pocket (xPosition, yPosition).

@@ -9,6 +9,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Shape;
 
+//View class for the ball.
+
 public class BallView implements Observer {
 	private Circle circle;
 	private double radius;
