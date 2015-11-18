@@ -23,7 +23,6 @@ public class EndScreenStatusView implements Observer{
 
 	@FXML
 	public void update(Observable o, Object arg) {
-		// TODO Auto-generated method stub
 		if (endScreenStatus == o) {
 			gameOverText.setText(endScreenStatus.getGameOverMessage());
 		}

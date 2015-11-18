@@ -35,7 +35,6 @@ public class PoolGameStatusView implements Observer {
 
 	@FXML
 	public void update(Observable o, Object arg) {
-		// TODO Auto-generated method stub
 		if (poolGameStatus == o){
 			player1PointsText.setText(poolGameStatus.getPlayer1PointsStatus());
 			player2PointsText.setText(poolGameStatus.getPlayer2PointsStatus());
