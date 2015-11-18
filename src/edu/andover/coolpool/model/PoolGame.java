@@ -122,7 +122,7 @@ public class PoolGame implements Observer {
 
 	// Updates status of game at the end of a turn. Updates points, 
 	// next player to go, and notification of last turn
-	public void updateStatus(ArrayList<Ball> pocketedBalls) {
+	private void updateStatus(ArrayList<Ball> pocketedBalls) {
 		int size = pocketedBalls.size();
 		// Call an illegal break if current player does not get balls to hit 
 		// sides of pool board at least 3 times and gets no pocketed balls.

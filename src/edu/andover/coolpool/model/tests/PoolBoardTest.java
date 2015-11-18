@@ -49,12 +49,12 @@ public class PoolBoardTest {
 		Ball[] balls = poolBoard.getBalls();
 		assertEquals(16, balls.length);
 	}
-
 	
 	// TODO: RackBalls sets correct location for one ball
 	// TODO: RackBalls should set numBumperCollisions to 0.
 	// TODO: stable returns true if stable
 	// TODO: resetCue
-	// TODO: 
+	// TODO: colliding
+	// TODO: resetPocketedBalls()
 
 }
