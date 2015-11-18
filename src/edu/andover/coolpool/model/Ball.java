@@ -16,10 +16,10 @@ public class Ball extends Observable {
 	private final double radius = GameConstants.BALL_RADIUS;
 	private int id;
 	
-	// ID = 0: Red 
-	// ID = 1: Blue
-	// ID = 2: Cue Ball
-	// ID = 3: Eight Ball
+	// ID = 0: Red.
+	// ID = 1: Blue.
+	// ID = 2: Cue Ball.
+	// ID = 3: Eight Ball.
 	public Ball(int id) {
 		centerX = 0;
 		centerY = 0;
@@ -38,7 +38,7 @@ public class Ball extends Observable {
 		this.id = id;
 	}
 
-	// Unpockets a ball, used only for cueball.
+	// Unpockets a ball, used only for cue ball.
 	public void unpocket(){
 		isPocketed = !isPocketed;
 	}
