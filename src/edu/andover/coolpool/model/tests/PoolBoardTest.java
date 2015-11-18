@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import edu.andover.coolpool.GameConstants;
 import edu.andover.coolpool.model.Ball;
 import edu.andover.coolpool.model.PoolBoard;
 
@@ -50,11 +51,41 @@ public class PoolBoardTest {
 		assertEquals(16, balls.length);
 	}
 	
-	// TODO: RackBalls sets correct location for one ball
-	// TODO: RackBalls should set numBumperCollisions to 0.
-	// TODO: stable returns true if stable
-	// TODO: resetCue
-	// TODO: colliding
-	// TODO: resetPocketedBalls()
+	@Test
+	public void rackBallsShouldSetCorrectLocationForEightBall() {
+		PoolBoard poolBoard = new PoolBoard();
+		Ball[] balls = poolBoard.getBalls();
+		poolBoard.rackBalls(balls);
+		double threeQuartersLength = 0.75 * 92 + GameConstants.POOLBOARD_X 
+				* GameConstants.PIXEL_TO_IN;
+		
+		boolean check = threeQuartersLength == poolBoard.getBalls()[0].getCenterX();
+		
+		assertEquals(true, check);
+	}
+	
+	@Test
+	public void rackBallsShouldSetNumBumperCollisionsToZero() {
+		fail("Not Implemented Yet");
+	}
 
+	@Test
+	public void stableShouldReturnTrueIfStable() {
+		fail("Not Implemented Yet");
+	}
+	
+	@Test
+	public void resetCueShouldUnpocketCueBall() {
+		fail("Not Implemented Yet");
+	}
+
+	@Test
+	public void collidingBallsShouldBeSeenAsColliding() {
+		fail("Not Implemented Yet");
+	}
+	
+//	@Test
+//	public void pocketBallsShouldResetOnIllegalBreak() {
+//		
+//	}
 }

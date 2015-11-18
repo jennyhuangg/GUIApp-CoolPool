@@ -7,14 +7,14 @@ import edu.andover.coolpool.model.EndScreenStatus;
 import javafx.fxml.FXML;
 import javafx.scene.text.Text;
 
-public class EndScreenStatusView implements Observer{
+public class EndScreenStatusView implements Observer {
 
 	@FXML
 	private Text gameOverText;
 
 	private EndScreenStatus endScreenStatus;
 	    
-    public void setObservable(EndScreenStatus endScreenStatus){
+    public void setObservable(EndScreenStatus endScreenStatus) {
     	this.endScreenStatus = endScreenStatus;
     	update(endScreenStatus, "initial update");
     }

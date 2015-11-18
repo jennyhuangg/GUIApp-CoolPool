@@ -36,9 +36,9 @@ public class Ball extends Observable {
 		yVelocity = 0;
 		this.id = id;
 	}
-
-	// Unpockets a ball, used only for cue ball.
-	public void unpocket(){
+	
+	// Unpockets a ball, used only for cueball
+	public void unpocket() {
 		isPocketed = !isPocketed;
 	}
 
@@ -84,11 +84,11 @@ public class Ball extends Observable {
 		notifyObservers();
 	}
 	
-	public int getId(){ return id;}
+	public int getId() { return id;}
 	public boolean isPocketed() { return isPocketed; }
-	public double getXVelocity(){ return xVelocity; }
-	public double getYVelocity(){ return yVelocity; }
-	public double getRadius(){ return radius; }
-	public double getCenterX(){ return centerX; }
+	public double getXVelocity() { return xVelocity; }
+	public double getYVelocity() { return yVelocity; }
+	public double getRadius() { return radius; }
+	public double getCenterX() { return centerX; }
 	public double getCenterY() { return centerY; }
 }
