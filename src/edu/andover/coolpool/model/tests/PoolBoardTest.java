@@ -105,9 +105,12 @@ public class PoolBoardTest {
 				for(Ball ball: balls) {
 
 					for (Ball b2: balls) {
-						final double deltaX = b2.getCenterX() - ball.getCenterX() ;
-						final double deltaY = b2.getCenterY() - ball.getCenterY() ;
-						boolean isColliding = poolBoard.colliding(ball, b2, deltaX, deltaY);
+						final double deltaX = b2.getCenterX() 
+								- ball.getCenterX() ;
+						final double deltaY = b2.getCenterY() 
+								- ball.getCenterY() ;
+						boolean isColliding = poolBoard.colliding(ball, 
+								b2, deltaX, deltaY);
 						
 						assertTrue(isColliding);
 					}
