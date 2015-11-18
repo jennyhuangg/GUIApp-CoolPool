@@ -57,7 +57,7 @@ public class CueBallController {
 		pbv.getScratchRectangle().toFront();
 		Rectangle r = pbv.getScratchRectangle();
 		r.setFill(Color.ORANGE);
-		pbv.bringBallsToFront();
+		pbv.bringElementsToFront();
 		pbv.removeCueStickHandlers();
 		pbv.getCueStickView().getLine().setVisible(false);
 		

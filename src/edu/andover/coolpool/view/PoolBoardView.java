@@ -14,6 +14,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
+// View class for a pool board and its elements (balls, cue stick, and pockets)
 public class PoolBoardView implements Observer {
 	private Pane view;
 	double length;
@@ -90,30 +91,10 @@ public class PoolBoardView implements Observer {
 		
 		
 		initElements();
-		bringBallsToFront();
+		bringElementsToFront();
 		
 	}
 	
-	public Pane getPane() {
-		return view;
-	}
-	
-	public Rectangle getRectangle() {
-		return rectangle;
-	}
-	
-	public Rectangle getBigRectangle() {
-		return bigRectangle;
-	}
-	
-	public Rectangle getCueStickRectangle() {
-		return cueStickRectangle;
-	}
-	
-	public Rectangle getScratchRectangle() {
-		return scratchRectangle;
-	}
-
 	@Override
 	public void update(Observable o, Object arg) {
 		if (o == poolBoard){
@@ -125,9 +106,9 @@ public class PoolBoardView implements Observer {
 				initCueBallController();
 			}
 		}
-		
 	}
 	
+	// Initializes views for balls, pockets, and cuestick on the pool board
 	public void initElements(){
 		// initialize balls.
 		Ball[] balls = poolBoard.getBalls();
@@ -155,6 +136,15 @@ public class PoolBoardView implements Observer {
 		this.getPane().getChildren().add(cueStickView.getLine());
 	}
 	
+	// Brings balls and cuestick in front of all rectangles
+	public void bringElementsToFront(){
+		for (BallView bv: ballViews){
+			bv.getCircle().toFront();
+		}
+		cueStickView.getLine().toFront();
+	}
+	
+	// Sets the handler for cue ball. Used when player makes a scratch
 	public void initCueBallController(){
 		// initialize scratchController.
 		CueBallController cueBallController = new CueBallController();
@@ -163,22 +153,8 @@ public class PoolBoardView implements Observer {
 		cueBallController.addMousePressedEventHandler(this, 
 				poolBoard.getBalls()[15]);
 	}
-	
-	public BallView[] getBallViews(){
-		return ballViews;
-	}
-	
-	public CueStickView getCueStickView(){
-		return cueStickView;
-	}
-	
-	public void bringBallsToFront(){
-		for (BallView bv: ballViews){
-			bv.getCircle().toFront();
-		}
-		cueStickView.getLine().toFront();
-	}
-	
+
+	// Sets all handlers for cuestick
 	public void setCueStickHandlers(){
 		CueStickController cueStickController = 
 				new CueStickController(cueStickView);
@@ -187,7 +163,8 @@ public class PoolBoardView implements Observer {
 		cueStickController.addMousePressedEH(this);
 		cueStickController.addMouseReleasedEH(this);
 	}
-	
+
+	// Unsets handlers for cuestick so that it does not respond to user input
 	public void removeCueStickHandlers(){
 		getCueStickRectangle().setOnMouseMoved(null);
 		getCueStickRectangle().setOnMouseDragged(null);
@@ -195,7 +172,19 @@ public class PoolBoardView implements Observer {
 		cueStickView.getLine().setOnMouseClicked(null);
 	}
 	
-	public PoolBoard getPoolBoard(){
-		return poolBoard;
-	}
+	public Pane getPane() { return view; }
+	
+	public Rectangle getRectangle() { return rectangle; }
+	
+	public Rectangle getBigRectangle() { return bigRectangle; }
+	
+	public Rectangle getCueStickRectangle() { return cueStickRectangle; }
+	
+	public Rectangle getScratchRectangle() { return scratchRectangle; }
+
+	public BallView[] getBallViews(){ return ballViews; }
+	
+	public CueStickView getCueStickView(){ return cueStickView; }
+	
+	public PoolBoard getPoolBoard(){ return poolBoard; }
 }
