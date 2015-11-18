@@ -27,7 +27,8 @@ public class CueStickController {
 		this.cueStick = cueStickView.getCueStick();
 	}
 	
-	// EH = Event Handler
+	// EH = Event Handler.
+	// When mouse is hovering, cue stick follows accordingly.
 	public void addMouseHoverEH(PoolBoardView pbv) {
 	    // Adds event handler to the view's rectangle
 		Rectangle r = pbv.getCueStickRectangle();
@@ -42,7 +43,7 @@ public class CueStickController {
 	    	}
 	    });
 	}
-
+	
 	public void addMousePressedEH(PoolBoardView pbv) {
 		Line l = (Line) cueStickView.getLine();
 		l.setOnMousePressed(new EventHandler<MouseEvent>() {
@@ -64,6 +65,7 @@ public class CueStickController {
 	    });
 	}
 	
+	// When mouse drags, cue stick drags accordingly. 
 	public void addMouseDraggedEH(PoolBoardView pbv) {
 	    Line l = (Line) cueStickView.getLine();
 		l.setOnMouseDragged(new EventHandler<MouseEvent>() {
@@ -105,6 +107,7 @@ public class CueStickController {
 	    });
 	}
 	
+	// When mouse is released, cue stick and cue ball act accordingly.
 	public void addMouseReleasedEH(PoolBoardView pbv) {
 	  Line l = (Line) cueStickView.getLine();
 		l.setOnMouseReleased(new EventHandler<MouseEvent>() {
