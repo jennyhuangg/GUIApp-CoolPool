@@ -29,9 +29,9 @@ public class PoolBoard extends Observable {
 	// Counts number of collisions of balls with boundaries in each term.
 	private int numBumperCollisions = 0;
 
-	public boolean isStable; // True if all balls are at rest.
-	public boolean bounced = false;
-	public boolean resetCue = false;
+	private boolean isStable; // True if all balls are at rest.
+	private boolean bounced;
+	private boolean resetCue;
 
 	public PoolBoard() {
 		for (int i = 0; i < pockets.length; i++) {
@@ -137,7 +137,7 @@ public class PoolBoard extends Observable {
 		remainingBalls.add(balls[15]);
 		balls[15].unpocket();
 		
-		balls[15].setCenter(length * 1/4 + boardX, width / 2 + boardY);
+		balls[15].setCenter(length * 0.25 + boardX, width / 2 + boardY);
 
 		resetCue = true;
 		setChanged();
@@ -275,6 +275,10 @@ public class PoolBoard extends Observable {
 	public void resetPocketedBalls() { 
 		pocketedBalls = new ArrayList<Ball>(); 
 	}
+	
+	public boolean getBounced() { return bounced; }
+	
+	public boolean getResetCue() { return resetCue; }
 
 	public Ball[] getBalls() { return balls; }
 	

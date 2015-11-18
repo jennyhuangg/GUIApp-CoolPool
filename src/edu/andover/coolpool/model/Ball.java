@@ -39,7 +39,7 @@ public class Ball extends Observable {
 	
 	// Unpockets a ball, used only for cueball
 	public void unpocket() {
-		isPocketed = !isPocketed;
+		isPocketed = false;
 	}
 
 	public void setCenterX(double centerX) {
@@ -75,7 +75,7 @@ public class Ball extends Observable {
 	
 	// Pockets a ball.
 	public void setPocketed() {
-		isPocketed = !isPocketed;
+		isPocketed = true;
 		xVelocity = 0;
 		yVelocity = 0;
 		centerX = 0;

@@ -7,6 +7,7 @@ import org.junit.Test;
 import edu.andover.coolpool.GameConstants;
 import edu.andover.coolpool.model.Ball;
 import edu.andover.coolpool.model.PoolBoard;
+import javafx.animation.AnimationTimer;
 
 public class PoolBoardTest {
 
@@ -16,10 +17,10 @@ public class PoolBoardTest {
 		b1.setXVelocity(10);
 		Ball b2 = new Ball(1, 0, 1);
 		b2.setXVelocity(-10);
-		
+
 		double deltaX = b2.getCenterX() - b1.getCenterX();
 		double deltaY = b2.getCenterY() - b1.getCenterY();
-		
+
 		PoolBoard poolBoard = new PoolBoard();
 		boolean colliding = poolBoard.colliding(b1, b2, deltaX, deltaY);
 		assertEquals(colliding, true);
@@ -50,7 +51,7 @@ public class PoolBoardTest {
 		Ball[] balls = poolBoard.getBalls();
 		assertEquals(16, balls.length);
 	}
-	
+
 	@Test
 	public void rackBallsShouldSetCorrectLocationForEightBall() {
 		PoolBoard poolBoard = new PoolBoard();
@@ -58,34 +59,67 @@ public class PoolBoardTest {
 		poolBoard.rackBalls(balls);
 		double threeQuartersLength = 0.75 * 92 + GameConstants.POOLBOARD_X 
 				* GameConstants.PIXEL_TO_IN;
-		
+
 		boolean check = threeQuartersLength == poolBoard.getBalls()[0].getCenterX();
-		
+
 		assertEquals(true, check);
-	}
-	
-	@Test
-	public void rackBallsShouldSetNumBumperCollisionsToZero() {
-		fail("Not Implemented Yet");
 	}
 
 	@Test
-	public void stableShouldReturnTrueIfStable() {
-		fail("Not Implemented Yet");
+	public void rackBallsShouldSetNumBumperCollisionsToZero() {
+		PoolBoard poolBoard = new PoolBoard();
+		Ball[] balls = poolBoard.getBalls();
+		poolBoard.rackBalls(balls);
+
+		assertEquals(0, poolBoard.getNumBumperCollisions());
 	}
-	
+
 	@Test
-	public void resetCueShouldUnpocketCueBall() {
-		fail("Not Implemented Yet");
+	public void poolBoardShouldBeImmediatelyStable() {
+		PoolBoard poolBoard = new PoolBoard();
+
+		assertTrue(poolBoard.stable());
+	}
+
+	@Test
+	public void resetCueBallShouldUnpocketCueBall() {
+		PoolBoard poolBoard = new PoolBoard();
+		Ball[] balls = poolBoard.getBalls();
+		
+		poolBoard.resetCueBall();
+		
+		assertFalse(balls[15].isPocketed());
 	}
 
 	@Test
 	public void collidingBallsShouldBeSeenAsColliding() {
-		fail("Not Implemented Yet");
+		PoolBoard poolBoard = new PoolBoard();
+		Ball[] balls = poolBoard.getBalls();
+		
+		balls[15].setXVelocity(100);
+		
+		AnimationTimer timer = new AnimationTimer() {
+			@Override
+			public void handle(long timestamp) {
+				poolBoard.update();
+				for(Ball ball: balls) {
+
+					for (Ball b2: balls) {
+						final double deltaX = b2.getCenterX() - ball.getCenterX() ;
+						final double deltaY = b2.getCenterY() - ball.getCenterY() ;
+						boolean isColliding = poolBoard.colliding(ball, b2, deltaX, deltaY);
+						
+						assertTrue(isColliding);
+					}
+				}
+			}
+		};
+		//TODO: FAULTY FAULTY FAULTY
+		timer.start();
 	}
-	
-//	@Test
-//	public void pocketBallsShouldResetOnIllegalBreak() {
-//		
-//	}
+
+	//	@Test
+	//	public void pocketBallsShouldResetOnIllegalBreak() {
+	//		
+	//	}
 }
