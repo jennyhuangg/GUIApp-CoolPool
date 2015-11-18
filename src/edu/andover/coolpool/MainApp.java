@@ -13,6 +13,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
+// The runner of the program.
 public class MainApp extends Application {
 	private Scene scene;
 
@@ -34,7 +35,7 @@ public class MainApp extends Application {
 
 		GameManager poolGame = GameManager.getInstance(scene);
 
-		poolGame.initStartScreen(scene); //TODO: View concept
+		poolGame.initStartScreen(scene);
 	}
 
 	public static void main(String[] args){

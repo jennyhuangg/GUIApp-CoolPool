@@ -1,6 +1,5 @@
 package edu.andover.coolpool;
 
-// This class contains methods to set each scene.
 import java.io.IOException;
 
 import edu.andover.coolpool.model.EndScreenStatus;
@@ -16,14 +15,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 
-/* 
- * TODO: Add JavaDoc comments
- * 
- * Dr. Miles:
- * GameManager should have know about all the model, view, and controllers.
- * If you need to change scene, pass information up the chain of command to
- * the game manager so that the game manager knows when to change scenes.
- */
+// The "manager" that is in charge of changing scenes within the program.
 public class GameManager {
 	private Scene scene;
 	private BorderPane rootLayout;
@@ -51,7 +43,7 @@ public class GameManager {
 	    scene.setRoot(rootLayout);
 	}
 
-	// Initializes the start screen. TODO: implement options menu
+	// Initializes the start screen.
 	public void initStartScreen(Scene scene){
 		FXMLLoader loader = new FXMLLoader();
 		loader.setLocation(

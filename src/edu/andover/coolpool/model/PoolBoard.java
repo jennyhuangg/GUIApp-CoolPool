@@ -17,7 +17,6 @@ public class PoolBoard extends Observable {
 	private CueStick cueStick;
 
 	// X and Y coordinates of top left corner of playable board
-	// TODO: Eric: Fix magic constants
 	private double boardX = GameConstants.POOLBOARD_X 
 			* GameConstants.PIXEL_TO_IN;
 	private double boardY = GameConstants.POOLBOARD_Y 
@@ -133,7 +132,7 @@ public class PoolBoard extends Observable {
 		return isStable;
 	}
 
-	public void resetCueBall() { //TODO: will change to get User Input Later
+	public void resetCueBall() {
 		pocketedBalls.remove(balls[15]);
 		remainingBalls.add(balls[15]);
 		balls[15].unpocket();
