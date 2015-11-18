@@ -20,11 +20,14 @@ public class CueBallController {
 		Circle c = (Circle) pbv.getBallViews()[15].getCircle();
 		c.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
-			public void handle(MouseEvent me) {
-				cueBall.setCenterX(mouseX);
-				cueBall.setCenterY(mouseY);
+			public void handle(MouseEvent me) {	
+				
+				// If the ball isn't overlapping with other balls, then
+				// place the cueball wherever the mouse is.
 				for (Ball b: pbv.getPoolBoard().getBalls()){
 					if (!pbv.getPoolBoard().colliding(cueBall, b, 0, 0)){
+						cueBall.setCenterX(mouseX);
+						cueBall.setCenterY(mouseY);
 						r.setOnMouseMoved(null);
 						c.setOnMousePressed(null);
 						r.toBack();
