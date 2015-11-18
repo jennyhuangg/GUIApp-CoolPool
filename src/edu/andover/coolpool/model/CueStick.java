@@ -240,7 +240,7 @@ public class CueStick extends Observable {
 		isDragging = true;
 		
 		setDistanceInitToMouse(mouseX, mouseY);
-		// Distance between the tip of cue stick to the cue ball
+		// Distance between the tip of cue stick to the cue ball.
  		double newDistanceTipFromCueBall = distanceTipFromCueBall + 
  				distanceInitToMouse;
 		

@@ -37,8 +37,8 @@ public class PoolGameStatus extends Observable {
     }
     
     public void setBallColors(int currPlayerInd, int player1ID){
-    	// 0 = red
-    	// 1 = blue
+    	// 0 = red.
+    	// 1 = blue.
     	if ((player1ID + currPlayerInd)%2 == 0 ){
     		player1BallColorStatus = "Ball color: RED";
     		player2BallColorStatus = "Ball color: BLUE";
@@ -134,7 +134,7 @@ public class PoolGameStatus extends Observable {
     	notifyObservers();
     }
     
-    // Unsets cue ball status to empty string
+    // Resets cue ball status to empty string.
     public void unsetCueBallStatus(){
     	cueBallStatus = "";
     	setChanged();
