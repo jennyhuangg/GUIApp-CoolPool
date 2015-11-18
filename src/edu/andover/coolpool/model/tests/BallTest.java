@@ -18,8 +18,9 @@ public class BallTest {
 		Ball b = new Ball(2);
 		b.setPocketed();
 		double pocketedBallVelocity = 0.0;
-		System.out.println(b.getXVelocity());
-		assertSame("X Velocity is not 0.", pocketedBallVelocity, b.getXVelocity());
+		
+		boolean check = b.getXVelocity() == pocketedBallVelocity;
+		assertTrue("X Velocity is not 0.", check);
 	}	
 	
 	@Test
@@ -27,7 +28,9 @@ public class BallTest {
 		Ball b = new Ball(2);
 		b.setPocketed();
 		double pocketedBallVelocity = 0.0;
-		assertSame("Y Velocity is not 0.", pocketedBallVelocity, b.getYVelocity());
+		
+		boolean check = b.getYVelocity() == pocketedBallVelocity;
+		assertTrue("Y Velocity is not 0.", check);
 	}
 	
 	// TODO: setPocketed centerX should be 0

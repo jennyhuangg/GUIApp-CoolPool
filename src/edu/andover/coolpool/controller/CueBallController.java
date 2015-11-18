@@ -23,7 +23,7 @@ public class CueBallController {
 			public void handle(MouseEvent me) {	
 				
 				// If the ball isn't overlapping with other balls, then
-				// place the cueball wherever the mouse is.
+				// place the cue ball wherever the mouse is.
 				for (Ball b: pbv.getPoolBoard().getBalls()){
 					if (!pbv.getPoolBoard().colliding(cueBall, b, 0, 0)){
 						cueBall.setCenterX(mouseX);
