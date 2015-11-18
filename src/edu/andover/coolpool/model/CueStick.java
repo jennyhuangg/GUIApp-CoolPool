@@ -49,7 +49,6 @@ public class CueStick extends Observable {
 
 	private Ball cueBall;
 	
-
 	public CueStick(Ball cueBall) {
 		this.cueBall = cueBall;
 		startX = cueBall.getCenterX() - distanceTipFromCueBall;
@@ -88,6 +87,14 @@ public class CueStick extends Observable {
 	
 	public boolean canReset() {
 		return canReset;
+	}
+	
+	public boolean isDragging(){
+		return isDragging;
+	}
+	
+	public boolean hasHit(){
+		return hasHit;
 	}
 	
 	public void setCanMove(boolean canMove) {
@@ -265,12 +272,5 @@ public class CueStick extends Observable {
 		setChanged();
 		notifyObservers();
 		hasHit = false;
-	}
-	
-	public boolean isDragging(){
-		return isDragging;
-	}
-	public boolean hasHit(){
-		return hasHit;
 	}
 }
