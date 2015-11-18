@@ -57,6 +57,34 @@ public class CueStick extends Observable {
 		endY = startY;
 	}
 
+	// Updates cue ball velocity proportional to the projected distance dragged.
+	public void updateCueBallVelocity(double finalMouseX, double finalMouseY) {
+		
+		// Adjusts amplification of cue ball speed.
+		double amplifier = 3; 
+		setDistanceInitToMouse(finalMouseX, finalMouseY);
+		
+		// Determines proportionally accurate direction of cue ball.
+		double dirX = -initStartX + cueBall.getCenterX();
+		double dirY = -initStartY + cueBall.getCenterY();
+		
+		// Determines velocity of cue ball.
+		double xVel = amplifier*distanceInitToMouse*dirX;
+		double yVel = amplifier*distanceInitToMouse*dirY;
+		
+		// Sets velocity of cue ball.
+		cueBall.setXVelocity(xVel);
+		cueBall.setYVelocity(yVel);
+		
+		// Resets drag distance to 0.
+		distanceInitToMouse = 0;
+		
+		hasHit = true;
+		setChanged();
+		notifyObservers();
+		hasHit = false;
+	}
+
 	public double getStartX() { return startX; }
 	public double getStartY() { return startY; }
 	public double getEndX() { return endX; }
@@ -64,54 +92,66 @@ public class CueStick extends Observable {
 	public double getDistanceInitToMouse() { return distanceInitToMouse; }
 	public Ball getCueBall() { return cueBall; }
 	
-	public void setStartX(double startX) {
-		this.startX = startX;
-	}
-	
-	public void setStartY(double startY) {
-		this.startY = startY;
-	}
-	
-	public void setEndX(double endX) {
-		this.endX = endX;
-	}
-	
-	public void setEndY(double endY) {
-		this.endY = endY;
-	}
-	
-	public boolean canMove() {
-		return canMove;
-	}
-	
-	public boolean canReset() {
-		return canReset;
-	}
-	
-	public boolean isDragging(){
-		return isDragging;
-	}
-	
-	public boolean hasHit(){
-		return hasHit;
-	}
-	
-	public void setCanMove(boolean canMove) {
-		this.canMove = canMove;
-	}
-
-	public void setCanReset(boolean canReset) {
-		this.canReset = canReset;
-	}
-	
-	public void setCueBall(Ball cueBall){
-		this.cueBall = cueBall;
-	}
-	
 	// Uses distance formula to calculate distance between two points.
 	private double getDistance(double x1, double y1, double x2, double y2) {
 		return Math.sqrt((x1-x2)*(x1-x2) + (y1-y2)*(y1-y2));
 	}
+
+	public void setStartX(double startX) { this.startX = startX; }
+	
+	public void setStartY(double startY) { this.startY = startY; }
+	
+	public void setEndX(double endX) { this.endX = endX; }
+	
+	public void setEndY(double endY) { this.endY = endY; }
+	
+	public boolean canMove() {	return canMove; }
+	
+	public boolean canReset() { return canReset; }
+	
+	public boolean isDragging(){ return isDragging; }
+	
+	// Returns true if mouse is dragging in the correct direction (away from
+	// cue ball in direction of initial mouse click).
+	private boolean isDraggingInCorrectDirection(double mouseX, double mouseY) {
+		double cueBallX = cueBall.getCenterX();
+		double cueBallY = cueBall.getCenterY();
+		
+		boolean isDraggingInCorrectDirection = true; 
+		if (cueBallX > initMouseX) {
+			if (cueBallY > initMouseY) {
+				if (mouseX >= initMouseX && mouseY >= initMouseY) {
+					isDraggingInCorrectDirection = false; 
+				}
+			}	
+			else if (cueBallY < initMouseY ) {
+				if (mouseX >= initMouseX && mouseY <= initMouseY) {
+					isDraggingInCorrectDirection = false; 
+				}
+			}
+		}
+		else { 
+			if (cueBallY > initMouseY) {
+				if (mouseX <= initMouseX && mouseY >= initMouseY) {
+					isDraggingInCorrectDirection = false;					
+				}	
+			}	
+			else if (cueBallY < initMouseY ) {
+				if (mouseX <= initMouseX && mouseY <= initMouseY) {
+					isDraggingInCorrectDirection = false;					
+				}	
+			}
+		}
+		return isDraggingInCorrectDirection;
+	 }
+
+	public boolean hasHit(){ return hasHit; }
+	
+	public void setCanMove(boolean canMove) { this.canMove = canMove; }
+
+	public void setCanReset(boolean canReset) { this.canReset = canReset; }
+	
+	public void setCueBall(Ball cueBall){ this.cueBall = cueBall; }
 	
 	// Sets values from initial mouse click position. Occurs before drag.
 	public void setInitialValues(double initMouseX, double initMouseY) {
@@ -160,40 +200,6 @@ public class CueStick extends Observable {
 		notifyObservers();
 	}
 	
-	// Returns true if mouse is dragging in the correct direction (away from
-	// cue ball in direction of initial mouse click).
-	private boolean isDraggingInCorrectDirection(double mouseX, double mouseY) {
-		double cueBallX = cueBall.getCenterX();
-		double cueBallY = cueBall.getCenterY();
-		
-		boolean isDraggingInCorrectDirection = true; 
-		if (cueBallX > initMouseX) {
-			if (cueBallY > initMouseY) {
-				if (mouseX >= initMouseX && mouseY >= initMouseY) {
-					isDraggingInCorrectDirection = false; 
-				}
-			}	
-			else if (cueBallY < initMouseY ) {
-				if (mouseX >= initMouseX && mouseY <= initMouseY) {
-					isDraggingInCorrectDirection = false; 
-				}
-			}
-		}
-		else { 
-			if (cueBallY > initMouseY) {
-				if (mouseX <= initMouseX && mouseY >= initMouseY) {
-					isDraggingInCorrectDirection = false;					
-				}	
-			}	
-			else if (cueBallY < initMouseY ) {
-				if (mouseX <= initMouseX && mouseY <= initMouseY) {
-					isDraggingInCorrectDirection = false;					
-				}	
-			}
-		}
-		return isDraggingInCorrectDirection;
-	 }
-	 
 	// General method that calculates new position of cue stick based on 
 	// distance of its tip from the cue ball and a point that indicates
 	// direction away from cue ball.
@@ -246,33 +252,5 @@ public class CueStick extends Observable {
 	public void setCueStickLocationAfterHit() {
 		isDragging = false;
 		setNewCueStickLocation(distanceTipFromCueBall, initStartX, initStartY);
-	}
-
-	// Updates cue ball velocity proportional to the projected distance dragged.
-	public void updateCueBallVelocity(double finalMouseX, double finalMouseY) {
-		
-		// Adjusts amplification of cue ball speed.
-		double amplifier = 3; 
-		setDistanceInitToMouse(finalMouseX, finalMouseY);
-		
-		// Determines proportionally accurate direction of cue ball.
-		double dirX = -initStartX + cueBall.getCenterX();
-		double dirY = -initStartY + cueBall.getCenterY();
-		
-		// Determines velocity of cue ball.
-		double xVel = amplifier*distanceInitToMouse*dirX;
-		double yVel = amplifier*distanceInitToMouse*dirY;
-		
-		// Sets velocity of cue ball.
-		cueBall.setXVelocity(xVel);
-		cueBall.setYVelocity(yVel);
-		
-		// Resets drag distance to 0.
-		distanceInitToMouse = 0;
-		
-		hasHit = true;
-		setChanged();
-		notifyObservers();
-		hasHit = false;
 	}
 }
