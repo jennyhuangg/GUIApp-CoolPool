@@ -11,4 +11,7 @@ public class CueStickTest {
 		fail("Not yet implemented");
 	}
 
+	// TODO: setInitValues sets correct distanceInit
+	// TODO: setLocation methods (3)
+	// TODO: UpdateCueBallVelocity updates cue ball velocity correctly.
 }
