@@ -11,8 +11,8 @@ public class Ball extends Observable {
 	private boolean isPocketed;
 	private double centerX;
 	private double centerY;
-	private double xVelocity; // in inches/sec
-	private double yVelocity; // in inches/sec
+	private double xVelocity; // in inches/second.
+	private double yVelocity; // in inches/second.
 	private final double radius = GameConstants.BALL_RADIUS;
 	private int id;
 	
@@ -38,7 +38,7 @@ public class Ball extends Observable {
 		this.id = id;
 	}
 
-	// Unpockets a ball, used only for cueball
+	// Unpockets a ball, used only for cueball.
 	public void unpocket(){
 		isPocketed = !isPocketed;
 	}
@@ -74,7 +74,7 @@ public class Ball extends Observable {
 		notifyObservers();
 	}
 	
-	// Pockets a ball
+	// Pockets a ball.
 	public void setPocketed() {
 		isPocketed = !isPocketed;
 		xVelocity = 0;
