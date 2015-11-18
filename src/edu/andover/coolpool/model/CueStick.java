@@ -241,6 +241,8 @@ public class CueStick extends Observable {
 	
 	public double getCueStickLength() { return cueStickLength; }
 	
+	public double getDistanceTipFromCueBall() { return distanceTipFromCueBall; }
+	
 	public Ball getCueBall() { return cueBall; }
 	
 	public boolean hasHit(){ return hasHit; }

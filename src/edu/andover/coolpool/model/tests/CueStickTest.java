@@ -11,7 +11,8 @@ public class CueStickTest {
 
 	@Test
 	public void setInitialValuesShouldSetCorrectDistanceInit() {
-		Ball b = new Ball(2);
+		int ballID = 2;
+		Ball b = new Ball(ballID);
 		CueStick cueStick = new CueStick(b);
 		double cueStickLength = cueStick.getCueStickLength();
 		cueStick.setStartX(0);
@@ -19,10 +20,11 @@ public class CueStickTest {
 		cueStick.setEndX(cueStickLength);
 		cueStick.setEndY(0);
 		
-		cueStick.setInitialValues(50.0, 50.0);
+		double initMouseX = 50.0;
+		double initMouseY = 50.0;
+		cueStick.setInitialValues(initMouseX, initMouseY);
 		
 		double expectedInitDistance = 50.0;
-		
 		boolean check = cueStick.getDistanceInit() == expectedInitDistance;
 		assertTrue("Failed to set correct initial distance.", check);
 	}
@@ -32,7 +34,61 @@ public class CueStickTest {
 		
 	}
 	
-	// TODO: setInitValues sets correct distanceInit
-	// TODO: setLocation methods (3)
-	// TODO: UpdateCueBallVelocity updates cue ball velocity correctly.
+	@Test
+	public void setCueStickLocationOnDragShouldSetCorrectLocation() {
+		
+	}
+	
+	@Test
+	public void setCueStickLocationAfterHitShouldSetCorrectLocation() {
+		
+	}
+	
+	@Test
+	public void updateCueBallVelocityShouldCorrectlyUpdateXVelocity() {
+		Ball b = new Ball(2);
+		CueStick cueStick = new CueStick(b);
+		double cueStickLength = cueStick.getCueStickLength();
+		double distanceTipFromCueBall = cueStick.getDistanceTipFromCueBall();
+		cueStick.setStartX(distanceTipFromCueBall);
+		cueStick.setStartY(0);
+		cueStick.setEndX(distanceTipFromCueBall + cueStickLength);
+		cueStick.setEndY(0);
+		
+		double initMouseX = 50.0;
+		double initMouseY = 50.0;
+		cueStick.setInitialValues(initMouseX, initMouseY);
+		
+		double finalMouseX = 60.0;
+		double finalMouseY = 60.0;
+		cueStick.updateCueBallVelocity(finalMouseX, finalMouseY);
+		
+		double expectedCueBallXVelocityAfterHit = - 90.0;
+		boolean check = b.getXVelocity() == expectedCueBallXVelocityAfterHit;
+		assertTrue("Failed to set correct cue ball x velocity.", check);
+	} 
+	
+	@Test
+	public void updateCueBallVelocityShouldCorrectlyUpdateYVelocity() {
+		Ball b = new Ball(2);
+		CueStick cueStick = new CueStick(b);
+		double cueStickLength = cueStick.getCueStickLength();
+		double distanceTipFromCueBall = cueStick.getDistanceTipFromCueBall();
+		cueStick.setStartX(distanceTipFromCueBall);
+		cueStick.setStartY(0);
+		cueStick.setEndX(distanceTipFromCueBall + cueStickLength);
+		cueStick.setEndY(0);
+		
+		double initMouseX = 50.0;
+		double initMouseY = 50.0;
+		cueStick.setInitialValues(initMouseX, initMouseY);
+		
+		double finalMouseX = 60.0;
+		double finalMouseY = 60.0;
+		cueStick.updateCueBallVelocity(finalMouseX, finalMouseY);
+		
+		double expectedCueBallYVelocityAfterHit = 0.0;
+		boolean check = b.getYVelocity() == expectedCueBallYVelocityAfterHit;
+		assertTrue("Failed to set correct cue ball x velocity.", check);
+	} 
 }
