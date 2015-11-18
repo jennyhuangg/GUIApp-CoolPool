@@ -19,7 +19,7 @@ public class PoolBoardView implements Observer {
 	double length;
 	double width;
 	
-	// The Green
+	// The green rectangle (pool table).
 	private Rectangle rectangle;
 	
 	// The Rectangle that has the pockets.
@@ -41,12 +41,12 @@ public class PoolBoardView implements Observer {
 		this.poolBoard = poolBoard;
 		view = new Pane();
 		
-		double xMargin = 50; // In Pixels.
-		double yMargin = 50; // In Pixels.
+		double xMargin = 50; // In pixels.
+		double yMargin = 50; // In pixels.
 		this.length = GameConstants.POOL_TABLE_LENGTH*GameConstants.IN_TO_PIXEL;
 		this.width = GameConstants.POOL_TABLE_WIDTH*GameConstants.IN_TO_PIXEL;
 		
-		// Set up table
+		// Set up table.
 		Color brown = Color.web("0x3D362D");
 		bigRectangle = new Rectangle(xMargin, yMargin, this.length, this.width);
 		double x_scale_multiplier = 1.09;
@@ -56,7 +56,7 @@ public class PoolBoardView implements Observer {
 		bigRectangle.setFill(brown);
 		view.getChildren().add(bigRectangle);
 		
-		// Set up green
+		// Set up table color.
 		Color green = Color.web("0x27AE60");
 		rectangle = new Rectangle(xMargin, yMargin, this.length, this.width);
 		rectangle.setFill(green);
@@ -129,7 +129,7 @@ public class PoolBoardView implements Observer {
 	}
 	
 	public void initElements(){
-		// initialize balls
+		// initialize balls.
 		Ball[] balls = poolBoard.getBalls();
 		ballViews = new BallView[16];
 
@@ -139,7 +139,7 @@ public class PoolBoardView implements Observer {
 			this.getPane().getChildren().add(ballViews[i].getCircle());
 		}
 		
-		// initialize pockets
+		// initialize pockets.
 		Pocket[] pockets = poolBoard.getPockets();
 		pocketViews = new PocketView[6];
 		for (int i = 0; i < 6; i ++){
@@ -147,8 +147,7 @@ public class PoolBoardView implements Observer {
 			this.getPane().getChildren().add(pocketViews[i].getCircle());
 		}
 
-
-		// initialize cueStick
+		// initialize cueStick.
 		CueStick cueStick = poolBoard.getCueStick();
 		cueStickView = new CueStickView(cueStick);
 		setCueStickHandlers();
@@ -157,7 +156,7 @@ public class PoolBoardView implements Observer {
 	}
 	
 	public void initCueBallController(){
-		// initialize scratchController
+		// initialize scratchController.
 		CueBallController cueBallController = new CueBallController();
 		cueBallController.addMouseHoverEventHandler(this, 
 				poolBoard.getBalls()[15]);
