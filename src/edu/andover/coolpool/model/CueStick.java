@@ -30,8 +30,8 @@ public class CueStick extends Observable {
 	// Projected distance between initial mouse position and dragging mouse.
 	private static double distanceInitToMouse;
 	
-	// True if values of initial mouse click position can be reset, i. e.
-	// True only on first mouse click before drag.
+	// True if values of initial mouse click position can be reset, 
+	// i.e. true only on first mouse click before drag.
 	private boolean canReset = true;
 	
 	// True if cue stick can move on pool board.
@@ -84,33 +84,12 @@ public class CueStick extends Observable {
 		notifyObservers();
 		hasHit = false;
 	}
-
-	public double getStartX() { return startX; }
-	public double getStartY() { return startY; }
-	public double getEndX() { return endX; }
-	public double getEndY() { return endY; }
-	public double getDistanceInitToMouse() { return distanceInitToMouse; }
-	public Ball getCueBall() { return cueBall; }
 	
 	// Uses distance formula to calculate distance between two points.
 	private double getDistance(double x1, double y1, double x2, double y2) {
 		return Math.sqrt((x1-x2)*(x1-x2) + (y1-y2)*(y1-y2));
 	}
 
-	public void setStartX(double startX) { this.startX = startX; }
-	
-	public void setStartY(double startY) { this.startY = startY; }
-	
-	public void setEndX(double endX) { this.endX = endX; }
-	
-	public void setEndY(double endY) { this.endY = endY; }
-	
-	public boolean canMove() {	return canMove; }
-	
-	public boolean canReset() { return canReset; }
-	
-	public boolean isDragging(){ return isDragging; }
-	
 	// Returns true if mouse is dragging in the correct direction (away from
 	// cue ball in direction of initial mouse click).
 	private boolean isDraggingInCorrectDirection(double mouseX, double mouseY) {
@@ -144,14 +123,6 @@ public class CueStick extends Observable {
 		}
 		return isDraggingInCorrectDirection;
 	 }
-
-	public boolean hasHit(){ return hasHit; }
-	
-	public void setCanMove(boolean canMove) { this.canMove = canMove; }
-
-	public void setCanReset(boolean canReset) { this.canReset = canReset; }
-	
-	public void setCueBall(Ball cueBall){ this.cueBall = cueBall; }
 	
 	// Sets values from initial mouse click position. Occurs before drag.
 	public void setInitialValues(double initMouseX, double initMouseY) {
@@ -181,7 +152,7 @@ public class CueStick extends Observable {
 				initStartX)*(initEndX - initStartX) + (mouseY - initStartY)
 				*(initEndY - initStartY)));
 		
-		// Projected distance between mouse and initial mouse click position
+		// Projected distance between mouse and initial mouse click position.
 		double distanceInitToMouse = distanceInitTipToMouse - distanceInit;
 		
 		// If dragging in incorrect direction, then drag distance is 0.
@@ -240,7 +211,7 @@ public class CueStick extends Observable {
 		isDragging = true;
 		
 		setDistanceInitToMouse(mouseX, mouseY);
-		// Distance between the tip of cue stick to the cue ball
+		// Distance between the tip of cue stick to the cue ball.
  		double newDistanceTipFromCueBall = distanceTipFromCueBall + 
  				distanceInitToMouse;
 		
@@ -253,4 +224,39 @@ public class CueStick extends Observable {
 		isDragging = false;
 		setNewCueStickLocation(distanceTipFromCueBall, initStartX, initStartY);
 	}
+	
+	public double getStartX() { return startX; }
+	
+	public double getStartY() { return startY; }
+	
+	public double getEndX() { return endX; }
+	
+	public double getEndY() { return endY; }
+	
+	public double getDistanceInitToMouse() { return distanceInitToMouse; }
+	
+	public Ball getCueBall() { return cueBall; }
+	
+	public boolean hasHit(){ return hasHit; }
+	
+	public boolean canMove() {	return canMove; }
+	
+	public boolean canReset() { return canReset; }
+	
+	public boolean isDragging(){ return isDragging; }
+	
+	public void setCueBall(Ball cueBall){ this.cueBall = cueBall; }
+	
+	public void setStartX(double startX) { this.startX = startX; }
+	
+	public void setStartY(double startY) { this.startY = startY; }
+	
+	public void setEndX(double endX) { this.endX = endX; }
+	
+	public void setEndY(double endY) { this.endY = endY; }
+	
+	public void setCanMove(boolean canMove) { this.canMove = canMove; }
+
+	public void setCanReset(boolean canReset) { this.canReset = canReset; }
+	
 }

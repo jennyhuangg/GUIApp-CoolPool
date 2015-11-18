@@ -6,30 +6,30 @@ import java.util.Observable;
 import edu.andover.coolpool.GameConstants;
 
 // Model class for a pool board, including interactions between the
-// pool balls, cuestick, and pockets
+// pool balls, cuestick, and pockets.
 
 public class PoolBoard extends Observable {
 
-	private Ball[] balls = new Ball[16]; // All 16 balls in 8-ball pool
+	private Ball[] balls = new Ball[16]; // All 16 balls in 8-ball pool.
 	private ArrayList<Ball> pocketedBalls = new ArrayList<Ball>();
 	private ArrayList<Ball> remainingBalls = new ArrayList<Ball>();
-	private Pocket[] pockets = new Pocket[6]; // 6 pockets along rim of board
+	private Pocket[] pockets = new Pocket[6]; // 6 pockets along rim of board.
 	private CueStick cueStick;
 
-	// X and Y coordinates of top left corner of playable board
+	// X and Y coordinates of top left corner of playable board.
 	private double boardX = GameConstants.POOLBOARD_X 
 			* GameConstants.PIXEL_TO_IN;
 	private double boardY = GameConstants.POOLBOARD_Y 
 			* GameConstants.PIXEL_TO_IN;
 
-	// Length and width of playable board
+	// Length and width of playable board.
 	private double length = GameConstants.POOL_TABLE_LENGTH; 
 	private double width = GameConstants.POOL_TABLE_WIDTH;
 
-	// Counts number of collisions of balls with boundaries in each term
+	// Counts number of collisions of balls with boundaries in each term.
 	private int numBumperCollisions = 0;
 
-	public boolean isStable; // True if all balls are at rest
+	public boolean isStable; // True if all balls are at rest.
 	public boolean bounced = false;
 	public boolean resetCue = false;
 
@@ -42,7 +42,7 @@ public class PoolBoard extends Observable {
 	}
 
 	// Initializes the array of balls and places the balls in the correct
-	// locations on the pool board
+	// locations on the pool board.
 	private void setUpBalls() {
 		// Set IDs for each ball.
 		for (int k = 0; k < balls.length; k ++) { 
@@ -78,7 +78,7 @@ public class PoolBoard extends Observable {
 		balls[8].setCenter(threeQuartersLength + 2 * incrementX, 
 				centerY + 2 * radius);
 		balls[14].setCenter(threeQuartersLength + 2 * incrementX, 
-				centerY); //8 Ball
+				centerY); // 8 Ball. 
 		balls[2].setCenter(threeQuartersLength + 2 * incrementX, 
 				centerY - 2 * radius);
 
@@ -109,7 +109,7 @@ public class PoolBoard extends Observable {
 	}
 
 	// Updates positions and states of the balls at each time step of 
-	// 0.01 seconds
+	// 0.01 seconds.
 	public void update() {
 		double elapsedSeconds = 0.01;
 		for (Ball b : remainingBalls) {
@@ -147,7 +147,7 @@ public class PoolBoard extends Observable {
 
 	// Checks to see if any balls have fallen inside the pockets
 	// Falls inside pockets if (distance between ball and pocket) <=
-	// (radius_of_pocket - radius_of_ball)
+	// (radius_of_pocket - radius_of_ball).
 	private void checkPockets(){
 		for (Pocket pocket: pockets){
 			for (Ball ball: balls){
@@ -164,7 +164,7 @@ public class PoolBoard extends Observable {
 		}
 	}
 
-	// Checks whether balls have collided with each other or with the walls
+	// Checks whether balls have collided with each other or with the walls.
 	private void checkCollisions() {
 		for (Ball ball: remainingBalls)
 		{
@@ -246,7 +246,7 @@ public class PoolBoard extends Observable {
 	}
 
 	// Processes a collision with momentum equations. Updates velocities of 
-	// the balls after collisions
+	// the balls after collisions.
 	private void bounce(final Ball b1, final Ball b2, final double deltaX, 
 			final double deltaY) {
 		// Direction of collision is <deltaX, deltaY>.
@@ -271,14 +271,19 @@ public class PoolBoard extends Observable {
 		b2.setYVelocity(b2.getYVelocity() +  unitContactY*(b2_f - b2_i));
 	}
 
-	// Clears pockets after each turn
+	// Clears pockets after each turn.
 	public void resetPocketedBalls() { 
 		pocketedBalls = new ArrayList<Ball>(); 
 	}
 
 	public Ball[] getBalls() { return balls; }
+	
 	public ArrayList<Ball> pocketedBalls() { return pocketedBalls; }
+	
 	public Pocket[] getPockets(){ return pockets; }
+	
 	public CueStick getCueStick(){ return cueStick; }
+	
 	public int getNumBumperCollisions() { return numBumperCollisions; }
+	
 }

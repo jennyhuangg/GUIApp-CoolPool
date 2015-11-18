@@ -1,8 +1,9 @@
 package edu.andover.coolpool.model;
 
-// Model class for a player. Stores the player's ball type and points
+// Model class for a player. Stores the player's ball type and points.
+
 public class Player {
-	int ballType; //0 if solid, 1 if stripe, -1 otherwise
+	int ballType; // 0 if solid, 1 if stripe, -1 otherwise.
 	int points = 0;
 
 	public Player() {
@@ -18,7 +19,9 @@ public class Player {
 	}
 	
 	public void setBallType(int ballType) { this.ballType = ballType; }
+	
 	public int getBallType(){ return ballType; }
+	
 	public int getPoints() { return points; }
 	
 }

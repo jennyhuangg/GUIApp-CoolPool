@@ -2,27 +2,26 @@ package edu.andover.coolpool.model;
 
 import edu.andover.coolpool.GameConstants;
 
-//This class is not used in Version 0, but will be implemented in the final.
 public class Pocket {
 	
-	// Location of the pocket (xPosition, yPosition)
+	// Location of the pocket (xPosition, yPosition).
 	private double xPosition; 
 	private double yPosition;
 
-	// Limits of the board
+	// Limits of the board.
 	private double maxX;
 	private double maxY;
 	private double minX;
 	private double minY;
 
-	private final double radius = GameConstants.POCKET_RADIUS; //inches
+	private final double radius = GameConstants.POCKET_RADIUS; //inches.
 
 	public Pocket(int id, double boardX, double boardY){
 		minX = boardX;
 		minY = boardY;
 		maxX = minX + GameConstants.POOL_TABLE_LENGTH;
 		maxY = minY +  GameConstants.POOL_TABLE_WIDTH;
-		setPocketLocation(id); //set xPosition and yPosition
+		setPocketLocation(id); //set xPosition and yPosition.
 	}
 	
 	private void setPocketLocation(int id){
@@ -59,6 +58,9 @@ public class Pocket {
 	}
 
 	public double getRadius(){ return radius; }
+	
 	public double getXPosition(){ return xPosition; }
+	
 	public double getYPosition(){ return yPosition; }
+	
 }

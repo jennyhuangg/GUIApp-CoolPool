@@ -4,8 +4,6 @@ import java.util.Observable;
 import java.util.Observer;
 
 import edu.andover.coolpool.model.EndScreenStatus;
-import edu.andover.coolpool.model.PoolGame;
-import edu.andover.coolpool.model.PoolGameStatus;
 import javafx.fxml.FXML;
 import javafx.scene.text.Text;
 

@@ -68,6 +68,7 @@ public class CueStickView implements Observer{
 		Pane parentNode = (Pane) line.getParent();
 		parentNode.getChildren().add(line);
 	}
+	
 	public Shape getLine() {return line; }
 
 	public void update(Observable o, Object arg) {
