@@ -233,7 +233,11 @@ public class CueStick extends Observable {
 	
 	public double getEndY() { return endY; }
 	
+	public double getDistanceInit() { return distanceInit; }
+	
 	public double getDistanceInitToMouse() { return distanceInitToMouse; }
+	
+	public double getCueStickLength() { return cueStickLength; }
 	
 	public Ball getCueBall() { return cueBall; }
 	
