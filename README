@@ -1,0 +1,10 @@
+Team: Jenny Huang, Amy Chou, Eric Lee, and Pranav Tadikonda
+
+We implemented a two-player turn based 8-ball pool game. Each player can control 
+the direction and power of the cue stick to hit the balls on the pool table. The goal 
+of the game is to be the first to pocket all of either the striped or solid balls and 
+then pocket the black 8-ball. The player who does that first wins.
+
+CS630: Software Design
+Phillips Academy
+Fall 2015
